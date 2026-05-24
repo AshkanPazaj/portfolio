@@ -109,14 +109,14 @@
   const rotator = document.querySelector('.rotator');
   if (rotator) {
     const phrases = [
-      { text: 'I lead floors',      tone: 'warm' },
-      { text: 'I write code',       tone: 'cool' },
-      { text: 'I run the rush',     tone: 'warm' },
-      { text: 'I ship features',    tone: 'cool' },
-      { text: 'I coach the team',   tone: 'warm' },
-      { text: 'I debug everything', tone: 'cool' },
-      { text: 'I open the doors',   tone: 'warm' },
-      { text: 'I learn the stack',  tone: 'cool' },
+      { text: 'I lead floors',   tone: 'warm' },
+      { text: 'I write code',    tone: 'cool' },
+      { text: 'I run the rush',  tone: 'warm' },
+      { text: 'I ship features', tone: 'cool' },
+      { text: 'I coach teams',   tone: 'warm' },
+      { text: 'I squash bugs',   tone: 'cool' },
+      { text: 'I open doors',    tone: 'warm' },
+      { text: 'I learn fast',    tone: 'cool' },
     ];
 
     // Measure widest phrase so the line doesn't jump.
