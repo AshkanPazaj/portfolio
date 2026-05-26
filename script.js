@@ -49,49 +49,17 @@
     });
   }
 
-  // ----- Reveal-on-scroll (fades in/out at both top and bottom edges) -----
+  // ----- Reveal-on-scroll animations -----
   const revealEls = document.querySelectorAll('.reveal');
-  const REVEAL_INSET = 0.24;
-
-  function updateReveal(el) {
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    const inset = vh * REVEAL_INSET;
-    const rect = el.getBoundingClientRect();
-    const inZone = rect.bottom > inset && rect.top < vh - inset;
-
-    if (inZone) {
-      el.classList.add('visible');
-      el.classList.remove('reveal-hide-up', 'reveal-hide-down');
-      return;
-    }
-
-    el.classList.remove('visible');
-    const center = rect.top + rect.height * 0.5;
-
-    if (center < vh * 0.5) {
-      el.classList.add('reveal-hide-up');
-      el.classList.remove('reveal-hide-down');
-    } else {
-      el.classList.add('reveal-hide-down');
-      el.classList.remove('reveal-hide-up');
-    }
-  }
-
-  let revealTicking = false;
-  function updateAllReveals() {
-    revealEls.forEach(updateReveal);
-    revealTicking = false;
-  }
-
-  function queueRevealUpdate() {
-    if (revealTicking) return;
-    revealTicking = true;
-    requestAnimationFrame(updateAllReveals);
-  }
-
-  window.addEventListener('scroll', queueRevealUpdate, { passive: true });
-  window.addEventListener('resize', queueRevealUpdate, { passive: true });
-  queueRevealUpdate();
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+  revealEls.forEach(el => io.observe(el));
 
   // ----- Animated stat counters -----
   const stats = document.querySelectorAll('.stat-num');

@@ -1579,22 +1579,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    ============================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
-  transition:
-    opacity 0.9s var(--ease) 0s,
-    transform 0.9s var(--ease) 0s;
-  will-change: opacity, transform;
-}
-.reveal.reveal-hide-up {
-  transform: translateY(-36px);
-}
-.reveal.reveal-hide-down {
-  transform: translateY(36px);
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
-  transition-delay: 0.18s;
 }
 
 /* ============================================
