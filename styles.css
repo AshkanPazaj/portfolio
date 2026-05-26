@@ -218,6 +218,9 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.text-solid-blue {
+  color: var(--accent);
+}
 
 /* ============================================
    Navigation
@@ -254,31 +257,91 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 .nav-links {
-  display: flex; gap: 8px;
+  display: flex; gap: 6px;
   align-items: center;
 }
 .nav-links a {
-  padding: 8px 16px;
-  border-radius: 10px;
+  padding: 8px 18px;
+  border-radius: 999px;
   font-size: 14px; font-weight: 500;
   color: var(--text-dim);
-  transition: all 0.2s var(--ease);
+  background: transparent;
+  border: 1px solid transparent;
+  transition: color 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.nav-links a:hover { color: var(--text); background: var(--surface); }
+
+/* Hospitality — warm orange box */
+.nav-links a.nav-warm:hover,
+.nav-links a.nav-warm.active,
+.nav-links a.nav-warm:focus-visible {
+  color: #fff;
+  background: rgba(255, 106, 61, 0.14);
+  border-color: rgba(255, 106, 61, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(255, 106, 61, 0.2),
+    0 0 18px rgba(255, 106, 61, 0.35),
+    inset 0 0 20px rgba(255, 179, 71, 0.08);
+}
+
+/* Full-stack / code — cool blue box */
+.nav-links a.nav-cool:hover,
+.nav-links a.nav-cool.active,
+.nav-links a.nav-cool:focus-visible {
+  color: #fff;
+  background: rgba(110, 139, 255, 0.14);
+  border-color: rgba(110, 139, 255, 0.45);
+  box-shadow:
+    0 0 0 1px rgba(110, 139, 255, 0.2),
+    0 0 18px rgba(110, 139, 255, 0.35),
+    inset 0 0 20px rgba(162, 107, 255, 0.08);
+}
+
+/* About, contact — dual orange + blue box */
+.nav-links a.nav-dual:hover,
+.nav-links a.nav-dual.active,
+.nav-links a.nav-dual:focus-visible {
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    rgba(110, 139, 255, 0.14) 0%,
+    rgba(162, 107, 255, 0.1) 45%,
+    rgba(255, 179, 71, 0.1) 55%,
+    rgba(255, 106, 61, 0.14) 100%
+  );
+  border-color: rgba(162, 107, 255, 0.4);
+  box-shadow:
+    0 0 0 1px rgba(110, 139, 255, 0.15),
+    0 0 14px rgba(110, 139, 255, 0.25),
+    0 0 14px rgba(255, 106, 61, 0.2),
+    inset 0 0 18px rgba(255, 255, 255, 0.04);
+}
 
 .nav-cta {
   padding: 10px 20px;
-  border-radius: 10px;
-  background: var(--surface);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border-strong);
   font-size: 14px; font-weight: 600;
-  transition: all 0.2s var(--ease);
+  color: var(--text);
+  transition: color 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
 }
-.nav-cta:hover {
-  background: linear-gradient(135deg, var(--brand), var(--accent));
-  border-color: transparent;
+.nav-cta-dual:hover,
+.nav-cta-dual:focus-visible {
+  color: #fff;
+  background: linear-gradient(
+    135deg,
+    rgba(110, 139, 255, 0.16) 0%,
+    rgba(162, 107, 255, 0.12) 45%,
+    rgba(255, 179, 71, 0.12) 55%,
+    rgba(255, 106, 61, 0.16) 100%
+  );
+  border-color: rgba(162, 107, 255, 0.45);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(255, 106, 61, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(110, 139, 255, 0.15),
+    0 0 16px rgba(110, 139, 255, 0.28),
+    0 0 16px rgba(255, 106, 61, 0.22),
+    0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .nav-toggle {
@@ -337,26 +400,42 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-family: var(--font-serif);
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.2;
   letter-spacing: -0.03em;
   margin-bottom: 24px;
+  overflow: visible;
 }
 
 /* Rotating headline phrase (hospitality <-> programming) */
 .rotator {
-  display: inline-block;
-  position: relative;
+  display: inline-grid;
   vertical-align: baseline;
+  text-align: left;
+  line-height: 1.25;
+  overflow: visible;
+  padding-bottom: 0.12em;
+}
+.rotator-sizer,
+.rotator-text {
+  grid-area: 1 / 1;
   white-space: nowrap;
-  min-width: 4ch;
-  transition: min-width 0.4s var(--ease);
+  line-height: 1.25;
+  padding-bottom: 0.14em;
+}
+.rotator-sizer {
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }
 .rotator-text {
   display: inline-block;
+  overflow: visible;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   animation: rotIn 0.55s var(--ease) both;
 }
 .rotator-text.rot-out {
@@ -366,12 +445,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .rot-cool  { background-image: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%); }
 
 @keyframes rotIn {
-  0%   { opacity: 0; transform: translateY(12px) skewY(2deg); filter: blur(4px); }
-  100% { opacity: 1; transform: translateY(0)    skewY(0);    filter: blur(0); }
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 @keyframes rotOut {
-  0%   { opacity: 1; transform: translateY(0)     skewY(0);    filter: blur(0); }
-  100% { opacity: 0; transform: translateY(-12px) skewY(-2deg); filter: blur(4px); }
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
 }
 .hero-sub {
   font-size: 19px;
@@ -1332,16 +1411,190 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 /* ============================================
+   Projects page
+   ============================================ */
+.page-hero {
+  padding: 160px 0 60px;
+}
+.page-hero .section-kicker { margin-bottom: 20px; }
+.page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+}
+.page-sub {
+  font-size: 18px;
+  color: var(--text-dim);
+  max-width: 640px;
+  line-height: 1.7;
+}
+
+.section-projects { padding: 40px 0 100px; }
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 22px;
+  margin-bottom: 60px;
+}
+.proj-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s var(--ease);
+  display: flex; flex-direction: column;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+.proj-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow);
+}
+.proj-img {
+  display: flex; align-items: center; justify-content: center;
+  height: 160px;
+  position: relative;
+  text-decoration: none;
+  overflow: hidden;
+}
+.proj-img-1 { background: linear-gradient(135deg, #535353 0%, #2a2a2a 55%, #f7f7f7 100%); }
+.proj-img-2 { background: linear-gradient(135deg, #6e8bff, #4ade80); }
+.proj-img-3 { background: linear-gradient(135deg, #ffb347, #ff6a3d); }
+.proj-img-4 { background: linear-gradient(135deg, #a26bff, #6e8bff); }
+.proj-emoji {
+  font-size: 64px;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+  transition: transform 0.35s var(--ease);
+}
+.proj-card:hover .proj-emoji { transform: scale(1.08) rotate(-3deg); }
+.proj-play {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.25s var(--ease);
+}
+.proj-card:hover .proj-play {
+  opacity: 1;
+  transform: translateY(0);
+}
+.proj-body {
+  padding: 24px;
+  display: flex; flex-direction: column; gap: 12px;
+  flex: 1;
+}
+.proj-status {
+  align-self: flex-start;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--green);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+}
+.proj-status-soon {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-mute);
+  border-color: var(--border-strong);
+}
+.proj-status-progress {
+  background: rgba(255, 179, 71, 0.1);
+  color: var(--brand-2);
+  border-color: rgba(255, 106, 61, 0.35);
+}
+.proj-card-coming {
+  opacity: 0.92;
+}
+.proj-card-coming .proj-img {
+  cursor: default;
+}
+.proj-body h3 {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  font-weight: 700;
+}
+.proj-body p {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.6;
+  flex: 1;
+}
+.proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.proj-tags span {
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(110, 139, 255, 0.08);
+  border: 1px solid rgba(110, 139, 255, 0.2);
+  color: var(--accent);
+  font-weight: 500;
+}
+.proj-cta {
+  align-self: flex-start;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-2);
+  transition: gap 0.2s var(--ease);
+}
+.proj-cta:hover { color: var(--brand); }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+  padding: 10px 16px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  transition: all 0.2s var(--ease);
+}
+.back-link:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+/* ============================================
    Reveal Animations
    ============================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+  transform: translateY(36px);
+  transition:
+    opacity 0.9s var(--ease) 0s,
+    transform 0.9s var(--ease) 0s;
+  will-change: opacity, transform;
+}
+.reveal.reveal-hide-up {
+  transform: translateY(-36px);
+}
+.reveal.reveal-hide-down {
+  transform: translateY(36px);
 }
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  transition-delay: 0.18s;
 }
 
 /* ============================================
@@ -1390,6 +1643,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   .cap-col { padding: 22px; }
 
   .footer-inner { flex-direction: column; text-align: center; }
+  .page-hero { padding: 130px 0 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

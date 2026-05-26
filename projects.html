@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects · Ashkan Pazaj</title>
+  <meta name="description" content="Projects by Ashkan (Cyrus) Pazaj — code, games and side experiments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Black + wave background -->
+  <div class="bg-base" aria-hidden="true"></div>
+  <div class="bg-wave" aria-hidden="true">
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+    <div class="bg-blob bg-blob-4"></div>
+  </div>
+  <div class="bg-noise" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <span class="logo-mark">AP</span>
+      <span class="logo-text">Ashkan Pazaj</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#about" class="nav-dual">About</a></li>
+      <li><a href="index.html#hospitality" class="nav-warm">Hospitality &amp; Retail</a></li>
+      <li><a href="index.html#fullstack" class="nav-cool">Full-Stack</a></li>
+      <li><a href="projects.html" class="nav-cool active">Projects</a></li>
+      <li><a href="index.html#contact" class="nav-dual">Contact</a></li>
+    </ul>
+    <a href="index.html#contact" class="nav-cta nav-cta-dual">Get in touch</a>
+    <button class="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Projects header -->
+  <header class="page-hero">
+    <div class="container">
+      <span class="section-kicker">Projects</span>
+      <h1 class="page-title">Things I'm <span class="text-solid-blue">building</span>.</h1>
+      <p class="page-sub">
+        Small coding experiments and personal builds. Some are finished, some are still in progress.
+      </p>
+    </div>
+  </header>
+
+  <!-- Projects grid -->
+  <section class="section section-projects">
+    <div class="container">
+      <div class="proj-grid">
+
+        <!-- Chrome Dino -->
+        <article class="proj-card proj-card-coming reveal">
+          <div class="proj-img proj-img-1">
+            <span class="proj-emoji">🦖</span>
+          </div>
+          <div class="proj-body">
+            <span class="proj-status proj-status-progress">In progress</span>
+            <h3>Chrome Dino</h3>
+            <p>A full-screen port of the classic Chrome offline dinosaur game — cacti, pterodactyls, scrolling horizon, and night mode. Still being built.</p>
+            <div class="proj-tags">
+              <span>HTML5 Canvas</span><span>Vanilla JS</span><span>Game</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Portfolio site itself -->
+        <article class="proj-card reveal">
+          <div class="proj-img proj-img-2">
+            <span class="proj-emoji">🎨</span>
+          </div>
+          <div class="proj-body">
+            <span class="proj-status">Live</span>
+            <h3>This portfolio site</h3>
+            <p>You're looking at it. Hand-coded single-page site with a fluid wave background, rotating hero, scroll reveals and a dual-track design. No framework, no build step.</p>
+            <div class="proj-tags">
+              <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            </div>
+            <a href="index.html" class="proj-cta">View &rarr;</a>
+          </div>
+        </article>
+
+        <!-- Cafe Ops dashboard placeholder -->
+        <article class="proj-card proj-card-coming reveal">
+          <div class="proj-img proj-img-4">
+            <span class="proj-emoji">🛠️</span>
+          </div>
+          <div class="proj-body">
+            <span class="proj-status proj-status-soon">Planning</span>
+            <h3>Café Ops dashboard</h3>
+            <p>A personal project drawn from real experience: a simple labour &amp; sales dashboard for small café teams. The tool I wished I'd had at Viuna.</p>
+            <div class="proj-tags">
+              <span>Full-Stack</span><span>Real-World</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <a href="index.html" class="back-link">&larr; Back to portfolio</a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-logo">
+        <span class="logo-mark">AP</span>
+        <span>Ashkan Pazaj</span>
+      </div>
+      <p>© <span id="year"></span> Ashkan (Cyrus) Pazaj. Made with care in Toronto.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
