@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order · Cafe X</title>
+  <meta name="description" content="Order pickup or delivery from Cafe X on Queen West, Toronto." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="cafe-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <nav class="cafe-nav is-solid" id="cafe-nav" aria-label="Primary">
+    <a href="index.html" class="cafe-logo">
+      <span class="cafe-logo-mark" aria-hidden="true">X</span>
+      <span>Cafe X</span>
+    </a>
+    <div class="cafe-nav-menu" id="cafe-nav-menu">
+      <ul class="cafe-nav-links">
+        <li><a href="index.html#menu">Menu</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#visit">Visit</a></li>
+      </ul>
+      <div class="cafe-nav-actions">
+        <a href="order.html" class="cafe-nav-cta cafe-nav-cta-outline" aria-current="page">Order</a>
+        <a href="reserve.html" class="cafe-nav-cta">Reserve</a>
+      </div>
+    </div>
+    <button class="cafe-nav-toggle" type="button" aria-expanded="false" aria-controls="cafe-nav-menu" aria-label="Open menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <main id="main" class="cafe-form-page">
+    <div class="cafe-container cafe-form-layout">
+      <header class="cafe-form-header">
+        <a href="index.html" class="cafe-back cafe-back-inline">&larr; Back to Cafe X</a>
+        <span class="cafe-kicker">Order online</span>
+        <h1>Pickup or delivery.</h1>
+        <p>Build your order, choose pickup or delivery, and pick a time that works for you.</p>
+      </header>
+
+      <div class="cafe-form-grid">
+        <form id="cafe-order-form" class="cafe-form" novalidate>
+          <div id="order-form-error" class="cafe-form-error" role="alert" hidden></div>
+
+          <fieldset class="cafe-fieldset">
+            <legend>How would you like it?</legend>
+            <div class="cafe-fieldset-body">
+            <div class="cafe-fulfillment" role="radiogroup" aria-label="Fulfillment method">
+              <label class="cafe-fulfillment-option">
+                <input type="radio" name="fulfillment" value="pickup" checked />
+                <span class="cafe-fulfillment-label">Pickup</span>
+                <span class="cafe-fulfillment-desc">Ready at the counter · 10–15 min</span>
+              </label>
+              <label class="cafe-fulfillment-option">
+                <input type="radio" name="fulfillment" value="delivery" />
+                <span class="cafe-fulfillment-label">Delivery</span>
+                <span class="cafe-fulfillment-desc">Within 3 km · $4.99 fee · min $15</span>
+              </label>
+            </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="cafe-fieldset">
+            <legend>Your order</legend>
+            <div class="cafe-fieldset-body">
+            <p class="cafe-field-hint">Use +/− buttons or type a quantity. Leave at 0 to skip an item.</p>
+            <ul class="cafe-order-items">
+              <li class="cafe-order-row" data-item="espresso">
+                <span class="cafe-order-name">Espresso <em>$3.50</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease espresso">−</button>
+                  <label class="sr-only" for="qty-espresso">Espresso quantity</label>
+                  <input type="number" id="qty-espresso" name="espresso" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase espresso">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="flat-white">
+                <span class="cafe-order-name">Flat white <em>$4.75</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease flat white">−</button>
+                  <label class="sr-only" for="qty-flat-white">Flat white quantity</label>
+                  <input type="number" id="qty-flat-white" name="flat-white" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase flat white">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="oat-latte">
+                <span class="cafe-order-name">Oat latte <em>$5.25</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease oat latte">−</button>
+                  <label class="sr-only" for="qty-oat-latte">Oat latte quantity</label>
+                  <input type="number" id="qty-oat-latte" name="oat-latte" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase oat latte">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="pour-over">
+                <span class="cafe-order-name">Pour-over <em>$5.50</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease pour-over">−</button>
+                  <label class="sr-only" for="qty-pour-over">Pour-over quantity</label>
+                  <input type="number" id="qty-pour-over" name="pour-over" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase pour-over">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="cold-brew">
+                <span class="cafe-order-name">Cold brew <em>$4.95</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease cold brew">−</button>
+                  <label class="sr-only" for="qty-cold-brew">Cold brew quantity</label>
+                  <input type="number" id="qty-cold-brew" name="cold-brew" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase cold brew">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="honey-latte">
+                <span class="cafe-order-name">Honey cinnamon latte <em>$6.25</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease honey cinnamon latte">−</button>
+                  <label class="sr-only" for="qty-honey-latte">Honey cinnamon latte quantity</label>
+                  <input type="number" id="qty-honey-latte" name="honey-latte" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase honey cinnamon latte">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="croissant">
+                <span class="cafe-order-name">Almond croissant <em>$4.50</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease almond croissant">−</button>
+                  <label class="sr-only" for="qty-croissant">Almond croissant quantity</label>
+                  <input type="number" id="qty-croissant" name="croissant" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase almond croissant">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="avocado-toast">
+                <span class="cafe-order-name">Avocado toast <em>$12.00</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease avocado toast">−</button>
+                  <label class="sr-only" for="qty-avocado-toast">Avocado toast quantity</label>
+                  <input type="number" id="qty-avocado-toast" name="avocado-toast" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase avocado toast">+</button>
+                </div>
+              </li>
+              <li class="cafe-order-row" data-item="sandwich">
+                <span class="cafe-order-name">Breakfast sandwich <em>$9.75</em></span>
+                <div class="cafe-qty-control">
+                  <button type="button" class="cafe-qty-btn" data-action="dec" aria-label="Decrease breakfast sandwich">−</button>
+                  <label class="sr-only" for="qty-sandwich">Breakfast sandwich quantity</label>
+                  <input type="number" id="qty-sandwich" name="sandwich" min="0" max="20" value="0" inputmode="numeric" />
+                  <button type="button" class="cafe-qty-btn" data-action="inc" aria-label="Increase breakfast sandwich">+</button>
+                </div>
+              </li>
+            </ul>
+            <div class="cafe-total-breakdown" aria-live="polite">
+              <div class="cafe-total-line">
+                <span>Subtotal</span>
+                <span id="order-subtotal">$0.00</span>
+              </div>
+              <div class="cafe-total-line" id="delivery-fee-row" hidden>
+                <span>Delivery fee</span>
+                <span id="order-delivery-fee">$4.99</span>
+              </div>
+              <div class="cafe-total-line cafe-total-line-grand">
+                <span>Estimated total</span>
+                <strong id="order-total">$0.00</strong>
+              </div>
+            </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="cafe-fieldset">
+            <legend id="fulfillment-details-legend">Pickup details</legend>
+            <div class="cafe-fieldset-body">
+            <div class="cafe-form-row">
+              <div class="cafe-field">
+                <label for="order-name">Full name</label>
+                <input type="text" id="order-name" name="name" autocomplete="name" required />
+              </div>
+              <div class="cafe-field">
+                <label for="order-phone">Phone</label>
+                <input type="tel" id="order-phone" name="phone" autocomplete="tel" required placeholder="(416) 555-0100" />
+              </div>
+            </div>
+            <div class="cafe-field">
+              <label for="order-email">Email</label>
+              <input type="email" id="order-email" name="email" autocomplete="email" required />
+            </div>
+
+            <div id="delivery-panel" class="cafe-delivery-panel" hidden>
+              <p class="cafe-field-hint">Delivery available within 3 km of 1 Queen West. Minimum order $15 before fees.</p>
+              <div class="cafe-field">
+                <label for="order-street">Street address</label>
+                <input type="text" id="order-street" name="street" autocomplete="street-address" placeholder="123 Queen St W" />
+              </div>
+              <div class="cafe-form-row">
+                <div class="cafe-field">
+                  <label for="order-unit">Unit / buzzer <span class="cafe-optional">(optional)</span></label>
+                  <input type="text" id="order-unit" name="unit" autocomplete="address-line2" placeholder="Apt 4B" />
+                </div>
+                <div class="cafe-field">
+                  <label for="order-city">City</label>
+                  <input type="text" id="order-city" name="city" autocomplete="address-level2" value="Toronto" />
+                </div>
+              </div>
+              <div class="cafe-field">
+                <label for="order-postal">Postal code</label>
+                <input type="text" id="order-postal" name="postal" autocomplete="postal-code" placeholder="M5H 2N2" maxlength="7" />
+              </div>
+            </div>
+
+            <div class="cafe-form-row">
+              <div class="cafe-field">
+                <label for="order-date" id="order-date-label">Pickup date</label>
+                <input type="date" id="order-date" name="date" required />
+              </div>
+              <div class="cafe-field">
+                <label for="order-time" id="order-time-label">Pickup time</label>
+                <select id="order-time" name="time" required>
+                  <option value="">Select a time</option>
+                </select>
+              </div>
+            </div>
+            <div class="cafe-field">
+              <label for="order-notes">Notes <span class="cafe-optional">(optional)</span></label>
+              <textarea id="order-notes" name="notes" rows="3" placeholder="Extra hot, oat milk only, allergy info, delivery instructions…"></textarea>
+            </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="cafe-btn cafe-btn-primary cafe-btn-full" id="order-submit">Place pickup order</button>
+          <p class="cafe-form-note">Demo only — no payment or real order is sent. You'll get a confirmation on this page.</p>
+        </form>
+
+        <aside class="cafe-form-aside-col" aria-label="Order information">
+          <div class="cafe-form-aside">
+          <img src="assets/pastry.jpg" alt="Fresh pastries ready at the Cafe X counter" loading="lazy" />
+          <div class="cafe-form-aside-copy">
+            <h2 id="order-aside-title">Pickup at the counter</h2>
+            <p id="order-aside-copy">1 Queen West, Toronto. Orders are usually ready in 10 to 15 minutes depending on the rush.</p>
+            <div class="cafe-order-summary">
+              <h3>Order summary</h3>
+              <p id="order-summary-empty" class="cafe-summary-empty">No items yet.</p>
+              <ul id="order-summary-list" class="cafe-summary-list"></ul>
+            </div>
+            <p>Need a table instead? <a href="reserve.html">Reserve here</a>.</p>
+          </div>
+          </div>
+        </aside>
+      </div>
+
+      <div id="order-success" class="cafe-success" hidden>
+        <span class="cafe-kicker">Order confirmed</span>
+        <h2>You're all set.</h2>
+        <p id="order-success-text"></p>
+        <ul id="order-success-items" class="cafe-summary-list cafe-success-items"></ul>
+        <p class="cafe-success-ref">Reference: <strong id="order-ref"></strong></p>
+        <div class="cafe-success-actions">
+          <a href="index.html" class="cafe-btn cafe-btn-primary">Back to Cafe X</a>
+          <button type="button" class="cafe-btn cafe-btn-ghost" id="order-again">Place another order</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="cafe-footer">
+    <div class="cafe-container cafe-footer-inner">
+      <div class="cafe-footer-brand">
+        <span class="cafe-logo-mark" aria-hidden="true">X</span>
+        <span>Cafe X</span>
+      </div>
+      <p>&copy; <span id="cafe-year"></span> Cafe X. A portfolio demo by Ashkan Pazaj.</p>
+      <a href="../../projects.html" class="cafe-back">&larr; Back to projects</a>
+    </div>
+  </footer>
+
+  <script src="cafe-x.js"></script>
+  <script src="cafe-x-forms.js"></script>
+</body>
+</html>

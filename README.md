@@ -9,10 +9,12 @@ A modern, single-page portfolio for **Ashkan (Cyrus) Pazaj** featuring two caree
 
 Pure HTML, CSS and vanilla JavaScript — no build step, no dependencies.
 
-- `index.html` — markup and content
-- `styles.css` — design system, layout and animations
+- `index.html` — main portfolio page
+- `projects.html` — project showcase
+- `styles.css` — portfolio design system, layout and animations
 - `script.js` — scroll reveals, counter animation, mobile nav, parallax photo
-- `assets/ashkan.png` — profile photo
+- `projects/` — self-contained project demos (Chrome Dino, Cafe X, etc.)
+- `assets/` — shared site assets (favicon, profile photo)
 
 ## Run locally
 

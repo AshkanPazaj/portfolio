@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chrome Dino · Ashkan Pazaj</title>
+  <meta name="description" content="An exact replica of the Chrome offline dinosaur game." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dino-page">
+  <a class="skip-link" href="#game-mount">Skip to game</a>
+  <header class="dino-header">
+    <a href="../../projects.html" class="back-link">&larr; Back to projects</a>
+    <p class="dino-hint" aria-hidden="true">Space / ↑ to jump · ↓ to duck · Tap to jump on mobile</p>
+    <p class="sr-only" id="dino-instructions">
+      Chrome Dino game. Press Space or the Up arrow to jump, and the Down arrow to duck.
+      On touch devices, tap the game area to jump. The game starts when you press Space or tap.
+    </p>
+  </header>
+  <main id="game-mount" class="dino-stage" aria-label="Chrome Dino game" aria-describedby="dino-instructions" tabindex="-1"></main>
+  <script type="module" src="lib/index.js"></script>
+</body>
+</html>

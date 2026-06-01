@@ -21,10 +21,20 @@
   // ----- Mobile nav toggle -----
   const toggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
+
+  function closeMobileNav() {
+    if (!toggle || !navLinks) return;
+    navLinks.classList.remove('open');
+    navLinks.style.display = '';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Open menu');
+  }
+
   if (toggle && navLinks) {
     toggle.addEventListener('click', () => {
       const isOpen = navLinks.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+      toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
       if (isOpen) {
         navLinks.style.display = 'flex';
         navLinks.style.position = 'absolute';
@@ -40,12 +50,11 @@
         navLinks.style.display = '';
       }
     });
-    // Close on link click
     navLinks.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navLinks.style.display = '';
-      });
+      a.addEventListener('click', closeMobileNav);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) closeMobileNav();
     });
   }
 
@@ -92,6 +101,7 @@
   }
 
   // ----- Smooth-scroll offset for fixed nav -----
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href');
@@ -101,13 +111,13 @@
       e.preventDefault();
       const navHeight = nav ? nav.offsetHeight : 0;
       const top = target.getBoundingClientRect().top + window.scrollY - navHeight - 10;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ top, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
     });
   });
 
   // ----- Rotating headline (hospitality <-> programming) -----
   const rotator = document.querySelector('.rotator');
-  if (rotator) {
+  if (rotator && !prefersReducedMotion) {
     const phrases = [
       { text: 'I lead floors',   tone: 'warm' },
       { text: 'I write code',    tone: 'cool' },
@@ -136,7 +146,7 @@
 
   // ----- Subtle parallax for hero photo -----
   const photoFrame = document.querySelector('.photo-frame');
-  if (photoFrame && window.matchMedia('(pointer: fine)').matches) {
+  if (photoFrame && window.matchMedia('(pointer: fine)').matches && !prefersReducedMotion) {
     const heroPhoto = document.querySelector('.hero-photo');
     heroPhoto.addEventListener('mousemove', (e) => {
       const rect = heroPhoto.getBoundingClientRect();

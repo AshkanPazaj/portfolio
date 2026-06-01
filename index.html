@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <!-- Black + wave background -->
   <div class="bg-base" aria-hidden="true"></div>
   <div class="bg-wave" aria-hidden="true">
@@ -23,23 +24,24 @@
   <div class="bg-noise" aria-hidden="true"></div>
 
   <!-- Navigation -->
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary">
     <a href="#home" class="nav-logo">
-      <span class="logo-mark">AP</span>
+      <span class="logo-mark" aria-hidden="true">AP</span>
       <span class="logo-text">Ashkan Pazaj</span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-nav">
       <li><a href="#about" class="nav-dual">About</a></li>
       <li><a href="#hospitality" class="nav-warm">Hospitality &amp; Retail</a></li>
       <li><a href="#fullstack" class="nav-cool">Full-Stack</a></li>
       <li><a href="projects.html" class="nav-cool">Projects</a></li>
       <li><a href="#contact" class="nav-dual">Contact</a></li>
     </ul>
-    <button class="nav-toggle" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </button>
   </nav>
 
+  <main id="main">
   <!-- Hero -->
   <header id="home" class="hero">
     <div class="hero-inner">
@@ -59,31 +61,31 @@
         <div class="hero-actions">
           <a href="#hospitality" class="btn btn-primary">
             <span>Hire me to lead a floor</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
           <a href="#fullstack" class="btn btn-ghost">
             <span>Hire me to build software</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
         </div>
-        <div class="hero-stats">
-          <div class="stat">
-            <div class="stat-num" data-target="5">0</div>
+        <ul class="hero-stats" aria-label="Career highlights">
+          <li class="stat">
+            <div class="stat-num" data-target="5" aria-label="5 plus years leading teams">0</div>
             <div class="stat-label">Years leading teams</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num" data-target="50">0</div>
+          </li>
+          <li class="stat">
+            <div class="stat-num" data-target="50" aria-label="50 plus direct reports managed">0</div>
             <div class="stat-label">Direct reports managed</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num" data-target="400">0</div>
+          </li>
+          <li class="stat">
+            <div class="stat-num" data-target="400" aria-label="400 plus daily guests served">0</div>
             <div class="stat-label">Daily guests served</div>
-          </div>
-          <div class="stat">
-            <div class="stat-num" data-target="25" data-suffix="%">0</div>
+          </li>
+          <li class="stat">
+            <div class="stat-num" data-target="25" data-suffix="%" aria-label="25 percent service efficiency lift">0</div>
             <div class="stat-label">Service efficiency lift</div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
 
       <div class="hero-photo reveal">
@@ -127,7 +129,7 @@
         <div class="path-cards">
           <a href="#hospitality" class="path-card path-card-hospitality reveal">
             <div class="path-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" y1="2" x2="6" y2="4"/><line x1="10" y1="2" x2="10" y2="4"/><line x1="14" y1="2" x2="14" y2="4"/></svg>
             </div>
             <h3>Hospitality &amp; Retail</h3>
             <p>Floor &amp; cash lead, team builder, guest-experience obsessed. Proven on 400+ guests/day and a flagship sales floor.</p>
@@ -135,7 +137,7 @@
           </a>
           <a href="#fullstack" class="path-card path-card-dev reveal">
             <div class="path-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             <h3>Full-Stack Development</h3>
             <p>Junior dev in training. Real operations experience to back up the code. Looking for co-op or junior roles.</p>
@@ -169,28 +171,28 @@
         <div class="vp-grid">
           <div class="vp-card">
             <div class="vp-icon vp-icon-warm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
             <h4>A reliable floor lead from week one</h4>
             <p>POS, cash, opening/closing, peak-hour traffic control: all already muscle memory. You won't be training me on the basics.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-warm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <h4>Team uplift, not just team coverage</h4>
             <p>I leave teams better than I find them. At Viuna I built an internal pipeline from server → shift lead. I coach in the moment, not just in reviews.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-warm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
             </div>
             <h4>Numbers I'm accountable to</h4>
             <p>I read the daily report before I clock in. Labour %, conversion, AUR, average ticket. I can talk to all of them and adjust the floor accordingly.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-warm">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             </div>
             <h4>Guests who come back, and bring people</h4>
             <p>The unglamorous part of retail: remembering names, anticipating needs, never selling. I turn one-time browsers into regulars.</p>
@@ -317,28 +319,28 @@
         <div class="vp-grid">
           <div class="vp-card">
             <div class="vp-icon vp-icon-cool">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg>
             </div>
             <h4>I've <em>been</em> the user</h4>
             <p>Five years on POS, scheduling and inventory software means I know exactly where line-of-business apps fail real people. I'll catch the UX gaps in code review.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-cool">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <h4>I communicate like an adult</h4>
             <p>I've managed customers, staff and vendors through messy days. Standups, code review, written specs. You won't have to teach me how to update stakeholders.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-cool">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
             </div>
             <h4>I learn in production</h4>
             <p>I've launched menus, trained teams and chased KPIs all at once. Picking up a new framework on a real ticket is just a Tuesday.</p>
           </div>
           <div class="vp-card">
             <div class="vp-icon vp-icon-cool">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <h4>I show up, on time, every time</h4>
             <p>Five years of opening shifts. I treat tickets the same way: own it, ship it, close the loop.</p>
@@ -363,28 +365,28 @@
         <div class="edu-pillars">
           <div class="pillar">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             <h4>Programming Fundamentals</h4>
             <p>Computing logic, object-oriented programming in Java, data structures &amp; algorithms.</p>
           </div>
           <div class="pillar">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <h4>Full-Stack Web</h4>
             <p>HTML/CSS/JS, advanced web programming, web application development, Java back-ends.</p>
           </div>
           <div class="pillar">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg>
             </div>
             <h4>Data &amp; Databases</h4>
             <p>Data management foundations, SQL, relational database design and querying.</p>
           </div>
           <div class="pillar">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
             </div>
             <h4>Software Engineering</h4>
             <p>System analysis &amp; design, software QA, agile workflows, open-source development, capstone.</p>
@@ -478,7 +480,7 @@
 
       <div class="soft-bridge reveal">
         <div class="bridge-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
         </div>
         <div>
           <h3>The honest pitch</h3>
@@ -507,7 +509,7 @@
         <div class="dual-cta">
           <a href="mailto:AshkanPazaj@gmail.com?subject=Hospitality%20%2F%20Retail%20opportunity&amp;body=Hi%20Ashkan%2C%0A%0AI%27d%20like%20to%20chat%20about%20a%20floor%2Fteam%20lead%20role." class="dual-card dual-card-warm">
             <div class="dual-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/></svg>
             </div>
             <strong>Hiring for retail or hospitality?</strong>
             <span>Floor lead, store lead, shift manager, ASM: let's talk targets, teams and trading days.</span>
@@ -515,7 +517,7 @@
           </a>
           <a href="mailto:AshkanPazaj@gmail.com?subject=Junior%20Developer%20%2F%20Co-op%20opportunity&amp;body=Hi%20Ashkan%2C%0A%0AI%27d%20like%20to%20chat%20about%20a%20junior%20%2F%20co-op%20developer%20role." class="dual-card dual-card-cool">
             <div class="dual-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </div>
             <strong>Hiring a junior dev or co-op?</strong>
             <span>I'm open to internships, co-op terms, junior full-stack and QA roles in the GTA or remote.</span>
@@ -526,7 +528,7 @@
         <div class="contact-grid">
           <a href="mailto:AshkanPazaj@gmail.com" class="contact-item">
             <div class="contact-ico">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
             <div>
               <small>Email</small>
@@ -535,7 +537,7 @@
           </a>
           <a href="tel:+14375524742" class="contact-item">
             <div class="contact-ico">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div>
               <small>Phone</small>
@@ -544,7 +546,7 @@
           </a>
           <div class="contact-item contact-item-static">
             <div class="contact-ico">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
               <small>Location</small>
@@ -553,7 +555,7 @@
           </div>
           <div class="contact-item contact-item-static">
             <div class="contact-ico">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6.5-6.5"/><path d="M2 5h12v12"/></svg>
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8l6 6"/><path d="M4 14l6.5-6.5"/><path d="M2 5h12v12"/></svg>
             </div>
             <div>
               <small>Languages</small>
@@ -565,10 +567,12 @@
     </div>
   </section>
 
+  </main>
+
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-logo">
-        <span class="logo-mark">AP</span>
+        <span class="logo-mark" aria-hidden="true">AP</span>
         <span>Ashkan Pazaj</span>
       </div>
       <p>© <span id="year"></span> Ashkan (Cyrus) Pazaj. Made with care in Toronto.</p>

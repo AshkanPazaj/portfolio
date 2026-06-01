@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserve a Table · Cafe X</title>
+  <meta name="description" content="Book a table at Cafe X on Queen West, Toronto." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="cafe-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <nav class="cafe-nav is-solid" id="cafe-nav" aria-label="Primary">
+    <a href="index.html" class="cafe-logo">
+      <span class="cafe-logo-mark" aria-hidden="true">X</span>
+      <span>Cafe X</span>
+    </a>
+    <div class="cafe-nav-menu" id="cafe-nav-menu">
+      <ul class="cafe-nav-links">
+        <li><a href="index.html#menu">Menu</a></li>
+        <li><a href="index.html#gallery">Gallery</a></li>
+        <li><a href="index.html#visit">Visit</a></li>
+      </ul>
+      <div class="cafe-nav-actions">
+        <a href="order.html" class="cafe-nav-cta cafe-nav-cta-outline">Order</a>
+        <a href="reserve.html" class="cafe-nav-cta" aria-current="page">Reserve</a>
+      </div>
+    </div>
+    <button class="cafe-nav-toggle" type="button" aria-expanded="false" aria-controls="cafe-nav-menu" aria-label="Open menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <main id="main" class="cafe-form-page">
+    <div class="cafe-container cafe-form-layout">
+      <header class="cafe-form-header">
+        <a href="index.html" class="cafe-back cafe-back-inline">&larr; Back to Cafe X</a>
+        <span class="cafe-kicker">Reservations</span>
+        <h1>Book a table.</h1>
+        <p>Tell us when you're coming and how many guests to expect. We'll hold a table for 15 minutes past your time.</p>
+      </header>
+
+      <div class="cafe-form-grid">
+        <form id="cafe-reserve-form" class="cafe-form" novalidate>
+          <div id="reserve-form-error" class="cafe-form-error" role="alert" hidden></div>
+
+          <fieldset class="cafe-fieldset">
+            <legend>When &amp; how many</legend>
+            <div class="cafe-fieldset-body">
+            <p id="reserve-hours-hint" class="cafe-field-hint">
+              Mon to Sat: 7:30 am to 7:00 pm. We hold your table for 15 minutes past your reservation time.
+            </p>
+            <div class="cafe-form-row">
+              <div class="cafe-field">
+                <label for="reserve-date">Date</label>
+                <input type="date" id="reserve-date" name="date" required />
+              </div>
+              <div class="cafe-field">
+                <label for="reserve-time">Time</label>
+                <select id="reserve-time" name="time" required>
+                  <option value="">Select a time</option>
+                </select>
+              </div>
+            </div>
+            <div class="cafe-form-row">
+              <div class="cafe-field">
+                <label for="reserve-guests">Party size</label>
+                <select id="reserve-guests" name="guests" required>
+                  <option value="">Guests</option>
+                  <option value="1">1 guest</option>
+                  <option value="2">2 guests</option>
+                  <option value="3">3 guests</option>
+                  <option value="4">4 guests</option>
+                  <option value="5">5 guests</option>
+                  <option value="6">6 guests</option>
+                  <option value="7">7 guests</option>
+                  <option value="8">8 guests</option>
+                </select>
+              </div>
+              <div class="cafe-field">
+                <label for="reserve-seating">Seating preference</label>
+                <select id="reserve-seating" name="seating">
+                  <option value="any">No preference</option>
+                  <option value="counter">Counter</option>
+                  <option value="window">Window</option>
+                  <option value="patio">Patio (seasonal)</option>
+                </select>
+              </div>
+            </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="cafe-fieldset">
+            <legend>Contact details</legend>
+            <div class="cafe-fieldset-body">
+            <div class="cafe-form-row">
+              <div class="cafe-field">
+                <label for="reserve-name">Full name</label>
+                <input type="text" id="reserve-name" name="name" autocomplete="name" required />
+              </div>
+              <div class="cafe-field">
+                <label for="reserve-phone">Phone</label>
+                <input type="tel" id="reserve-phone" name="phone" autocomplete="tel" required placeholder="(416) 555-0100" />
+              </div>
+            </div>
+            <div class="cafe-field">
+              <label for="reserve-email">Email</label>
+              <input type="email" id="reserve-email" name="email" autocomplete="email" required />
+            </div>
+            <div class="cafe-field">
+              <label for="reserve-occasion">Occasion <span class="cafe-optional">(optional)</span></label>
+              <select id="reserve-occasion" name="occasion">
+                <option value="">None</option>
+                <option value="birthday">Birthday</option>
+                <option value="date">Date night</option>
+                <option value="business">Business meeting</option>
+                <option value="celebration">Celebration</option>
+              </select>
+            </div>
+            <div class="cafe-field">
+              <label for="reserve-notes">Special requests <span class="cafe-optional">(optional)</span></label>
+              <textarea id="reserve-notes" name="notes" rows="3" placeholder="High chair, quiet corner, dietary notes…"></textarea>
+            </div>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="cafe-btn cafe-btn-primary cafe-btn-full">Confirm reservation</button>
+          <p class="cafe-form-note">Demo only — no real booking is sent. You'll get a confirmation on this page.</p>
+        </form>
+
+        <aside class="cafe-form-aside-col" aria-label="Reservation information">
+          <div class="cafe-form-aside">
+          <img src="assets/interior.jpg" alt="Tables and seating inside Cafe X" loading="lazy" />
+          <div class="cafe-form-aside-copy">
+            <h2>What to know</h2>
+            <ul class="cafe-aside-list">
+              <li>Tables held for 15 minutes past your reservation</li>
+              <li>Groups of 8+ — call us at <a href="tel:+14165550199">(416) 555-0199</a></li>
+              <li>Mon – Sat: 7:00 am – 7:00 pm</li>
+              <li>Sunday: 9:00 am – 5:00 pm</li>
+            </ul>
+            <p>Ordering to go? <a href="order.html">Start a pickup or delivery order</a>.</p>
+          </div>
+          </div>
+        </aside>
+      </div>
+
+      <div id="reserve-success" class="cafe-success" hidden>
+        <span class="cafe-kicker">Reservation confirmed</span>
+        <h2>See you soon.</h2>
+        <p id="reserve-success-text"></p>
+        <p class="cafe-success-ref">Confirmation: <strong id="reserve-ref"></strong></p>
+        <div class="cafe-success-actions">
+          <a href="index.html" class="cafe-btn cafe-btn-primary">Back to Cafe X</a>
+          <button type="button" class="cafe-btn cafe-btn-ghost" id="reserve-again">Book another table</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="cafe-footer">
+    <div class="cafe-container cafe-footer-inner">
+      <div class="cafe-footer-brand">
+        <span class="cafe-logo-mark" aria-hidden="true">X</span>
+        <span>Cafe X</span>
+      </div>
+      <p>&copy; <span id="cafe-year"></span> Cafe X. A portfolio demo by Ashkan Pazaj.</p>
+      <a href="../../projects.html" class="cafe-back">&larr; Back to projects</a>
+    </div>
+  </footer>
+
+  <script src="cafe-x.js"></script>
+  <script src="cafe-x-forms.js"></script>
+</body>
+</html>

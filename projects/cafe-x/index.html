@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cafe X · Specialty Coffee in Toronto</title>
+  <meta name="description" content="Cafe X — specialty coffee, fresh pastries, and a warm neighbourhood hangout in Toronto." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="cafe-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <nav class="cafe-nav" id="cafe-nav" aria-label="Primary">
+    <a href="#top" class="cafe-logo">
+      <span class="cafe-logo-mark" aria-hidden="true">X</span>
+      <span>Cafe X</span>
+    </a>
+    <div class="cafe-nav-menu" id="cafe-nav-menu">
+      <ul class="cafe-nav-links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#visit">Visit</a></li>
+      </ul>
+      <div class="cafe-nav-actions">
+        <a href="order.html" class="cafe-nav-cta cafe-nav-cta-outline">Order</a>
+        <a href="reserve.html" class="cafe-nav-cta">Reserve</a>
+      </div>
+    </div>
+    <button class="cafe-nav-toggle" type="button" aria-expanded="false" aria-controls="cafe-nav-menu" aria-label="Open menu">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
+  </nav>
+
+  <main id="main">
+  <header id="top" class="cafe-hero cafe-hero-photo">
+    <div class="cafe-hero-media" aria-hidden="true">
+      <img src="assets/hero-coffee.jpg" alt="" class="cafe-hero-img" />
+      <div class="cafe-hero-gradient"></div>
+      <div class="cafe-hero-grain"></div>
+    </div>
+    <div class="cafe-hero-content">
+      <p class="cafe-eyebrow">Toronto · Queen West</p>
+      <h1>Cafe X</h1>
+      <p class="cafe-hero-tagline">The neighbourhood spot for slow coffee, house baking, and mornings done right.</p>
+      <div class="cafe-hero-actions">
+        <a href="order.html" class="cafe-btn cafe-btn-light">Order online</a>
+        <a href="#menu" class="cafe-btn cafe-btn-ghost-light">View menu</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="cafe-promo" aria-label="Featured offers" aria-roledescription="carousel">
+    <div class="cafe-promo-track" id="cafe-promo-track" aria-live="polite">
+      <article class="cafe-promo-slide is-active">
+        <div class="cafe-promo-copy">
+          <span class="cafe-promo-label">Now pouring</span>
+          <h2>Ethiopia Yirgacheffe</h2>
+          <p>Bright citrus, floral finish, single-origin espresso and pour-over all week.</p>
+          <a href="order.html" class="cafe-text-link">Order pickup or delivery</a>
+        </div>
+        <div class="cafe-promo-visual">
+          <img src="assets/pour-over.jpg" alt="Barista preparing pour-over coffee" class="cafe-promo-img" />
+        </div>
+      </article>
+      <article class="cafe-promo-slide">
+        <div class="cafe-promo-copy">
+          <span class="cafe-promo-label">Morning special</span>
+          <h2>Coffee + pastry · $8</h2>
+          <p>Any drip or americano with an almond croissant before 10am, weekdays only.</p>
+          <a href="reserve.html" class="cafe-text-link">Book a table</a>
+        </div>
+        <div class="cafe-promo-visual">
+          <img src="assets/pastry.jpg" alt="Fresh pastries on a cafe counter" class="cafe-promo-img" />
+        </div>
+      </article>
+    </div>
+    <div class="cafe-promo-controls" role="tablist" aria-label="Choose a featured offer">
+      <button type="button" class="cafe-promo-dot is-active" data-slide="0" role="tab" aria-selected="true" aria-label="Slide 1: Ethiopia Yirgacheffe"></button>
+      <button type="button" class="cafe-promo-dot" data-slide="1" role="tab" aria-selected="false" aria-label="Slide 2: Coffee and pastry special"></button>
+    </div>
+  </section>
+
+  <section id="gallery" class="cafe-section cafe-gallery">
+    <div class="cafe-container">
+      <span class="cafe-kicker">Inside Cafe X</span>
+      <h2>A look around the room.</h2>
+      <div class="cafe-gallery-grid">
+        <figure class="cafe-gallery-item cafe-gallery-wide">
+          <img src="assets/interior.jpg" alt="Warm cafe interior with wooden tables and pendant lights" loading="lazy" />
+        </figure>
+        <figure class="cafe-gallery-item">
+          <img src="assets/latte-art.jpg" alt="Latte with leaf art in a ceramic cup" loading="lazy" />
+        </figure>
+        <figure class="cafe-gallery-item">
+          <img src="assets/beans.jpg" alt="Fresh roasted coffee beans in a burlap sack" loading="lazy" />
+        </figure>
+        <figure class="cafe-gallery-item">
+          <img src="assets/pastry.jpg" alt="Almond croissants and baked goods on display" loading="lazy" />
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="cafe-section cafe-about">
+    <div class="cafe-container cafe-about-grid">
+      <div class="cafe-about-copy">
+        <span class="cafe-kicker">Our story</span>
+        <h2>Hospitality you can feel at the counter.</h2>
+        <p>
+          Cafe X was built from floor experience: the pace of a busy morning, the
+          regular who wants their order remembered, and the manager who needs the
+          line to move without losing warmth.
+        </p>
+        <p>
+          We designed the space and the service around that reality. Unhurried when
+          you have time. Efficient when you don't.
+        </p>
+      </div>
+      <figure class="cafe-about-photo">
+        <img src="assets/interior.jpg" alt="Guests seated inside Cafe X on Queen West" loading="lazy" />
+      </figure>
+      <ul class="cafe-stats">
+        <li><strong>12</strong><span>Single-origin rotations per year</span></li>
+        <li><strong>7am</strong><span>Doors open Mon–Sat</span></li>
+        <li><strong>100%</strong><span>House syrups and bakes</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="menu" class="cafe-section cafe-menu">
+    <div class="cafe-container">
+      <span class="cafe-kicker">Menu</span>
+      <h2>What we're serving today.</h2>
+      <p class="cafe-menu-intro">Order ahead for pickup, or browse before you visit. Prices in CAD.</p>
+      <div class="cafe-menu-grid">
+        <article class="cafe-menu-col">
+          <h3>Coffee</h3>
+          <ul>
+            <li><span>Espresso</span><span>$3.50</span></li>
+            <li><span>Flat white</span><span>$4.75</span></li>
+            <li><span>Oat latte</span><span>$5.25</span></li>
+            <li><span>Pour-over</span><span>$5.50</span></li>
+            <li><span>Cold brew</span><span>$4.95</span></li>
+          </ul>
+        </article>
+        <article class="cafe-menu-col">
+          <h3>Food</h3>
+          <ul>
+            <li><span>Almond croissant</span><span>$4.50</span></li>
+            <li><span>Avocado toast</span><span>$12.00</span></li>
+            <li><span>Granola bowl</span><span>$10.50</span></li>
+            <li><span>Breakfast sandwich</span><span>$9.75</span></li>
+            <li><span>Seasonal soup</span><span>$8.00</span></li>
+          </ul>
+        </article>
+        <article class="cafe-menu-col cafe-menu-featured">
+          <img src="assets/pour-over.jpg" alt="" class="cafe-menu-featured-img" aria-hidden="true" loading="lazy" />
+          <h3>Barista pick</h3>
+          <p class="cafe-featured-name">Honey cinnamon latte</p>
+          <p>Double shot, steamed oat milk, house honey syrup, and a light dusting of cinnamon.</p>
+          <span class="cafe-featured-price">$6.25</span>
+        </article>
+      </div>
+      <div class="cafe-menu-cta">
+        <a href="order.html" class="cafe-btn cafe-btn-primary">Start an order</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit" class="cafe-find">
+    <div class="cafe-container cafe-find-inner">
+      <div class="cafe-find-copy">
+        <span class="cafe-kicker">Visit</span>
+        <h2>Find your Cafe X.</h2>
+        <p>One location on Queen West. Walk in, grab a seat, or order ahead for pickup.</p>
+        <address class="cafe-address">
+          1 Queen West<br />
+          Toronto, ON
+        </address>
+        <dl class="cafe-hours">
+          <div><dt>Mon – Sat</dt><dd>7:00am – 7:00pm</dd></div>
+          <div><dt>Sunday</dt><dd>9:00am – 5:00pm</dd></div>
+        </dl>
+        <div class="cafe-find-actions">
+          <a href="order.html" class="cafe-btn cafe-btn-primary">Order online</a>
+          <a href="reserve.html" class="cafe-btn cafe-btn-ghost">Reserve a table</a>
+          <a href="mailto:hello@cafex.ca" class="cafe-text-link cafe-text-link-dark">hello@cafex.ca</a>
+        </div>
+      </div>
+      <div class="cafe-map">
+        <p class="sr-only">Interactive map preview. Full address: 1 Queen West, Toronto, Ontario. Use the address and hours listed above for directions.</p>
+        <iframe
+          class="cafe-map-frame"
+          title="Cafe X on Google Maps — 1 Queen West, Toronto"
+          src="https://www.google.com/maps?q=1+Queen+Street+West,+Toronto,+ON,+Canada&hl=en&z=16&output=embed"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+        <div class="cafe-map-blocker" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <footer class="cafe-footer">
+    <div class="cafe-container cafe-footer-inner">
+      <div class="cafe-footer-brand">
+        <span class="cafe-logo-mark" aria-hidden="true">X</span>
+        <span>Cafe X</span>
+      </div>
+      <nav class="cafe-footer-links" aria-label="Footer">
+        <a href="#menu">Menu</a>
+        <a href="#gallery">Gallery</a>
+        <a href="order.html">Order</a>
+        <a href="reserve.html">Reserve</a>
+        <a href="#visit">Visit</a>
+      </nav>
+      <p>&copy; <span id="cafe-year"></span> Cafe X. A portfolio demo by Ashkan Pazaj.</p>
+      <a href="../../projects.html" class="cafe-back">&larr; Back to projects</a>
+    </div>
+  </footer>
+
+  <script src="cafe-x.js"></script>
+</body>
+</html>
