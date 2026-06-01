@@ -1,6 +1,6 @@
 # Ashkan Pazaj — Portfolio
 
-A modern, single-page portfolio for **Ashkan (Cyrus) Pazaj** featuring two career tracks:
+A modern, single-page portfolio for **Ashkan Pazaj** featuring two career tracks:
 
 1. **Hospitality & Retail** — 5+ years of progressive leadership (Viuna Café, Roots)
 2. **Full-Stack Development** — Currently in the Computer Programming (T186) 2-Year Diploma at George Brown Polytechnic
