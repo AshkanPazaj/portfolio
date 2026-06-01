@@ -1516,7 +1516,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 .proj-img-1 { background: linear-gradient(135deg, #535353 0%, #2a2a2a 55%, #f7f7f7 100%); }
 .proj-img-2 { background: linear-gradient(135deg, #6e8bff, #4ade80); }
 .proj-img-3 { background: linear-gradient(135deg, #ffb347, #ff6a3d); }
-.proj-img-4 { background: linear-gradient(135deg, #a26bff, #6e8bff); }
+.proj-img-4 { background: linear-gradient(135deg, #238636 0%, #1a7f37 50%, #0d4e20 100%); }
 .proj-emoji {
   font-size: 64px;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));

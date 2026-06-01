@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Buddy · Coming Soon</title>
+  <meta name="description" content="Budget Buddy — a personal budgeting app coming soon by Ashkan Pazaj." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; }
+
+    :root {
+      --bg: #0d1117;
+      --bg-2: #161b22;
+      --border: rgba(255,255,255,0.08);
+      --green: #3fb950;
+      --green-soft: #238636;
+      --green-glow: rgba(63, 185, 80, 0.25);
+      --teal: #58a6ff;
+      --text: #e6edf3;
+      --text-soft: #8b949e;
+      --text-muted: #484f58;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Ambient background blobs */
+    .bg-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+    .blob-1 {
+      width: 500px; height: 500px;
+      background: var(--green);
+      top: -160px; left: -120px;
+      animation: drift1 14s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 400px; height: 400px;
+      background: #58a6ff;
+      bottom: -120px; right: -100px;
+      animation: drift2 18s ease-in-out infinite alternate;
+    }
+    .blob-3 {
+      width: 260px; height: 260px;
+      background: #bc8cff;
+      top: 50%; left: 60%;
+      animation: drift3 22s ease-in-out infinite alternate;
+    }
+    @keyframes drift1 { to { transform: translate(60px, 80px); } }
+    @keyframes drift2 { to { transform: translate(-60px, -50px); } }
+    @keyframes drift3 { to { transform: translate(-80px, 60px); } }
+
+    /* Grain overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+
+    /* Main card */
+    .card {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      width: calc(100% - 40px);
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 52px 44px 44px;
+      text-align: center;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.04),
+        0 32px 80px rgba(0,0,0,0.55),
+        0 0 60px var(--green-glow);
+    }
+
+    /* ── Animated Logo ── */
+    .logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 88px;
+      height: 88px;
+      display: grid;
+      place-items: center;
+    }
+
+    /* Outer spinning ring */
+    .logo-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      border-top-color: var(--green);
+      border-right-color: rgba(63, 185, 80, 0.3);
+      animation: spin 2.4s linear infinite;
+    }
+    /* Inner slower ring */
+    .logo-ring-2 {
+      position: absolute;
+      inset: 8px;
+      border-radius: 50%;
+      border: 1.5px solid transparent;
+      border-bottom-color: rgba(63, 185, 80, 0.5);
+      border-left-color: rgba(63, 185, 80, 0.2);
+      animation: spin 4s linear infinite reverse;
+    }
+    /* Coin body */
+    .logo-coin {
+      position: relative;
+      z-index: 1;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #2ea043, #238636);
+      box-shadow:
+        0 0 0 2px rgba(63,185,80,0.3),
+        0 8px 28px rgba(63,185,80,0.35),
+        inset 0 1px 0 rgba(255,255,255,0.15);
+      display: grid;
+      place-items: center;
+      animation: pulse-coin 3s ease-in-out infinite;
+    }
+    .logo-coin svg {
+      width: 28px;
+      height: 28px;
+      color: #fff;
+      animation: icon-bob 3s ease-in-out infinite;
+    }
+
+    /* Orbiting dot */
+    .orbit-dot {
+      position: absolute;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      top: 4px; left: 50%;
+      transform-origin: 0 40px;
+      animation: orbit 2.4s linear infinite;
+    }
+    .orbit-dot-2 {
+      width: 5px; height: 5px;
+      background: rgba(63,185,80,0.6);
+      top: 12px;
+      transform-origin: 0 32px;
+      animation: orbit 4s linear infinite reverse;
+      animation-delay: -2s;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    @keyframes pulse-coin {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 2px rgba(63,185,80,0.3), 0 8px 28px rgba(63,185,80,0.35), inset 0 1px 0 rgba(255,255,255,0.15); }
+      50% { transform: scale(1.06); box-shadow: 0 0 0 4px rgba(63,185,80,0.25), 0 12px 36px rgba(63,185,80,0.45), inset 0 1px 0 rgba(255,255,255,0.18); }
+    }
+    @keyframes icon-bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+
+    .logo-name {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+    .logo-name span {
+      color: var(--green);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(63, 185, 80, 0.1);
+      border: 1px solid rgba(63, 185, 80, 0.3);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 24px;
+    }
+    .badge-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Text */
+    h1 {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(1.6rem, 5vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 14px;
+      color: var(--text);
+    }
+    .subtitle {
+      font-size: 0.97rem;
+      color: var(--text-soft);
+      line-height: 1.75;
+      max-width: 38ch;
+      margin: 0 auto 32px;
+    }
+
+    /* Feature pills */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .feature-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 13px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-soft);
+    }
+    .feature-pill svg {
+      width: 13px; height: 13px;
+      color: var(--green);
+      flex-shrink: 0;
+    }
+
+    /* Progress bar */
+    .progress-wrap {
+      margin-bottom: 32px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 28%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--green-soft), var(--green));
+      position: relative;
+      animation: progress-shimmer 2.5s ease-in-out infinite;
+    }
+    .progress-fill::after {
+      content: "";
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 40px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+      animation: shimmer-sweep 2.5s ease-in-out infinite;
+    }
+    @keyframes progress-shimmer {
+      0%, 100% { filter: brightness(1); }
+      50% { filter: brightness(1.2); }
+    }
+    @keyframes shimmer-sweep {
+      0% { transform: translateX(-40px); }
+      100% { transform: translateX(0px); }
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+    .back-link:hover { color: var(--green); }
+    .back-link svg { width: 14px; height: 14px; }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 40px 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-blob blob-1" aria-hidden="true"></div>
+  <div class="bg-blob blob-2" aria-hidden="true"></div>
+  <div class="bg-blob blob-3" aria-hidden="true"></div>
+
+  <main>
+    <div class="card">
+
+      <!-- Logo -->
+      <div class="logo-wrap">
+        <div class="logo-mark" aria-hidden="true">
+          <div class="logo-ring"></div>
+          <div class="logo-ring-2"></div>
+          <div class="orbit-dot"></div>
+          <div class="orbit-dot orbit-dot-2"></div>
+          <div class="logo-coin">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+        </div>
+        <div class="logo-name">Budget<span>Buddy</span></div>
+      </div>
+
+      <!-- Badge -->
+      <div class="badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        Under Construction
+      </div>
+
+      <h1>Your money,<br />finally making sense.</h1>
+      <p class="subtitle">
+        A personal budgeting app to track spending, set savings goals, and actually understand where your money goes — without the spreadsheet headache.
+      </p>
+
+      <!-- Feature pills -->
+      <div class="features" aria-label="Planned features">
+        <span class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Expense tracking
+        </span>
+        <span class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Monthly budgets
+        </span>
+        <span class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          Savings goals
+        </span>
+        <span class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          Visual reports
+        </span>
+        <span class="feature-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Feels personal
+        </span>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Build progress</span>
+          <span>28%</span>
+        </div>
+        <div class="progress-bar" role="progressbar" aria-valuenow="28" aria-valuemin="0" aria-valuemax="100" aria-label="28% complete">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <a href="../../projects.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back to projects
+      </a>
+
+    </div>
+  </main>
+</body>
+</html>
