@@ -26,6 +26,7 @@ html { scroll-behavior: smooth; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 /* Cafe X website */
+.cafe-page a { text-decoration: none; }
 .cafe-page {
   --cafe-bg: #f8f4ee;
   --cafe-bg-2: #efe6da;
@@ -491,6 +492,7 @@ html { scroll-behavior: smooth; }
 .cafe-stats {
   display: grid;
   gap: 16px;
+  list-style: none;
 }
 .cafe-stats li {
   padding: 24px;
@@ -694,6 +696,7 @@ html { scroll-behavior: smooth; }
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
 }
 .cafe-btn-ghost-light {
   border: 1px solid rgba(255, 255, 255, 0.45);
