@@ -25,7 +25,10 @@
       --text-muted: #484f58;
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden; /* clips fixed-position blobs on mobile */
+    }
     body {
       min-height: 100vh;
       background: var(--bg);
@@ -337,6 +340,10 @@
     }
 
     @media (max-width: 480px) {
+      .blob-1 { width: 260px; height: 260px; }
+      .blob-2 { width: 220px; height: 220px; }
+      .blob-3 { width: 160px; height: 160px; }
+
       body { padding: 20px 0; }
       .card {
         padding: 36px 20px 28px;
