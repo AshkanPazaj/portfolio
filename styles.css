@@ -1198,7 +1198,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   padding-left: 16px;
 }
 .sem-card ul li::before {
-  content: 'â€º';
+  content: '\203A';
   position: absolute;
   left: 0; top: 4px;
   color: var(--accent);
