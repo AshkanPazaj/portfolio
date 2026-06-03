@@ -66,7 +66,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
    Accessibility
    ============================================ */
 .skip-link {
-  position: absolute;
+  position: fixed;
   top: 12px;
   left: 12px;
   z-index: 1000;
@@ -556,6 +556,15 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   background: var(--surface-2);
   border-color: var(--accent);
   transform: translateY(-2px);
+}
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(110, 139, 255, 0.4);
+}
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(110, 139, 255, 0.5);
 }
 .btn-large { padding: 18px 32px; font-size: 16px; }
 
@@ -1773,7 +1782,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   height: auto;
   filter: invert(1);
   transform-origin: center center;
-  animation: splash-logo-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: splash-logo-in 3s cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
   display: block;
 }
