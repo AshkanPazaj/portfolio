@@ -2,6 +2,74 @@
    Ashkan Pazaj — Portfolio Scripts
    ============================================ */
 
+// ── Intro splash (once per session) ──────────────────────────
+;(() => {
+  const splash    = document.getElementById('introSplash');
+  const logoImg   = document.getElementById('introLogoImg');
+  if (!splash || !logoImg) return;
+
+  // Skip on repeat visits within the same session
+  if (sessionStorage.getItem('ap_intro_seen')) {
+    splash.classList.add('gone');
+    return;
+  }
+
+  // Lock scroll while splash is up
+  document.documentElement.style.overflow = 'hidden';
+
+  setTimeout(() => {
+    const navLogo = document.querySelector('.nav-logo .logo-img');
+    if (!navLogo) {
+      splash.style.transition = 'opacity 0.6s ease';
+      splash.style.opacity    = '0';
+      setTimeout(() => {
+        splash.classList.add('gone');
+        document.documentElement.style.overflow = '';
+        sessionStorage.setItem('ap_intro_seen', '1');
+      }, 650);
+      return;
+    }
+
+    // Hide the real nav logo — the splash logo will visibly travel to its spot
+    navLogo.style.opacity = '0';
+
+    // Cancel the CSS entry animation so it doesn't interfere with the slide
+    logoImg.style.animation = 'none';
+
+    // Snapshot the current center position AFTER killing the animation
+    const from  = logoImg.getBoundingClientRect();
+    const to    = navLogo.getBoundingClientRect();
+    const dx    = (to.left + to.width  / 2) - (from.left + from.width  / 2);
+    const dy    = (to.top  + to.height / 2) - (from.top  + from.height / 2);
+    const scale = to.width / from.width;
+
+    // Double rAF: first frame registers the current (no-transform) state,
+    // second frame applies the transition so the browser actually animates it
+    requestAnimationFrame(() => {
+      logoImg.style.transition = 'transform 1.4s cubic-bezier(0.55, 0, 0.2, 1)';
+      requestAnimationFrame(() => {
+        logoImg.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
+      });
+    });
+
+    // Background fades in sync with the logo slide
+    setTimeout(() => {
+      splash.style.transition      = 'background-color 1.4s ease';
+      splash.style.backgroundColor = 'transparent';
+    }, 0);
+
+    // Logo has landed — show the real nav logo and tear down the splash
+    setTimeout(() => {
+      navLogo.style.transition = 'opacity 0.2s ease';
+      navLogo.style.opacity    = '1';
+      splash.classList.add('gone');
+      document.documentElement.style.overflow = '';
+      sessionStorage.setItem('ap_intro_seen', '1');
+    }, 1500);
+
+  }, 3000);
+})();
+
 (() => {
   'use strict';
 
