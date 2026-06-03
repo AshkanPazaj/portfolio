@@ -1773,7 +1773,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   height: auto;
   filter: invert(1);
   transform-origin: center center;
-  animation: splash-logo-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: splash-logo-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   will-change: transform, opacity;
   display: block;
 }

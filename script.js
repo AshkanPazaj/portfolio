@@ -46,7 +46,7 @@
     // Double rAF: first frame registers the current (no-transform) state,
     // second frame applies the transition so the browser actually animates it
     requestAnimationFrame(() => {
-      logoImg.style.transition = 'transform 1.4s cubic-bezier(0.55, 0, 0.2, 1)';
+      logoImg.style.transition = 'transform 1s cubic-bezier(0.55, 0, 0.2, 1)';
       requestAnimationFrame(() => {
         logoImg.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
       });
@@ -54,7 +54,7 @@
 
     // Background fades in sync with the logo slide
     setTimeout(() => {
-      splash.style.transition      = 'background-color 1.4s ease';
+      splash.style.transition      = 'background-color 1s ease';
       splash.style.backgroundColor = 'transparent';
     }, 0);
 
@@ -65,9 +65,9 @@
       splash.classList.add('gone');
       document.documentElement.style.overflow = '';
       sessionStorage.setItem('ap_intro_seen', '1');
-    }, 1500);
+    }, 1050);
 
-  }, 3000);
+  }, 1400);
 })();
 
 (() => {
