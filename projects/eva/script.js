@@ -80,7 +80,7 @@ function renderNavAuth() {
             });
         } else {
             area.innerHTML = `
-                <a href="login.html" class="nav-link-plain">Login</a>
+                <a href="login.html">Login</a>
                 <a href="signup.html" class="btn btn-ghost nav-cta">Sign Up</a>
             `;
         }

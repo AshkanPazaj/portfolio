@@ -4,12 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ashkan Pazaj</title>
-  <meta name="description" content="Ashkan Pazaj. Hospitality &amp; Retail Leader and Full-Stack Developer based in Toronto, Canada." />
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <meta name="description" content="Ashkan Pazaj — Hospitality &amp; Retail Leader and Full-Stack Developer based in Toronto, Canada. Five years leading teams, now building full-stack software." />
+  <meta property="og:title" content="Ashkan Pazaj" />
+  <meta property="og:description" content="Ashkan Pazaj — Hospitality &amp; Retail Leader and Full-Stack Developer based in Toronto, Canada." />
+  <meta property="og:type" content="website" />
+  <meta name="author" content="Ashkan Pazaj" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ashkan Pazaj",
+    "url": "https://ashkanpazaj.com",
+    "jobTitle": "Hospitality & Retail Leader and Full-Stack Developer",
+    "address": { "@type": "PostalAddress", "addressLocality": "Toronto", "addressRegion": "Ontario", "addressCountry": "CA" }
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -26,7 +40,7 @@
   <!-- Navigation -->
   <nav class="nav" aria-label="Primary">
     <a href="#home" class="nav-logo">
-      <span class="logo-mark" aria-hidden="true">AP</span>
+      <img src="assets/logo.png" alt="AP" class="logo-img" aria-hidden="true" />
       <span class="logo-text">Ashkan Pazaj</span>
     </a>
     <ul class="nav-links" id="primary-nav">
@@ -495,6 +509,20 @@
     </div>
   </section>
 
+  <!-- Projects teaser band -->
+  <div class="proj-teaser reveal" aria-label="Projects teaser">
+    <div class="container proj-teaser-inner">
+      <div class="proj-teaser-copy">
+        <span class="proj-teaser-label">5 live projects</span>
+        <p>Games, real client sites, booking systems. All hand-coded — no frameworks, no build tools. Want to see what I actually ship?</p>
+      </div>
+      <a href="projects.html" class="btn btn-primary proj-teaser-btn">
+        See the work
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
   <!-- Contact -->
   <section id="contact" class="section section-contact">
     <div class="container">
@@ -571,10 +599,6 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <div class="footer-logo">
-        <span class="logo-mark" aria-hidden="true">AP</span>
-        <span>Ashkan Pazaj</span>
-      </div>
       <p>© <span id="year"></span> Ashkan Pazaj. Made with care in Toronto.</p>
     </div>
   </footer>

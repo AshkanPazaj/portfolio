@@ -267,8 +267,40 @@ p {
     width: 100%;
 }
 
-.nav-cta {
-    padding: 10px 22px !important;
+.nav-links .btn.nav-cta {
+    background: transparent;
+    border-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--ink);
+    box-shadow: none;
+    transform: none;
+    position: relative;
+}
+
+.nav-links .btn.nav-cta::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--rose-dark);
+    transition: width var(--transition);
+}
+
+.nav-links .btn.nav-cta:hover {
+    background: transparent;
+    border-color: transparent;
+    color: var(--ink);
+    transform: none;
+    box-shadow: none;
+}
+
+.nav-links .btn.nav-cta:hover::after {
+    width: 100%;
 }
 
 .menu-toggle {
@@ -1275,20 +1307,14 @@ p {
 }
 
 /* ---------- Nav auth area ---------- */
+/* display:contents removes the div from layout — children become direct
+   flex siblings of the other nav links, inheriting the same 30px gap */
 .nav-auth-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.nav-link-plain {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--ink);
+    display: contents;
 }
 
 .nav-user {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--ink-soft);
     font-weight: 500;
 }
@@ -1297,14 +1323,27 @@ p {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--muted);
     padding: 0;
+    position: relative;
     transition: color var(--transition);
 }
 
-.nav-logout:hover { color: var(--rose-dark); }
+.nav-logout::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--rose-dark);
+    transition: width var(--transition);
+}
+
+.nav-logout:hover { color: var(--ink); }
+.nav-logout:hover::after { width: 100%; }
 
 /* ---------- Auth pages ---------- */
 .auth-page {

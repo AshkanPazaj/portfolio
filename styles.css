@@ -306,6 +306,13 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   letter-spacing: -0.02em;
   box-shadow: 0 4px 16px rgba(255, 106, 61, 0.4);
 }
+.logo-img {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: invert(1);
+  mix-blend-mode: screen;
+}
 
 .nav-links {
   display: flex; gap: 6px;
@@ -1448,17 +1455,12 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   margin-top: 80px;
 }
 .footer-inner {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
-.footer-logo {
-  display: flex; align-items: center; gap: 12px;
-  font-weight: 600;
+  display: flex; justify-content: center; align-items: center;
 }
 .footer p {
   color: var(--text-mute);
   font-size: 14px;
+  text-align: center;
 }
 
 /* ============================================
@@ -1484,6 +1486,49 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 .section-projects { padding: 40px 0 100px; }
+
+/* ── Projects teaser band ── */
+.proj-teaser {
+  margin: 0 0 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(90deg, rgba(99,102,241,0.06) 0%, rgba(79,209,197,0.06) 100%);
+  padding: 36px 0;
+}
+.proj-teaser-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.proj-teaser-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 560px;
+}
+.proj-teaser-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.proj-teaser-copy p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+.proj-teaser-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  .proj-teaser-inner { flex-direction: column; align-items: flex-start; }
+  .proj-teaser-btn { width: 100%; justify-content: center; }
+}
 
 .proj-grid {
   display: grid;
@@ -1678,7 +1723,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   .philosophy-mark { font-size: 70px; left: 18px; }
   .cap-col { padding: 22px; }
 
-  .footer-inner { flex-direction: column; text-align: center; }
   .page-hero { padding: 130px 0 40px; }
 }
 
