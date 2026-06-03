@@ -2,6 +2,16 @@ import DinoGame from './game/DinoGame.js'
 
 const game = new DinoGame(600, 150)
 
+// ── Touch detection — show on-screen buttons on any touch-capable device ────
+// Uses three checks because no single API is reliable across all phones/browsers.
+if (
+  'ontouchstart' in window ||
+  navigator.maxTouchPoints > 0 ||
+  navigator.msMaxTouchPoints > 0
+) {
+  document.body.classList.add('touch-device')
+}
+
 // ── Keyboard (desktop) ──────────────────────────────────────────────────────
 const JUMP_KEYS = new Set([38, 32]) // ArrowUp, Space
 const DUCK_KEYS = new Set([40])     // ArrowDown

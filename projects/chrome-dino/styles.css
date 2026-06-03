@@ -69,69 +69,68 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 
 /* ── Mobile touch controls ─────────────────────────────────── */
+/* Hidden by default; JS adds .touch-device to <body> on any touch-capable device */
 .touch-controls {
   display: none;
 }
 
-@media (hover: none) and (pointer: coarse) {
-  .touch-controls {
-    display: block;
-  }
+.touch-device .touch-controls {
+  display: block;
+}
 
-  .ctrl-btn {
-    position: fixed;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: rgba(60, 60, 60, 0.82);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.18);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    box-shadow:
-      0 4px 20px rgba(0, 0, 0, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-    z-index: 200;
-    cursor: move;
-    transition: background 0.15s ease, transform 0.1s ease;
-  }
+.ctrl-btn {
+  position: fixed;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(60, 60, 60, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 200;
+  cursor: move;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
 
-  .ctrl-btn:active {
-    background: rgba(83, 83, 83, 0.95);
-    transform: scale(0.93);
-  }
+.ctrl-btn:active {
+  background: rgba(83, 83, 83, 0.95);
+  transform: scale(0.93);
+}
 
-  .ctrl-btn svg {
-    width: 30px;
-    height: 30px;
-    flex-shrink: 0;
-  }
+.ctrl-btn svg {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
 
-  .ctrl-label {
-    font-family: ui-monospace, monospace;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    opacity: 0.75;
-    line-height: 1;
-  }
+.ctrl-label {
+  font-family: ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+  line-height: 1;
+}
 
-  /* Default positions — jump upper-right, duck lower-right */
-  #ctrl-jump {
-    right: 24px;
-    bottom: 136px;
-  }
+/* Default positions — jump upper-right, duck lower-right */
+#ctrl-jump {
+  right: 24px;
+  bottom: 136px;
+}
 
-  #ctrl-duck {
-    right: 24px;
-    bottom: 52px;
-  }
+#ctrl-duck {
+  right: 24px;
+  bottom: 52px;
 }
