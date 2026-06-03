@@ -12,13 +12,27 @@
   <a class="skip-link" href="#game-mount">Skip to game</a>
   <header class="dino-header">
     <a href="../../projects.html" class="back-link">&larr; Back to projects</a>
-    <p class="dino-hint" aria-hidden="true">Space / ↑ to jump · ↓ to duck · Tap to jump on mobile</p>
+    <p class="dino-hint" aria-hidden="true">Space / ↑ to jump · ↓ to duck · Buttons on mobile</p>
     <p class="sr-only" id="dino-instructions">
       Chrome Dino game. Press Space or the Up arrow to jump, and the Down arrow to duck.
-      On touch devices, tap the game area to jump. The game starts when you press Space or tap.
+      On touch devices, use the on-screen jump and duck buttons. Drag the buttons to reposition them.
+      The game starts when you press Space or tap a button.
     </p>
   </header>
   <main id="game-mount" class="dino-stage" aria-label="Chrome Dino game" aria-describedby="dino-instructions" tabindex="-1"></main>
+
+  <!-- Mobile touch controls (shown only on touch screens via CSS) -->
+  <div class="touch-controls" id="touchControls" aria-hidden="true">
+    <button class="ctrl-btn" id="ctrl-jump" title="Jump">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>
+      <span class="ctrl-label">JUMP</span>
+    </button>
+    <button class="ctrl-btn" id="ctrl-duck" title="Duck (hold)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      <span class="ctrl-label">DUCK</span>
+    </button>
+  </div>
+
   <script type="module" src="lib/index.js"></script>
 </body>
 </html>
