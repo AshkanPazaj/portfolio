@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>گالری طلای آرمه | جواهرات لوکس، تهران</title>
+  <meta name="description" content="گالری طلای آرمه. جواهرات طلای ناب، دست‌ساز. گوشواره، انگشتر، گردنبد، النگو، دستبند، آویز و زنجیر. تهران، هروی، مرکز خرید رونیکا." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    :root {
+      --green:        #114411;
+      --green-deep:   #0c330c;
+      --green-mid:    #1a5c1a;
+      --green-light:  #2a7a2a;
+      --green-pale:   #e8f0e8;
+      --green-tint:   #f2f6f2;
+      --gold:         #c9a840;
+      --gold-light:   #dfc060;
+      --gold-dark:    #9a7e28;
+      --white:        #ffffff;
+      --off-white:    #faf9f6;
+      --cream:        #f4f0e6;
+      --text:         #1a1a1a;
+      --text-mid:     #3d3d3d;
+      --text-dim:     #6b6b6b;
+      --text-muted:   #9a9a9a;
+      --border:       #e0ddd5;
+      --border-green: rgba(17, 68, 17, 0.15);
+      --ease:         cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body {
+      background: var(--white);
+      color: var(--text);
+      font-family: 'Vazirmatn', system-ui, sans-serif;
+      overflow-x: hidden;
+      line-height: 1.8;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* ════ NAVIGATION ════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 40px;
+      height: 76px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s var(--ease);
+    }
+    .nav.scrolled {
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .nav-logo-img {
+      height: 44px; width: auto;
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 40px;
+    }
+    .nav-links a {
+      font-size: 13px; font-weight: 500;
+      color: var(--text-dim);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; right: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.25s var(--ease);
+    }
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-phone {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 20px;
+      border: 1px solid var(--border-green);
+      color: var(--green) !important;
+      border-radius: 2px;
+      font-size: 13px !important; font-weight: 600 !important;
+      direction: ltr;
+      transition: background 0.2s, border-color 0.2s !important;
+    }
+    .nav-phone svg { width: 13px; height: 13px; }
+    .nav-phone:hover { background: var(--green-pale) !important; border-color: var(--green) !important; }
+    .nav-phone::after { display: none !important; }
+
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      width: 32px; padding: 4px;
+    }
+    .nav-toggle span {
+      display: block; height: 1.5px;
+      background: var(--text); border-radius: 1px;
+      transition: transform 0.25s, opacity 0.25s;
+    }
+    .nav-toggle span:nth-child(2) { width: 75%; }
+
+    /* ════ HERO ════ */
+    .hero {
+      min-height: 100vh;
+      padding-top: 76px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+    }
+
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 80px 60px 80px 40px;
+      border-left: 1px solid var(--border);
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 32px;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4.5vw, 4rem);
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--green-deep);
+      margin-bottom: 24px;
+    }
+    .hero-title strong {
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      max-width: 42ch;
+      margin-bottom: 48px;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 32px;
+      background: var(--green);
+      color: var(--white);
+      font-size: 13px; font-weight: 600;
+      border-radius: 2px;
+      transition: background 0.2s;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .btn-primary:hover { background: var(--green-mid); }
+    .btn-primary svg { width: 14px; height: 14px; }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px;
+      border: 1px solid var(--border);
+      color: var(--text-mid);
+      font-size: 13px; font-weight: 500;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+    .btn-outline:hover { border-color: var(--green); color: var(--green); }
+
+    .hero-right {
+      background: var(--green);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 32px;
+      padding: 80px 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 40% 40%, rgba(201,168,64,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-logo-large {
+      width: 200px; height: auto;
+      position: relative; z-index: 1;
+      filter: brightness(1.05);
+    }
+
+    .hero-divider {
+      width: 1px; height: 60px;
+      background: rgba(201,168,64,0.3);
+    }
+
+    .hero-tagline {
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(201,168,64,0.8);
+      position: relative; z-index: 1;
+    }
+
+    .hero-badges {
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201,168,64,0.2);
+      border-radius: 2px;
+    }
+    .hero-badge-icon {
+      width: 28px; height: 28px;
+      border: 1px solid rgba(201,168,64,0.4);
+      border-radius: 50%;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .hero-badge-icon svg { width: 13px; height: 13px; color: var(--gold); }
+    .hero-badge-text { font-size: 12px; color: rgba(240,235,220,0.8); }
+    .hero-badge-text strong { display: block; font-size: 13px; color: #f0ead8; font-weight: 600; }
+
+
+    /* ════ SECTION SHARED ════ */
+    .section { padding: 96px 0; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 16px;
+    }
+    .section-label::before {
+      content: ''; display: block;
+      width: 24px; height: 1px; background: var(--gold);
+    }
+
+    .section-title {
+      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-weight: 300; line-height: 1.35;
+      color: var(--green-deep);
+      margin-bottom: 16px;
+    }
+    .section-title strong { font-weight: 700; color: var(--green); }
+
+    .section-sub {
+      font-size: 0.95rem; color: var(--text-dim);
+      line-height: 1.9; max-width: 50ch;
+    }
+
+    /* Reveal */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ════ COLLECTIONS ════ */
+    .collections { background: var(--off-white); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .collections-head {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px; gap: 24px; flex-wrap: wrap;
+    }
+
+    .link-arrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--green);
+      border-bottom: 1px solid rgba(17,68,17,0.25);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, gap 0.2s;
+    }
+    .link-arrow:hover { border-color: var(--green); gap: 10px; }
+    .link-arrow svg { width: 12px; height: 12px; }
+
+    .coll-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0;
+    }
+    .coll-card {
+      grid-column: span 2;
+      box-shadow: inset 0 0 0 1px var(--border);
+    }
+    .coll-card:nth-child(5) { grid-column: 2 / span 2; }
+    .coll-card:nth-child(6) { grid-column: 4 / span 2; }
+    .coll-card:nth-child(7) { grid-column: 6 / span 2; }
+
+    .coll-card {
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 3/4;
+      background: var(--white);
+      transition: background 0.3s;
+    }
+    .coll-card:hover { background: var(--green-tint); }
+
+    .coll-art {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -58%);
+      transition: transform 0.4s var(--ease);
+    }
+    .coll-card:hover .coll-art { transform: translate(-50%, -62%) scale(1.04); }
+
+    .coll-art svg {
+      transition: filter 0.4s;
+      filter: drop-shadow(0 4px 12px rgba(17,68,17,0.1));
+    }
+    .coll-card:hover .coll-art svg {
+      filter: drop-shadow(0 6px 18px rgba(17,68,17,0.18));
+    }
+
+    .coll-body {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 28px 20px 20px;
+      background: linear-gradient(0deg, rgba(255,255,255,0.96) 60%, transparent 100%);
+    }
+    .coll-number {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--gold-dark); opacity: 0.8;
+      margin-bottom: 4px;
+    }
+    .coll-name {
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--green-deep); line-height: 1.1;
+      margin-bottom: 5px;
+    }
+    .coll-count {
+      font-size: 11px; color: var(--text-muted);
+    }
+    .coll-hover {
+      position: absolute; bottom: 20px; left: 20px;
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--green);
+      opacity: 0; transform: translateX(6px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .coll-hover svg { width: 11px; height: 11px; }
+    .coll-card:hover .coll-hover { opacity: 1; transform: translateX(0); }
+
+
+    /* ════ ABOUT ════ */
+    .about { background: var(--cream); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-body {
+      font-size: 0.97rem; color: var(--text-mid);
+      line-height: 1.95; margin-bottom: 20px;
+    }
+    .about-sig {
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--green); margin-top: 32px;
+    }
+
+    .stats-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; border: 1px solid var(--border);
+    }
+    .stat-block {
+      padding: 32px 28px;
+      border-left: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--white);
+      transition: background 0.25s;
+    }
+    .stat-block:hover { background: var(--green-tint); }
+    .stat-block:nth-child(odd) { border-left: none; }
+    .stat-block:nth-child(3), .stat-block:nth-child(4) { border-bottom: none; }
+    .stat-num {
+      font-size: 2.6rem; font-weight: 700;
+      color: var(--green); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 12px; color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ════ PILLARS ════ */
+    .pillars { border-top: 1px solid var(--border); }
+    .pillars-head { text-align: center; margin-bottom: 56px; }
+    .pillars-head .section-label { justify-content: center; }
+
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+    }
+    .pillar {
+      padding: 44px 32px;
+      border-left: 1px solid var(--border);
+      transition: background 0.25s;
+    }
+    .pillar:first-child { border-left: none; }
+    .pillar:hover { background: var(--green-tint); }
+
+    .pillar-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border-green);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin-bottom: 20px;
+      transition: border-color 0.25s;
+    }
+    .pillar:hover .pillar-icon { border-color: var(--green); }
+    .pillar-icon svg { width: 18px; height: 18px; color: var(--green); }
+    .pillar-title {
+      font-size: 1rem; font-weight: 700;
+      color: var(--green-deep); margin-bottom: 10px;
+    }
+    .pillar-desc {
+      font-size: 13px; color: var(--text-dim);
+      line-height: 1.85;
+    }
+
+
+    /* ════ FOOTER ════ */
+    /* ════ FOOTER ════ */
+    .footer {
+      background: var(--green-deep);
+      padding: 56px 0 28px;
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr;
+      gap: 40px; margin-bottom: 48px;
+      align-items: start;
+    }
+    .footer-logo-img { height: 52px; width: auto; margin-bottom: 16px; }
+    .footer-brand p {
+      font-size: 13px; color: rgba(201,168,64,0.55);
+      line-height: 1.8; max-width: 28ch;
+    }
+    .footer-col-title {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(240,235,220,0.5); margin-bottom: 16px;
+    }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li { font-size: 13px; color: rgba(240,235,220,0.45); line-height: 1.7; }
+    .footer-links a {
+      font-size: 13px; color: rgba(240,235,220,0.45);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-map-box {
+      order: -1;
+    }
+    .footer-map {
+      border-radius: 4px; overflow: hidden;
+      border: 1px solid rgba(201,168,64,0.2);
+    }
+    .footer-map iframe {
+      width: 100%; height: 180px;
+      border: none; display: block;
+      filter: grayscale(25%) contrast(1.05);
+    }
+    .footer-divider { height: 1px; background: rgba(201,168,64,0.1); margin-bottom: 24px; }
+    .footer-bottom {
+      display: flex; align-items: center;
+      justify-content: center;
+    }
+    .footer-copy { font-size: 15px; color: rgba(201,168,64,0.5); text-align: center; }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 1024px) {
+      .coll-grid { grid-template-columns: repeat(6, 1fr); }
+      .coll-card { grid-column: span 2; }
+      .coll-card:nth-child(5) { grid-column: span 2; }
+      .coll-card:nth-child(6) { grid-column: span 2; }
+      .coll-card:nth-child(7) { grid-column: 3 / span 2; }
+
+      .about-inner { grid-template-columns: 1fr; gap: 48px; }
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .pillar:nth-child(2) { border-left: none; }
+      .pillar:nth-child(1), .pillar:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .footer-map-box { order: 0; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 60px 40px; border-left: none; }
+      .hero-right { min-height: 400px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+      .coll-grid { grid-template-columns: repeat(4, 1fr); }
+      .coll-card { grid-column: span 2; aspect-ratio: 2/3; }
+      .coll-card:nth-child(5), .coll-card:nth-child(6) { grid-column: span 2; }
+      .coll-card:nth-child(7) { grid-column: 2 / span 2; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .container { padding: 0 24px; }
+      .section { padding: 72px 0; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .pillar { border-left: none; border-bottom: 1px solid var(--border); }
+      .pillar:last-child { border-bottom: none; }
+    }
+
+    @media (max-width: 480px) {
+      .coll-grid { grid-template-columns: repeat(2, 1fr); }
+      .coll-card { grid-column: span 1 !important; aspect-ratio: 3/4; }
+      .hero-title { font-size: 2.2rem; }
+      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+      .hero-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════ NAV ════ -->
+  <nav class="nav" id="nav" aria-label="ناوبری اصلی">
+    <a href="#" class="nav-logo" aria-label="گالری طلای آرمه">
+      <img src="assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" />
+    </a>
+
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#collections">مجموعه‌ها</a></li>
+      <li><a href="#about">درباره ما</a></li>
+      <li><a href="login.html">ورود</a></li>
+      <li>
+        <a href="tel:02121006803" class="nav-phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>
+          02121006803
+        </a>
+      </li>
+    </ul>
+
+    <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="باز کردن منو">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ════ HERO ════ -->
+  <section class="hero" aria-label="خوش آمدید">
+    <div class="hero-left">
+      <p class="hero-tag reveal">جواهرات طلای ناب</p>
+      <h1 class="hero-title reveal">
+        جایی که طلا<br />
+        به <strong>زیباترین شکل</strong><br />
+        خود می‌رسد.
+      </h1>
+      <p class="hero-sub reveal">
+        جواهرات دست‌ساز با طراحی ماندگار و طلای تأییدشده. هر قطعه در گالری ما برای زیبایی، کیفیت و داستانی که حمل می‌کند انتخاب شده است.
+      </p>
+      <div class="hero-actions reveal">
+        <a href="#collections" class="btn-primary">
+          مشاهده مجموعه‌ها
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        </a>
+        <a href="#about" class="btn-outline">درباره گالری</a>
+      </div>
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <img src="assets/logo-page-0.png" alt="" class="hero-logo-large" />
+      <div class="hero-divider"></div>
+      <p class="hero-tagline">ARMEH GOLD GALLERY</p>
+      <div class="hero-badges">
+        <div class="hero-badge">
+          <div class="hero-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="hero-badge-text">
+            <strong>طلای تأییدشده</strong>
+            ۱۸ و ۲۴ عیار با مهر رسمی
+          </div>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="hero-badge-text">
+            <strong>تهران، هروی</strong>
+            مرکز خرید رونیکا، پلاک ۶۷
+          </div>
+        </div>
+        <div class="hero-badge">
+          <div class="hero-badge-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="hero-badge-text">
+            <strong>ساعت کاری</strong>
+            شنبه تا پنج‌شنبه ۱۰ تا ۲۱
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ COLLECTIONS ════ -->
+  <section class="section collections" id="collections" aria-label="مجموعه‌ها">
+    <div class="container">
+      <div class="collections-head reveal">
+        <div>
+          <span class="section-label">گالری</span>
+          <h2 class="section-title">مجموعه‌های <strong>ما</strong></h2>
+        </div>
+      </div>
+
+      <div class="coll-grid" role="list">
+
+        <!-- گوشواره -->
+        <a href="collections/earrings.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="110" height="140" viewBox="0 0 130 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="42" cy="22" r="6" fill="none" stroke="#114411" stroke-width="2"/>
+              <path d="M42,28 L42,60 Q30,90 36,130 Q42,155 42,155" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="42" cy="145" rx="10" ry="13" fill="rgba(17,68,17,0.08)" stroke="#114411" stroke-width="1.5"/>
+              <polygon points="42,134 49,145 42,156 35,145" fill="rgba(201,168,64,0.25)" stroke="#c9a840" stroke-width="1.2"/>
+              <circle cx="88" cy="22" r="6" fill="none" stroke="#114411" stroke-width="2"/>
+              <path d="M88,28 L88,60 Q100,90 94,130 Q88,155 88,155" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <ellipse cx="88" cy="145" rx="10" ry="13" fill="rgba(17,68,17,0.08)" stroke="#114411" stroke-width="1.5"/>
+              <polygon points="88,134 95,145 88,156 81,145" fill="rgba(201,168,64,0.25)" stroke="#c9a840" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۱</div>
+            <div class="coll-name">گوشواره</div>
+            <div class="coll-count">آویز، گوی و حلقه</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- انگشتر -->
+        <a href="collections/rings.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="120" height="120" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="70" cy="70" r="58" stroke="#114411" stroke-width="1.5" opacity="0.25"/>
+              <circle cx="70" cy="70" r="44" stroke="#114411" stroke-width="2.5"/>
+              <circle cx="70" cy="70" r="30" stroke="#114411" stroke-width="1" stroke-dasharray="4 3" opacity="0.4"/>
+              <polygon points="70,16 80,26 70,36 60,26" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.5"/>
+              <line x1="60" y1="26" x2="80" y2="26" stroke="#c9a840" stroke-width="1" opacity="0.7"/>
+              <line x1="70" y1="16" x2="70" y2="36" stroke="#c9a840" stroke-width="1" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۲</div>
+            <div class="coll-name">انگشتر</div>
+            <div class="coll-count">نگین‌دار، ساده و فانتزی</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- گردنبد -->
+        <a href="collections/necklaces.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="110" height="130" viewBox="0 0 130 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M15,20 Q65,80 115,20" stroke="#114411" stroke-width="2" fill="none"/>
+              <path d="M15,20 Q65,80 115,20" stroke="#114411" stroke-width="1" fill="none" stroke-dasharray="5 4" opacity="0.35"/>
+              <ellipse cx="65" cy="100" rx="18" ry="28" fill="rgba(17,68,17,0.06)" stroke="#114411" stroke-width="2"/>
+              <ellipse cx="65" cy="100" rx="10" ry="18" fill="rgba(201,168,64,0.1)" stroke="#c9a840" stroke-width="1" opacity="0.8"/>
+              <line x1="65" y1="72" x2="65" y2="82" stroke="#114411" stroke-width="2"/>
+              <circle cx="65" cy="80" r="3" fill="none" stroke="#114411" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۳</div>
+            <div class="coll-name">گردنبد</div>
+            <div class="coll-count">آویزدار، ظریف و لایه‌ای</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- النگو -->
+        <a href="collections/bangles.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="120" height="120" viewBox="0 0 150 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="8" fill="none"/>
+              <circle cx="75" cy="60" r="40" stroke="#114411" stroke-width="1.5" fill="none" opacity="0.25"/>
+              <circle cx="75" cy="10" r="7" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
+              <polygon points="75,4 80,10 75,16 70,10" fill="rgba(201,168,64,0.3)" stroke="#c9a840" stroke-width="1"/>
+              <circle cx="32" cy="28" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
+              <circle cx="118" cy="28" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۴</div>
+            <div class="coll-name">النگو</div>
+            <div class="coll-count">ساده، نگین‌دار و طرح‌دار</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- دستبند -->
+        <a href="collections/bracelets.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="120" height="100" viewBox="0 0 150 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M25,80 A52,52 0 1 1 125,80" stroke="#114411" stroke-width="7" fill="none" stroke-linecap="round"/>
+              <path d="M35,80 A42,42 0 1 1 115,80" stroke="#114411" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.25"/>
+              <circle cx="75" cy="28" r="7" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
+              <polygon points="75,22 80,28 75,34 70,28" fill="rgba(201,168,64,0.3)" stroke="#c9a840" stroke-width="1"/>
+              <circle cx="42" cy="40" r="4" fill="rgba(201,168,64,0.12)" stroke="#c9a840" stroke-width="1"/>
+              <circle cx="108" cy="40" r="4" fill="rgba(201,168,64,0.12)" stroke="#c9a840" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۵</div>
+            <div class="coll-name">دستبند</div>
+            <div class="coll-count">تنیس، چرمی و زنجیری</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- آویز تک -->
+        <a href="collections/pendants.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="80" height="140" viewBox="0 0 100 160" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <line x1="50" y1="10" x2="50" y2="40" stroke="#114411" stroke-width="2"/>
+              <ellipse cx="50" cy="44" rx="8" ry="5" fill="none" stroke="#114411" stroke-width="1.8"/>
+              <ellipse cx="50" cy="100" rx="28" ry="40" fill="rgba(17,68,17,0.05)" stroke="#114411" stroke-width="2"/>
+              <ellipse cx="50" cy="100" rx="16" ry="26" fill="rgba(201,168,64,0.08)" stroke="#c9a840" stroke-width="1.2" opacity="0.8"/>
+              <polygon points="50,60 62,76 50,92 38,76" fill="rgba(201,168,64,0.18)" stroke="#c9a840" stroke-width="1.3"/>
+              <circle cx="72" cy="80" r="2" fill="#c9a840" opacity="0.6"/>
+              <circle cx="28" cy="80" r="2" fill="#c9a840" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۶</div>
+            <div class="coll-name">آویز تک</div>
+            <div class="coll-count">کلاسیک، مدرن و نگین‌دار</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+        <!-- زنجیر تک -->
+        <a href="collections/chains.html" class="coll-card reveal" role="listitem">
+          <div class="coll-art">
+            <svg width="130" height="100" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10,60 Q35,30 70,60 Q105,90 130,60" stroke="#114411" stroke-width="2.5" fill="none"/>
+              <ellipse cx="22" cy="52" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(-20 22 52)"/>
+              <ellipse cx="38" cy="44" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(-10 38 44)"/>
+              <ellipse cx="55" cy="50" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(10 55 50)"/>
+              <ellipse cx="70" cy="60" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5"/>
+              <ellipse cx="85" cy="70" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(-10 85 70)"/>
+              <ellipse cx="102" cy="68" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(-20 102 68)"/>
+              <ellipse cx="118" cy="62" rx="6" ry="4" fill="none" stroke="#114411" stroke-width="1.5" transform="rotate(-10 118 62)"/>
+              <circle cx="10" cy="60" r="4" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.5"/>
+              <circle cx="130" cy="60" r="4" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="coll-body">
+            <div class="coll-number">۰۷</div>
+            <div class="coll-name">زنجیر تک</div>
+            <div class="coll-count">فیگارو، کارتیه و هرینگبون</div>
+            <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ ABOUT ════ -->
+  <section class="section about" id="about" aria-label="درباره ما">
+    <div class="container">
+      <div class="about-inner">
+        <div class="reveal">
+          <span class="section-label">داستان ما</span>
+          <h2 class="section-title">ساخته‌شده با<br /><strong>دهه‌ها دلسوزی.</strong></h2>
+          <p class="about-body">
+            گالری طلای آرمه بر پایه یک باور ساده بنا شده است: جواهرات طلا باید بیش از یک اکسسوری باشند. باید خاطره، دستاورد و میراثی باشند که از نسلی به نسل دیگر می‌رسند.
+          </p>
+          <p class="about-body">
+            هر قطعه در گالری ما برای صنعت‌گری، خلوص و داستانی که با خود حمل می‌کند دست‌چین شده است. ما با هنرمندانی کار می‌کنیم که می‌دانند جواهرات عالی در دقیقه ساخته نمی‌شوند — بلکه در طول عمر ساخته می‌شوند.
+          </p>
+          <p class="about-body">
+            چه برای خودتان خرید کنید، چه هدیه بدهید یا سفارش اختصاصی داشته باشید، تیمی می‌یابید که مناسبت شما را با احترامی که لایق آن است می‌پذیرد.
+          </p>
+          <div class="about-sig">گالری طلای آرمه</div>
+        </div>
+
+        <div class="stats-grid reveal">
+          <div class="stat-block">
+            <div class="stat-num">۱۸K</div>
+            <div class="stat-label">حداقل خلوص در تمام قطعات</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num">+۵۰۰</div>
+            <div class="stat-label">قطعه منحصربه‌فرد در گالری</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num">۱۰۰٪</div>
+            <div class="stat-label">ضمانت رضایت هر خرید</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num">۲۴K</div>
+            <div class="stat-label">طلای ناب در مجموعه‌های انتخابی</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════ PILLARS ════ -->
+  <section class="section pillars" aria-label="چرا آرمه">
+    <div class="container">
+      <div class="pillars-head reveal">
+        <span class="section-label">چرا آرمه</span>
+        <h2 class="section-title">تعهد <strong>آرمه</strong></h2>
+      </div>
+      <div class="pillars-grid">
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="pillar-title">طلای دارای مهر</h3>
+          <p class="pillar-desc">هر قطعه دارای مهر رسمی تأیید عیار طلاست تا دقیقاً بدانید چه می‌خرید.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+          </div>
+          <h3 class="pillar-title">عیار تأییدشده</h3>
+          <p class="pillar-desc">فقط طلای ۱۸، ۲۱ و ۲۴ عیار. گواهی عیار همراه هر قطعه ارائه می‌شود.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <h3 class="pillar-title">سفارش اختصاصی</h3>
+          <p class="pillar-desc">طرحی در ذهن دارید؟ با هنرمندان ماهر کار می‌کنیم تا رویایتان را به واقعیت تبدیل کنیم.</p>
+        </div>
+        <div class="pillar reveal">
+          <div class="pillar-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3 class="pillar-title">بازدید از گالری</h3>
+          <p class="pillar-desc">بیایید و هر قطعه را در دست بگیرید. گالری ما شش روز هفته باز است.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════ FOOTER ════ -->
+  <footer class="footer" aria-label="پاورقی">
+    <div class="container">
+      <div class="footer-top">
+
+        <!-- Brand — visual LEFT (last in RTL grid) -->
+        <div class="footer-brand">
+          <img src="assets/logo-page-0.png" alt="آرمه گلد" class="footer-logo-img" />
+          <p>جواهرات طلای ناب، دست‌ساز با عشق. ارسال به سراسر کشور.</p>
+        </div>
+
+        <!-- Privacy & links -->
+        <div>
+          <div class="footer-col-title">لینک‌ها</div>
+          <ul class="footer-links">
+            <li><a href="privacy.html">سیاست حریم خصوصی</a></li>
+            <li><a href="#collections">مجموعه‌ها</a></li>
+            <li><a href="#about">درباره گالری</a></li>
+          </ul>
+        </div>
+
+        <!-- Visit info -->
+        <div>
+          <div class="footer-col-title">بازدید</div>
+          <ul class="footer-links">
+            <li>تهران، هروی، مرکز خرید رونیکا، طبقه همکف، پلاک ۶۷</li>
+            <li><a href="tel:02121006803">۰۲۱۲۱۰۰۶۸۰۳</a></li>
+            <li>شنبه تا پنج‌شنبه ۱۰ تا ۲۱</li>
+          </ul>
+        </div>
+
+        <!-- Map box — visual RIGHT (first in RTL grid) -->
+        <div class="footer-map-box">
+          <div class="footer-map">
+            <iframe
+              src="https://maps.google.com/maps?q=Ronika+Mall+Heravi+Tehran+Iran&output=embed&hl=fa&z=17"
+              allowfullscreen loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="موقعیت گالری طلای آرمه">
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© <span id="year"></span> گالری طلای آرمه. تمام حقوق محفوظ است.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    const toggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      if (!open) {
+        navLinks.style.display = 'flex';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '76px';
+        navLinks.style.left = '0';
+        navLinks.style.right = '0';
+        navLinks.style.background = '#ffffff';
+        navLinks.style.borderBottom = '1px solid #e0ddd5';
+        navLinks.style.padding = '24px 40px';
+        navLinks.style.gap = '20px';
+        navLinks.style.boxShadow = '0 8px 24px rgba(0,0,0,0.06)';
+      } else {
+        navLinks.removeAttribute('style');
+      }
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+          toggle.setAttribute('aria-expanded', 'false');
+          navLinks.removeAttribute('style');
+        }
+      });
+    });
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 55);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+  </script>
+</body>
+</html>

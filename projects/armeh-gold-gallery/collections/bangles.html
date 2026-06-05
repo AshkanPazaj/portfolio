@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>النگو | گالری طلای آرمه</title>
+  <meta name="description" content="مجموعه النگوهای طلای آرمه. ساده، نگین‌دار و طرح‌دار. طلای ۱۸ و ۲۱ عیار با مهر رسمی." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { display: block; max-width: 100%; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+    :root {
+      --green:#114411;--green-deep:#0c330c;--green-mid:#1a5c1a;
+      --green-pale:#e8f0e8;--green-tint:#f2f6f2;
+      --gold:#c9a840;--gold-light:#dfc060;--gold-dark:#9a7e28;
+      --white:#ffffff;--off-white:#faf9f6;--cream:#f4f0e6;
+      --text:#1a1a1a;--text-mid:#3d3d3d;--text-dim:#6b6b6b;--text-muted:#9a9a9a;
+      --border:#e0ddd5;--border-green:rgba(17,68,17,0.15);
+      --ease:cubic-bezier(0.4,0,0.2,1);
+    }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background:var(--white); color:var(--text); font-family:'Vazirmatn',system-ui,sans-serif; overflow-x:hidden; line-height:1.8; }
+    .container { width:100%; max-width:1160px; margin:0 auto; padding:0 40px; }
+    .nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:0 40px; height:76px; display:flex; align-items:center; justify-content:space-between; background:var(--white); border-bottom:1px solid var(--border); transition:box-shadow 0.3s var(--ease); }
+    .nav.scrolled { box-shadow:0 2px 20px rgba(0,0,0,0.06); }
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+    .nav-logo-img { height:44px; width:auto; }
+    .nav-links { display:flex; align-items:center; gap:40px; }
+    .nav-links a { font-size:13px; font-weight:500; color:var(--text-dim); transition:color 0.2s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; right:0; width:0; height:1px; background:var(--gold); transition:width 0.25s var(--ease); }
+    .nav-links a:hover { color:var(--green); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-phone { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border:1px solid var(--border-green); color:var(--green)!important; border-radius:2px; font-size:13px!important; font-weight:600!important; direction:ltr; transition:background 0.2s,border-color 0.2s!important; }
+    .nav-phone svg { width:13px; height:13px; }
+    .nav-phone:hover { background:var(--green-pale)!important; border-color:var(--green)!important; }
+    .nav-phone::after { display:none!important; }
+    .coll-hero { padding-top:76px; background:var(--green-deep); min-height:320px; display:flex; align-items:center; position:relative; overflow:hidden; }
+    .coll-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%,rgba(201,168,64,0.10) 0%,transparent 60%); pointer-events:none; }
+    .coll-hero-inner { display:flex; align-items:center; gap:56px; padding:60px 0; position:relative; z-index:1; }
+    .coll-hero-art { flex-shrink:0; opacity:0.9; filter:drop-shadow(0 8px 24px rgba(0,0,0,0.25)); }
+    .coll-hero-text { flex:1; }
+    .coll-hero-back { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:rgba(201,168,64,0.65); letter-spacing:0.08em; margin-bottom:20px; transition:color 0.2s; }
+    .coll-hero-back:hover { color:var(--gold); }
+    .coll-hero-back svg { width:13px; height:13px; }
+    .coll-hero-num { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,64,0.5); margin-bottom:12px; }
+    .coll-hero-title { font-size:clamp(2.2rem,5vw,3.6rem); font-weight:700; color:#f0ead8; line-height:1.2; margin-bottom:14px; }
+    .coll-hero-desc { font-size:0.97rem; color:rgba(201,168,64,0.6); max-width:44ch; line-height:1.9; }
+    .products { padding:80px 0 96px; background:var(--off-white); border-bottom:1px solid var(--border); }
+    .products-head { margin-bottom:48px; }
+    .section-label { display:inline-flex; align-items:center; gap:10px; font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold-dark); margin-bottom:14px; }
+    .section-label::before { content:''; display:block; width:24px; height:1px; background:var(--gold); }
+    .section-title { font-size:clamp(1.5rem,2.5vw,2.2rem); font-weight:300; line-height:1.35; color:var(--green-deep); }
+    .section-title strong { font-weight:700; color:var(--green); }
+    .products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .product-card { background:var(--white); border:1px solid var(--border); border-radius:3px; display:flex; flex-direction:column; transition:background 0.25s,box-shadow 0.25s; cursor:default; }
+    .product-card:hover { box-shadow:0 4px 20px rgba(17,68,17,0.08); }
+    .product-card:hover { background:var(--green-tint); }
+    .product-art { height:200px; display:flex; align-items:center; justify-content:center; background:var(--cream); border-bottom:1px solid var(--border); transition:background 0.25s; }
+    .product-card:hover .product-art { background:var(--green-pale); }
+    .product-art svg { filter:drop-shadow(0 3px 10px rgba(17,68,17,0.12)); transition:transform 0.35s var(--ease),filter 0.35s; }
+    .product-card:hover .product-art svg { transform:scale(1.06) translateY(-3px); filter:drop-shadow(0 6px 16px rgba(17,68,17,0.2)); }
+    .product-body { padding:24px 22px 22px; flex:1; }
+    .product-name { font-size:1rem; font-weight:700; color:var(--green-deep); margin-bottom:6px; }
+    .product-material { font-size:12px; color:var(--text-muted); margin-bottom:16px; }
+    .product-cta { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:700; letter-spacing:0.08em; color:var(--green); border-bottom:1px solid rgba(17,68,17,0.25); padding-bottom:2px; transition:border-color 0.2s,gap 0.2s; }
+    .product-cta:hover { border-color:var(--green); gap:9px; }
+    .product-cta svg { width:11px; height:11px; }
+    .contact-strip { background:var(--cream); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:48px 0; }
+    .contact-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+    .contact-strip-text h3 { font-size:1.1rem; font-weight:700; color:var(--green-deep); margin-bottom:6px; }
+    .contact-strip-text p { font-size:0.9rem; color:var(--text-dim); }
+    .btn-primary { display:inline-flex; align-items:center; gap:10px; padding:13px 28px; background:var(--green); color:var(--white); font-size:13px; font-weight:600; border-radius:2px; transition:background 0.2s; font-family:'Vazirmatn',sans-serif; }
+    .btn-primary:hover { background:var(--green-mid); }
+    .btn-primary svg { width:14px; height:14px; }
+    .footer { background:var(--green-deep); padding:40px 0 24px; }
+    .footer-inner { display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; margin-bottom:28px; }
+    .footer-logo-img { height:44px; width:auto; }
+    .footer-info { font-size:13px; color:rgba(201,168,64,0.55); line-height:1.8; }
+    .footer-info a { color:rgba(201,168,64,0.7); transition:color 0.2s; }
+    .footer-info a:hover { color:var(--gold); }
+    .footer-divider { height:1px; background:rgba(201,168,64,0.1); margin-bottom:20px; }
+    .footer-copy { font-size:13px; color:rgba(201,168,64,0.4); text-align:center; }
+    .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.6s var(--ease),transform 0.6s var(--ease); }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    @media (max-width:900px) { .products-grid { grid-template-columns:repeat(2,1fr); } .coll-hero-inner { gap:36px; } }
+    @media (max-width:600px) { .products-grid { grid-template-columns:1fr; } .coll-hero-inner { flex-direction:column; gap:24px; padding:40px 0; } .coll-hero-art { display:none; } .container { padding:0 24px; } }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a href="../index.html" class="nav-logo"><img src="../assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" /></a>
+    <ul class="nav-links">
+      <li><a href="../index.html#collections">مجموعه‌ها</a></li>
+      <li><a href="../index.html#about">درباره ما</a></li>
+      <li><a href="tel:02121006803" class="nav-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>02121006803</a></li>
+    </ul>
+  </nav>
+
+  <section class="coll-hero">
+    <div class="container">
+      <div class="coll-hero-inner">
+        <div class="coll-hero-art">
+          <svg width="130" height="120" viewBox="0 0 150 120" fill="none">
+            <circle cx="75" cy="60" r="50" stroke="#c9a840" stroke-width="8" fill="none"/>
+            <circle cx="75" cy="60" r="40" stroke="rgba(201,168,64,0.3)" stroke-width="1.5" fill="none"/>
+            <circle cx="75" cy="10" r="7" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
+            <polygon points="75,4 80,10 75,16 70,10" fill="rgba(201,168,64,0.3)" stroke="#c9a840" stroke-width="1"/>
+            <circle cx="32" cy="28" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
+            <circle cx="118" cy="28" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="coll-hero-text">
+          <a href="../index.html#collections" class="coll-hero-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 19l7-7-7-7"/></svg>بازگشت به مجموعه‌ها</a>
+          <div class="coll-hero-num">مجموعه ۰۴</div>
+          <h1 class="coll-hero-title">النگو</h1>
+          <p class="coll-hero-desc">ساده، نگین‌دار و طرح‌دار. هر النگو از طلای ۱۸ و ۲۱ عیار با مهر رسمی صادرشده.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products">
+    <div class="container">
+      <div class="products-head reveal">
+        <span class="section-label">مجموعه النگو</span>
+        <h2 class="section-title">انتخاب <strong>برتر</strong></h2>
+      </div>
+      <div class="products-grid">
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="8" fill="none"/>
+              <circle cx="75" cy="60" r="40" stroke="#114411" stroke-width="1.5" fill="none" opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو ساده طلایی</div>
+            <div class="product-material">طلای ۱۸ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="8" fill="none"/>
+              <circle cx="75" cy="10" r="7" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
+              <polygon points="75,4 80,10 75,16 70,10" fill="rgba(201,168,64,0.3)" stroke="#c9a840" stroke-width="1"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو نگین‌دار</div>
+            <div class="product-material">طلای ۱۸ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="8" fill="none"/>
+              <circle cx="75" cy="10" r="5" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.2"/>
+              <circle cx="32" cy="28" r="5" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.2"/>
+              <circle cx="118" cy="28" r="5" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.2"/>
+              <circle cx="19" cy="60" r="5" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.2"/>
+              <circle cx="131" cy="60" r="5" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.2"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو پنج نگین</div>
+            <div class="product-material">طلای ۱۸ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="5" fill="none"/>
+              <circle cx="75" cy="60" r="50" stroke="#c9a840" stroke-width="2" fill="none" opacity="0.4" stroke-dasharray="5 4"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو طرح‌دار کلاسیک</div>
+            <div class="product-material">طلای ۲۱ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="10" fill="none"/>
+              <circle cx="75" cy="60" r="37" stroke="#114411" stroke-width="1.5" fill="none" opacity="0.2"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو دستی ضخیم</div>
+            <div class="product-material">طلای ۱۸ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+        <div class="product-card reveal">
+          <div class="product-art">
+            <svg width="100" height="100" viewBox="0 0 150 120" fill="none">
+              <circle cx="75" cy="60" r="50" stroke="#114411" stroke-width="4" fill="none"/>
+              <circle cx="75" cy="60" r="44" stroke="#114411" stroke-width="2" fill="none" opacity="0.3"/>
+              <circle cx="75" cy="10" r="8" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.8"/>
+            </svg>
+          </div>
+          <div class="product-body">
+            <div class="product-name">النگو فانتزی دو رنگ</div>
+            <div class="product-material">طلای ۱۸ عیار</div>
+            <a href="tel:02121006803" class="product-cta">تماس برای قیمت <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-strip">
+    <div class="container">
+      <div class="contact-strip-inner reveal">
+        <div class="contact-strip-text">
+          <h3>برای مشاوره و استعلام قیمت تماس بگیرید</h3>
+          <p>کارشناسان ما شنبه تا پنج‌شنبه از ساعت ۱۰ تا ۲۱ پاسخگو هستند.</p>
+        </div>
+        <a href="tel:02121006803" class="btn-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>02121006803</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <img src="../assets/logo-page-0.png" alt="آرمه گلد" class="footer-logo-img" />
+        <div class="footer-info">تهران، هروی، مرکز خرید رونیکا، طبقه همکف، پلاک ۶۷ &nbsp;|&nbsp; <a href="tel:02121006803">۰۲۱۲۱۰۰۶۸۰۳</a> &nbsp;|&nbsp; <a href="../index.html">بازگشت به گالری</a></div>
+      </div>
+      <div class="footer-divider"></div>
+      <p class="footer-copy">© <span id="year"></span> گالری طلای آرمه. تمام حقوق محفوظ است.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
+    const obs = new IntersectionObserver((entries) => { entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); } }); }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

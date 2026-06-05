@@ -1557,6 +1557,12 @@ button:focus-visible {
 .proj-teaser-btn {
   white-space: nowrap;
   flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(110, 139, 255, 0.4);
+}
+.proj-teaser-btn:hover {
+  box-shadow: 0 16px 40px rgba(110, 139, 255, 0.5);
 }
 @media (max-width: 600px) {
   .proj-teaser-inner { flex-direction: column; align-items: flex-start; }
@@ -1596,6 +1602,7 @@ button:focus-visible {
 .proj-img-3 { background: linear-gradient(135deg, #ffb347, #ff6a3d); }
 .proj-img-4 { background: linear-gradient(135deg, #238636 0%, #1a7f37 50%, #0d4e20 100%); }
 .proj-img-5 { background: linear-gradient(135deg, #c98a8e 0%, #a8666b 50%, #7a3e42 100%); }
+.proj-img-6 { background: linear-gradient(135deg, #3d2e00 0%, #7a5c10 45%, #d4af37 100%); }
 .proj-emoji {
   font-size: 64px;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));

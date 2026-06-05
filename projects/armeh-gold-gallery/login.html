@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورود | گالری طلای آرمه</title>
+  <meta name="description" content="ورود به حساب کاربری گالری طلای آرمه." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+
+    :root {
+      --green:        #114411;
+      --green-deep:   #0c330c;
+      --green-mid:    #1a5c1a;
+      --green-pale:   #e8f0e8;
+      --green-tint:   #f2f6f2;
+      --gold:         #c9a840;
+      --gold-dark:    #9a7e28;
+      --white:        #ffffff;
+      --off-white:    #faf9f6;
+      --cream:        #f4f0e6;
+      --text:         #1a1a1a;
+      --text-dim:     #6b6b6b;
+      --text-muted:   #9a9a9a;
+      --border:       #e0ddd5;
+      --border-green: rgba(17,68,17,0.18);
+      --ease:         cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Vazirmatn', system-ui, sans-serif;
+      background: var(--off-white);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+
+    /* ════ LEFT PANEL (green) ════ */
+    .panel-brand {
+      background: var(--green-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .panel-brand::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 40% 40%, rgba(201,168,64,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .brand-logo {
+      width: 160px; height: auto;
+      position: relative; z-index: 1;
+      margin-bottom: 32px;
+      filter: brightness(1.05);
+    }
+    .brand-divider {
+      width: 1px; height: 48px;
+      background: rgba(201,168,64,0.25);
+      margin-bottom: 28px;
+      position: relative; z-index: 1;
+    }
+    .brand-tagline {
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(201,168,64,0.65);
+      position: relative; z-index: 1;
+      margin-bottom: 48px;
+    }
+    .brand-badges {
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; z-index: 1;
+      width: 100%; max-width: 280px;
+    }
+    .brand-badge {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,64,0.15);
+      border-radius: 2px;
+    }
+    .brand-badge-icon {
+      width: 28px; height: 28px;
+      border: 1px solid rgba(201,168,64,0.35);
+      border-radius: 50%;
+      display: grid; place-items: center; flex-shrink: 0;
+    }
+    .brand-badge-icon svg { width: 12px; height: 12px; color: var(--gold); }
+    .brand-badge-text { font-size: 12px; color: rgba(240,235,220,0.7); }
+    .brand-badge-text strong { display: block; font-size: 13px; color: #f0ead8; font-weight: 600; }
+
+    /* ════ RIGHT PANEL (form) ════ */
+    .panel-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 48px;
+      background: var(--white);
+    }
+
+    .form-box {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-back {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 12px; font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      transition: color 0.2s;
+    }
+    .form-back:hover { color: var(--green); }
+    .form-back svg { width: 13px; height: 13px; }
+
+    .form-header { margin-bottom: 36px; }
+    .form-label-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 10px;
+    }
+    .form-label-tag::before {
+      content: ''; display: block;
+      width: 20px; height: 1px; background: var(--gold);
+    }
+    .form-header h1 {
+      font-size: 1.9rem; font-weight: 700;
+      color: var(--green-deep);
+      line-height: 1.2;
+    }
+    .form-header p {
+      font-size: 0.88rem; color: var(--text-dim);
+      margin-top: 8px;
+    }
+
+    .form-group { margin-bottom: 20px; }
+    .form-group label {
+      display: block;
+      font-size: 12px; font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .input-wrap { position: relative; }
+    .input-wrap svg {
+      position: absolute;
+      right: 14px; top: 50%; transform: translateY(-50%);
+      width: 15px; height: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 42px 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background: var(--white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+    .form-group input::placeholder { color: var(--text-muted); }
+    .form-group input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(17,68,17,0.07);
+    }
+    .form-group input:focus + svg,
+    .input-wrap:focus-within svg { color: var(--green); }
+
+    .form-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .form-check {
+      display: flex; align-items: center; gap: 8px;
+      cursor: pointer;
+    }
+    .form-check input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+    .form-check span {
+      font-size: 12px; color: var(--text-dim);
+    }
+    .form-forgot {
+      font-size: 12px; font-weight: 500;
+      color: var(--green);
+      transition: opacity 0.2s;
+    }
+    .form-forgot:hover { opacity: 0.7; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px 24px;
+      background: var(--green);
+      color: var(--white);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 14px; font-weight: 600;
+      border: none; border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+    }
+    .btn-submit:hover { background: var(--green-mid); box-shadow: 0 4px 14px rgba(17,68,17,0.2); }
+    .btn-submit:active { background: var(--green-deep); }
+    .btn-submit svg { width: 15px; height: 15px; }
+
+    .form-divider {
+      display: flex; align-items: center; gap: 14px;
+      margin: 24px 0;
+    }
+    .form-divider::before, .form-divider::after {
+      content: ''; flex: 1;
+      height: 1px; background: var(--border);
+    }
+    .form-divider span { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+
+    .btn-phone {
+      width: 100%;
+      padding: 12px 24px;
+      border: 1px solid var(--border-green);
+      background: var(--white);
+      color: var(--green);
+      font-family: 'Vazirmatn', sans-serif;
+      font-size: 13px; font-weight: 600;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+    }
+    .btn-phone:hover { background: var(--green-pale); border-color: var(--green); }
+    .btn-phone svg { width: 15px; height: 15px; }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-muted);
+    }
+
+    /* ════ ERROR STATE ════ */
+    .field-error {
+      font-size: 11px; color: #c0392b;
+      margin-top: 5px; display: none;
+    }
+    .form-group.has-error input {
+      border-color: #c0392b;
+    }
+    .form-group.has-error .field-error { display: block; }
+
+    /* ════ RESPONSIVE ════ */
+    @media (max-width: 860px) {
+      body { grid-template-columns: 1fr; }
+      .panel-brand { display: none; }
+      .panel-form { padding: 48px 32px; min-height: 100vh; }
+    }
+    @media (max-width: 480px) {
+      .panel-form { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BRAND PANEL -->
+  <div class="panel-brand" aria-hidden="true">
+    <img src="assets/logo-page-0.png" alt="" class="brand-logo" />
+    <div class="brand-divider"></div>
+    <p class="brand-tagline">ARMEH GOLD GALLERY</p>
+    <div class="brand-badges">
+      <div class="brand-badge">
+        <div class="brand-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="brand-badge-text">
+          <strong>دسترسی امن</strong>
+          اطلاعات شما محافظت می‌شود
+        </div>
+      </div>
+      <div class="brand-badge">
+        <div class="brand-badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <div class="brand-badge-text">
+          <strong>حساب اختصاصی</strong>
+          مدیریت سفارش‌ها و پروفایل
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM PANEL -->
+  <div class="panel-form">
+    <div class="form-box">
+
+      <a href="index.html" class="form-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        بازگشت به گالری
+      </a>
+
+      <div class="form-header">
+        <p class="form-label-tag">خوش آمدید</p>
+        <h1>ورود به حساب</h1>
+        <p>شماره موبایل یا ایمیل و رمز عبور خود را وارد کنید.</p>
+      </div>
+
+      <form id="login-form" novalidate>
+
+        <div class="form-group" id="group-identifier">
+          <label for="identifier">شماره موبایل یا ایمیل</label>
+          <div class="input-wrap">
+            <input
+              type="text"
+              id="identifier"
+              name="identifier"
+              placeholder="مثال: ۰۹۱۲۰۰۰۰۰۰۰"
+              autocomplete="username"
+            />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <p class="field-error" id="err-identifier">لطفاً شماره موبایل یا ایمیل خود را وارد کنید.</p>
+        </div>
+
+        <div class="form-group" id="group-password">
+          <label for="password">رمز عبور</label>
+          <div class="input-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="رمز عبور خود را وارد کنید"
+              autocomplete="current-password"
+            />
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <p class="field-error" id="err-password">لطفاً رمز عبور خود را وارد کنید.</p>
+        </div>
+
+        <div class="form-row">
+          <label class="form-check">
+            <input type="checkbox" id="remember" />
+            <span>مرا به خاطر بسپار</span>
+          </label>
+          <a href="#" class="form-forgot">فراموشی رمز عبور</a>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          ورود
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+        </button>
+
+        <div class="form-divider"><span>یا</span></div>
+
+        <button type="button" class="btn-phone" onclick="window.location.href='tel:02121006803'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>
+          ورود با تماس تلفنی
+        </button>
+
+      </form>
+
+      <div class="form-footer">
+        © <span id="year"></span> گالری طلای آرمه &nbsp;·&nbsp; <a href="privacy.html" style="color: var(--green);">حریم خصوصی</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const form = document.getElementById('login-form');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      let valid = true;
+
+      const identifier = document.getElementById('identifier');
+      const password   = document.getElementById('password');
+      const gId        = document.getElementById('group-identifier');
+      const gPw        = document.getElementById('group-password');
+
+      gId.classList.remove('has-error');
+      gPw.classList.remove('has-error');
+
+      if (!identifier.value.trim()) {
+        gId.classList.add('has-error');
+        valid = false;
+      }
+      if (!password.value.trim()) {
+        gPw.classList.add('has-error');
+        valid = false;
+      }
+
+      if (valid) {
+        const btn = form.querySelector('.btn-submit');
+        btn.textContent = 'در حال ورود...';
+        btn.disabled = true;
+      }
+    });
+
+    document.getElementById('identifier').addEventListener('input', function () {
+      document.getElementById('group-identifier').classList.remove('has-error');
+    });
+    document.getElementById('password').addEventListener('input', function () {
+      document.getElementById('group-password').classList.remove('has-error');
+    });
+  </script>
+</body>
+</html>
