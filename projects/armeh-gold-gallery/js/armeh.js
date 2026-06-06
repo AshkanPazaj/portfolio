@@ -1361,8 +1361,38 @@ function initFooterInstagram() {
   });
 }
 
+/* ── Intro splash (homepage) ──────────────── */
+function initIntroSplash() {
+  const splash  = document.getElementById('introSplash');
+  const logoImg = document.getElementById('introLogoImg');
+  if (!splash || !logoImg) return;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    splash.classList.add('gone');
+    return;
+  }
+
+  if (sessionStorage.getItem('armeh_intro_seen')) {
+    splash.classList.add('gone');
+    return;
+  }
+
+  document.documentElement.style.overflow = 'hidden';
+
+  setTimeout(() => {
+    splash.style.transition = 'opacity 0.8s ease';
+    splash.style.opacity = '0';
+    setTimeout(() => {
+      splash.classList.add('gone');
+      document.documentElement.style.overflow = '';
+      sessionStorage.setItem('armeh_intro_seen', '1');
+    }, 850);
+  }, 2600);
+}
+
 /* ── Bootstrap ───────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
+  initIntroSplash();
   initNav();
   initNavSearch();
   initMobileNav();
