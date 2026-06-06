@@ -102,7 +102,8 @@
     }
     .nav-icon-link { display:inline-flex; align-items:center; gap:7px; line-height:1; }
     .nav-icon-link svg { width:14px; height:14px; flex-shrink:0; display:block; }
-    #nav-logout-li { display:flex; align-items:center; gap:10px; }
+    #nav-logout-li:not([hidden]) { display:flex; align-items:center; gap:10px; }
+    #nav-links > li[hidden] { display:none !important; }
     .footer-instagram {
       display:inline-flex; align-items:center; justify-content:center;
       margin-top:14px; color:rgba(201,168,64,0.55); line-height:0;
@@ -274,14 +275,20 @@
       .nav { padding-left:20px !important; padding-right:20px !important; }
       .nav-links { display:none !important; }
       .nav-links.open {
-        display:flex !important; flex-direction:column; align-items:flex-start;
+        display:flex !important; flex-direction:column; align-items:stretch;
         position:absolute; top:76px; left:0; right:0;
-        background:rgba(255,255,255,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+        height:auto !important; min-height:0;
+        background:var(--white,#fff);
         border-bottom:1px solid var(--border,#e0ddd5);
         padding:20px 24px; gap:18px; box-shadow:0 8px 24px rgba(0,0,0,.06); z-index:99;
       }
-      .nav-links.open li { width:100%; }
-      .nav-links.open a, .nav-links.open .nav-logout-btn { min-height:0; justify-content:flex-start; }
+      .nav-links.open > li:not([hidden]) { width:100%; display:flex; align-items:center; }
+      .nav-links.open a,
+      .nav-links.open .nav-admin-link,
+      .nav-links.open .nav-user-name,
+      .nav-links.open .nav-logout-btn {
+        width:100%; min-height:0; justify-content:flex-start;
+      }
       .nav-toggle { display:flex !important; }
       #nav-logout-li { flex-direction:column; align-items:flex-start !important; gap:10px; }
       .nav-logo-img { height:38px !important; }
@@ -1052,11 +1059,18 @@ function initNav() {
   });
 
   if (loginLi) {
-    loginLi.style.display = s ? 'none' : 'list-item';
+    loginLi.hidden = !!s;
+    loginLi.style.removeProperty('display');
     addNavIcon(loginLi.querySelector('a'), NAV_ICONS.login);
   }
-  if (adminLi)  adminLi.style.display  = (s?.role === 'admin') ? 'list-item' : 'none';
-  if (logoutLi) logoutLi.style.display = s ? 'flex' : 'none';
+  if (adminLi) {
+    adminLi.hidden = s?.role !== 'admin';
+    adminLi.style.removeProperty('display');
+  }
+  if (logoutLi) {
+    logoutLi.hidden = !s;
+    logoutLi.style.removeProperty('display');
+  }
   const profileLink = document.getElementById('nav-profile-link');
   if (profileLink) {
     const showProfile = s?.role === 'user';
