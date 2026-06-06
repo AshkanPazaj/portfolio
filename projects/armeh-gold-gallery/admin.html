@@ -144,7 +144,15 @@
     .product-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 2px; border: 1px solid var(--border); background: var(--cream); }
     .product-thumb-empty { width: 44px; height: 44px; border-radius: 2px; border: 1px dashed var(--border); background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--text-muted); }
     .image-upload-box { border: 1px dashed var(--border); border-radius: 3px; padding: 16px; text-align: center; background: var(--off-white); }
-    .image-preview { max-width: 100%; max-height: 160px; border-radius: 3px; margin-top: 10px; object-fit: contain; }
+    .prod-images-gallery { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 12px; min-height: 0; }
+    .prod-img-item { position: relative; width: 72px; height: 72px; border-radius: 3px; overflow: hidden; border: 1px solid var(--border); background: var(--cream); }
+    .prod-img-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prod-img-remove {
+      position: absolute; top: 2px; left: 2px; width: 20px; height: 20px;
+      background: rgba(192,57,43,.9); color: #fff; border: none; border-radius: 2px;
+      font-size: 14px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
+    .prod-img-remove:hover { background: #c0392b; }
     .image-actions { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
     .btn-img { padding: 6px 14px; font-size: 11px; font-weight: 600; border-radius: 2px; cursor: pointer; font-family: 'Vazirmatn', sans-serif; border: 1px solid var(--border); background: var(--white); color: var(--text-dim); }
     .btn-img:hover { background: var(--off-white); }
@@ -271,14 +279,17 @@
           </label>
         </div>
         <div class="form-group">
-          <label>تصویر محصول</label>
+          <label>توضیحات محصول <span style="font-weight:400;color:var(--text-muted)">(اختیاری)</span></label>
+          <textarea id="prod-description" rows="3" placeholder="جزئیات، ابعاد، نگین و..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>تصاویر محصول</label>
           <div class="image-upload-box">
-            <img id="prod-image-preview" class="image-preview" style="display:none" alt="پیش‌نمایش" />
-            <p id="prod-image-hint" style="font-size:12px;color:var(--text-muted)">فرمت JPG یا PNG — حداکثر ۲ مگابایت</p>
-            <input type="file" id="product-image-input" accept="image/jpeg,image/png,image/webp" />
+            <div id="prod-images-gallery" class="prod-images-gallery"></div>
+            <p id="prod-image-hint" style="font-size:12px;color:var(--text-muted)">فرمت JPG یا PNG — حداکثر ۲ مگابایت برای هر تصویر — تعداد نامحدود</p>
+            <input type="file" id="product-image-input" accept="image/jpeg,image/png,image/webp" multiple />
             <div class="image-actions">
-              <button type="button" class="btn-img" onclick="document.getElementById('product-image-input').click()">انتخاب تصویر</button>
-              <button type="button" class="btn-img danger" id="prod-remove-image" onclick="removeProductImage()" style="display:none">حذف تصویر</button>
+              <button type="button" class="btn-img" onclick="document.getElementById('product-image-input').click()">افزودن تصویر</button>
             </div>
           </div>
         </div>
@@ -333,13 +344,18 @@
     document.getElementById('tab-' + name).classList.add('active');
   }
 
-  let pendingProductImage = undefined;
+  let pendingProductImages = undefined;
 
   function renderProductsTab() {
     const all = Products.getAll();
-    const rows = Object.values(all).flat().map(p => `
+    const rows = Object.values(all).flat().map(p => {
+      const imgs = getProductImages(p);
+      const thumb = imgs[0]
+        ? `<img src="${imgs[0]}" class="product-thumb" alt="" />${imgs.length > 1 ? `<span style="font-size:9px;color:var(--text-muted);display:block;margin-top:2px">${imgs.length} تصویر</span>` : ''}`
+        : '<div class="product-thumb-empty">بدون<br>تصویر</div>';
+      return `
       <tr data-pid="${p.id}">
-        <td>${p.image ? `<img src="${p.image}" class="product-thumb" alt="" />` : '<div class="product-thumb-empty">بدون<br>تصویر</div>'}</td>
+        <td>${thumb}</td>
         <td><span class="coll-badge">${p.collectionName}</span></td>
         <td style="font-weight:600;color:var(--text)">${p.name}</td>
         <td>${p.material}</td>
@@ -359,7 +375,8 @@
             <button class="btn-action btn-delete" onclick="confirmDeleteProduct('${p.id}')">حذف</button>
           </div>
         </td>
-      </tr>`).join('');
+      </tr>`;
+    }).join('');
     return `
       <div class="section-header">
         <h2>مدیریت محصولات (${Object.values(all).flat().length})</h2>
@@ -378,28 +395,32 @@
     ).join('');
   }
 
-  function setProductImagePreview(src) {
-    const img = document.getElementById('prod-image-preview');
-    const hint = document.getElementById('prod-image-hint');
-    const rmBtn = document.getElementById('prod-remove-image');
-    if (src) {
-      img.src = src; img.style.display = 'block'; hint.style.display = 'none'; rmBtn.style.display = '';
-    } else {
-      img.style.display = 'none'; img.removeAttribute('src'); hint.style.display = ''; rmBtn.style.display = 'none';
+  function renderProductImagesGallery() {
+    const gallery = document.getElementById('prod-images-gallery');
+    const imgs = Array.isArray(pendingProductImages) ? pendingProductImages : [];
+    if (!imgs.length) {
+      gallery.innerHTML = '<p style="font-size:11px;color:var(--text-muted);width:100%">هنوز تصویری اضافه نشده است.</p>';
+      return;
     }
+    gallery.innerHTML = imgs.map((src, i) => `
+      <div class="prod-img-item">
+        <img src="${src}" alt="تصویر ${i + 1}" />
+        <button type="button" class="prod-img-remove" onclick="removeProductImageAt(${i})" aria-label="حذف تصویر">×</button>
+      </div>`).join('');
   }
 
   function openProductAdd() {
-    pendingProductImage = null;
+    pendingProductImages = [];
     document.getElementById('product-modal-title').textContent = 'افزودن محصول جدید';
     document.getElementById('prod-id').value = '';
     fillCollectionSelect('rings');
     document.getElementById('prod-name').value = '';
     document.getElementById('prod-material').value = 'طلای ۱۸ عیار';
     document.getElementById('prod-price').value = '';
+    document.getElementById('prod-description').value = '';
     document.getElementById('prod-available').checked = true;
     document.getElementById('product-image-input').value = '';
-    setProductImagePreview(null);
+    renderProductImagesGallery();
     document.getElementById('product-modal').classList.remove('hidden');
   }
 
@@ -407,33 +428,43 @@
     const found = Products.findProduct(id);
     if (!found) return;
     const p = found.product;
-    pendingProductImage = undefined;
+    pendingProductImages = getProductImages(p).slice();
     document.getElementById('product-modal-title').textContent = 'ویرایش محصول';
     document.getElementById('prod-id').value = p.id;
     fillCollectionSelect(found.collection);
     document.getElementById('prod-name').value = p.name;
     document.getElementById('prod-material').value = p.material;
     document.getElementById('prod-price').value = p.price || '';
+    document.getElementById('prod-description').value = p.description || '';
     document.getElementById('prod-available').checked = p.available !== false;
     document.getElementById('product-image-input').value = '';
-    setProductImagePreview(p.image || null);
+    renderProductImagesGallery();
     document.getElementById('product-modal').classList.remove('hidden');
   }
 
-  function removeProductImage() {
-    pendingProductImage = null;
-    document.getElementById('product-image-input').value = '';
-    setProductImagePreview(null);
+  function removeProductImageAt(index) {
+    if (!Array.isArray(pendingProductImages)) return;
+    pendingProductImages.splice(index, 1);
+    renderProductImagesGallery();
   }
 
   document.getElementById('product-image-input').addEventListener('change', async function () {
-    const file = this.files[0];
-    if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { alert('حجم تصویر نباید بیشتر از ۲ مگابایت باشد.'); this.value = ''; return; }
-    try {
-      pendingProductImage = await compressImage(file, 480, 0.72);
-      setProductImagePreview(pendingProductImage);
-    } catch (e) { alert('خطا در بارگذاری تصویر.'); }
+    const files = Array.from(this.files || []);
+    if (!files.length) return;
+    if (!Array.isArray(pendingProductImages)) pendingProductImages = [];
+    for (const file of files) {
+      if (file.size > 2 * 1024 * 1024) {
+        alert(`تصویر «${file.name}» بیش از ۲ مگابایت است و رد شد.`);
+        continue;
+      }
+      try {
+        pendingProductImages.push(await compressImage(file, 480, 0.72));
+      } catch (e) {
+        alert(`خطا در بارگذاری «${file.name}».`);
+      }
+    }
+    renderProductImagesGallery();
+    this.value = '';
   });
 
   function saveProduct() {
@@ -442,11 +473,12 @@
     const collection = document.getElementById('prod-collection').value;
     const material = document.getElementById('prod-material').value.trim();
     const price = document.getElementById('prod-price').value;
+    const description = document.getElementById('prod-description').value.trim();
     const available = document.getElementById('prod-available').checked;
     if (!name) { alert('لطفاً نام محصول را وارد کنید.'); return; }
     if (!material) { alert('لطفاً جنس محصول را وارد کنید.'); return; }
-    const data = { name, material, price, available, collection };
-    if (pendingProductImage !== undefined) data.image = pendingProductImage;
+    const data = { name, material, price, available, collection, description };
+    if (pendingProductImages !== undefined) data.images = pendingProductImages.slice();
     if (id) Products.updateProduct(id, data);
     else Products.addProduct(collection, data);
     closeModal('product-modal');

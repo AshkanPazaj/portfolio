@@ -58,6 +58,72 @@
     .product-art.has-image { padding:0; overflow:hidden; }
     .product-art.has-image img { width:100%; height:100%; object-fit:cover; display:block; }
     .product-art-placeholder { opacity:.85; }
+    .product-art-clickable { cursor:pointer; position:relative; }
+    .product-img-count {
+      position:absolute; bottom:8px; left:8px;
+      background:rgba(17,68,17,.75); color:#fff;
+      font-size:10px; font-weight:600; padding:3px 8px; border-radius:2px;
+      pointer-events:none;
+    }
+    .product-name-clickable { cursor:pointer; transition:color .2s; }
+    .product-name-clickable:hover { color:var(--green,#114411); }
+    .pd-overlay {
+      position:fixed; inset:0; z-index:2000;
+      background:rgba(12,51,12,.45); backdrop-filter:blur(4px);
+      display:flex; align-items:center; justify-content:center;
+      padding:24px; opacity:1; transition:opacity .25s;
+    }
+    .pd-overlay.hidden { display:none; }
+    .pd-modal {
+      background:var(--white,#fff); border-radius:4px;
+      max-width:720px; width:100%; max-height:90vh; overflow:auto;
+      position:relative; box-shadow:0 20px 60px rgba(0,0,0,.18);
+    }
+    .pd-close {
+      position:absolute; top:12px; left:12px; z-index:2;
+      background:rgba(255,255,255,.9); border:1px solid var(--border,#e0ddd5);
+      width:32px; height:32px; border-radius:2px; cursor:pointer;
+      font-size:20px; line-height:1; color:var(--text-dim,#6b6b6b);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .pd-close:hover { background:var(--off-white,#faf9f6); color:var(--green,#114411); }
+    .pd-gallery { position:relative; background:var(--cream,#faf9f6); border-bottom:1px solid var(--border,#e0ddd5); }
+    .pd-slide-wrap { height:320px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .pd-slide { max-width:100%; max-height:320px; object-fit:contain; display:block; }
+    .pd-placeholder { opacity:.7; }
+    .pd-nav {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:36px; height:36px; border-radius:2px;
+      background:rgba(255,255,255,.92); border:1px solid var(--border,#e0ddd5);
+      color:var(--green,#114411); font-size:22px; line-height:1;
+      cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:background .2s,color .2s; z-index:1;
+    }
+    .pd-nav:hover { background:var(--green,#114411); color:#fff; border-color:var(--green,#114411); }
+    .pd-nav:disabled { opacity:.35; cursor:default; pointer-events:none; }
+    .pd-prev { right:12px; }
+    .pd-next { left:12px; }
+    .pd-dots { display:flex; justify-content:center; gap:6px; padding:12px; flex-wrap:wrap; }
+    .pd-dot {
+      width:7px; height:7px; border-radius:50%; border:none; padding:0;
+      background:rgba(17,68,17,.2); cursor:pointer; transition:background .2s,transform .2s;
+    }
+    .pd-dot.active { background:var(--gold,#c9a840); transform:scale(1.2); }
+    .pd-info { padding:24px 28px 28px; }
+    .pd-collection { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-dark,#9a7e28); margin-bottom:8px; display:block; }
+    .pd-name { font-size:1.35rem; font-weight:700; color:var(--green-deep,#0c330c); margin-bottom:10px; line-height:1.35; }
+    .pd-material { font-size:13px; color:var(--text-muted,#9a9a9a); margin-bottom:8px; }
+    .pd-price { font-size:1.1rem; font-weight:700; color:var(--gold-dark,#9a7e28); margin-bottom:12px; }
+    .pd-desc { font-size:13px; color:var(--text-dim,#6b6b6b); line-height:1.85; margin-bottom:16px; }
+    .pd-status { font-size:12px; font-weight:600; margin-bottom:18px; }
+    .pd-status.available { color:var(--green,#114411); }
+    .pd-status.unavailable { color:#c0392b; }
+    .pd-add-cart { font-size:13px !important; padding-bottom:3px; }
+    @media (max-width:600px) {
+      .pd-slide-wrap { height:240px; }
+      .pd-slide { max-height:240px; }
+      .pd-info { padding:20px; }
+    }
   `;
   const s = document.createElement('style');
   s.textContent = css;
@@ -168,15 +234,32 @@ const Products = (function () {
     pendants:  [{id:'pen1',name:'آویز لوزی کلاسیک',collection:'pendants',collectionName:'آویز تک',material:'طلای ۱۸ عیار',price:11200000,available:true},{id:'pen2',name:'آویز دایره نگین‌دار',collection:'pendants',collectionName:'آویز تک',material:'طلای ۱۸ عیار',price:14800000,available:true},{id:'pen3',name:'آویز قلب با تاج',collection:'pendants',collectionName:'آویز تک',material:'طلای ۱۸ عیار',price:16200000,available:true},{id:'pen4',name:'آویز لوزی با مرکز نگین',collection:'pendants',collectionName:'آویز تک',material:'طلای ۲۱ عیار',price:19500000,available:true},{id:'pen5',name:'آویز ستاره طلایی',collection:'pendants',collectionName:'آویز تک',material:'طلای ۱۸ عیار',price:12800000,available:true},{id:'pen6',name:'آویز بیضی مدرن',collection:'pendants',collectionName:'آویز تک',material:'طلای ۱۸ عیار',price:13800000,available:true}],
     chains:    [{id:'cha1',name:'زنجیر فیگارو طلایی',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۱۸ عیار',price:28200000,available:true},{id:'cha2',name:'زنجیر کارتیه ظریف',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۱۸ عیار',price:24500000,available:true},{id:'cha3',name:'زنجیر هرینگبون',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۱۸ عیار',price:26800000,available:true},{id:'cha4',name:'زنجیر طناب دوبل',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۱۸ عیار',price:31200000,available:true},{id:'cha5',name:'زنجیر ساده با خامه',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۲۱ عیار',price:35800000,available:true},{id:'cha6',name:'زنجیر فانتزی مرکز‌دار',collection:'chains',collectionName:'زنجیر تک',material:'طلای ۱۸ عیار',price:29500000,available:true}],
   };
+  function normalizeProduct(p) {
+    if (Array.isArray(p.images)) {
+      if (p.image && !p.images.length) p.images = [p.image];
+    } else {
+      p.images = p.image ? [p.image] : [];
+    }
+    delete p.image;
+    if (!Array.isArray(p.images)) p.images = [];
+    return p;
+  }
   function mergeDefaults(all) {
     let changed = false;
+    Object.keys(all).forEach(coll => {
+      (all[coll] || []).forEach(p => {
+        const hadLegacy = p.image != null || !Array.isArray(p.images);
+        normalizeProduct(p);
+        if (hadLegacy) changed = true;
+      });
+    });
     Object.keys(D).forEach(coll => {
       if (!all[coll]) all[coll] = [];
       D[coll].forEach(def => {
         const p = all[coll].find(x => x.id === def.id);
         if (p) {
           if (p.price == null) { p.price = def.price; changed = true; }
-        } else { all[coll].push({ ...def }); changed = true; }
+        } else { all[coll].push(normalizeProduct({ ...def })); changed = true; }
       });
     });
     if (changed) localStorage.setItem(KEY, JSON.stringify(all));
@@ -226,7 +309,8 @@ const Products = (function () {
       material: (data.material || 'طلای ۱۸ عیار').trim(),
       price: Number(data.price) || 0,
       available: data.available !== false,
-      image: data.image || null,
+      images: Array.isArray(data.images) ? data.images.filter(Boolean) : [],
+      description: (data.description || '').trim(),
     };
     all[collection].push(product);
     saveAll(all);
@@ -242,7 +326,8 @@ const Products = (function () {
     if (data.material != null) p.material = data.material.trim();
     if (data.price != null) p.price = Number(data.price) || 0;
     if (data.available != null) p.available = !!data.available;
-    if (data.image !== undefined) p.image = data.image;
+    if (data.images !== undefined) p.images = Array.isArray(data.images) ? data.images.filter(Boolean) : [];
+    if (data.description !== undefined) p.description = (data.description || '').trim();
     if (data.collection && data.collection !== found.collection && COLLECTIONS[data.collection]) {
       all[found.collection] = all[found.collection].filter(x => x.id !== id);
       p.collection = data.collection;
@@ -306,24 +391,39 @@ function compressImage(file, maxW, quality) {
 
 const PRODUCT_PLACEHOLDER_SVG = `<svg class="product-art-placeholder" width="90" height="90" viewBox="0 0 140 140" fill="none"><circle cx="70" cy="70" r="44" stroke="#114411" stroke-width="2.5"/><circle cx="70" cy="70" r="28" stroke="rgba(201,168,64,.4)" stroke-width="1.5" stroke-dasharray="4 3"/></svg>`;
 
+function getProductImages(p) {
+  if (!p) return [];
+  if (Array.isArray(p.images) && p.images.length) return p.images.filter(Boolean);
+  if (p.image) return [p.image];
+  return [];
+}
+
+function getPrimaryImage(p) {
+  return getProductImages(p)[0] || null;
+}
+
 function productArtHtml(p) {
-  if (p.image) return `<img src="${p.image}" alt="${p.name}" />`;
+  const img = getPrimaryImage(p);
+  if (img) return `<img src="${img}" alt="${escHtml(p.name)}" />`;
   return PRODUCT_PLACEHOLDER_SVG;
 }
 
 function buildProductCard(p, collectionKey) {
   const cartSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`;
-  const art = p.image
-    ? `<img src="${p.image}" alt="${escHtml(p.name)}" />`
+  const primary = getPrimaryImage(p);
+  const art = primary
+    ? `<img src="${primary}" alt="${escHtml(p.name)}" />`
     : PRODUCT_PLACEHOLDER_SVG;
+  const imgCount = getProductImages(p).length;
+  const badge = imgCount > 1 ? `<span class="product-img-count">${imgCount} تصویر</span>` : '';
   return `
-    <div class="product-card reveal" data-id="${escHtml(p.id)}" data-available="${p.available}">
-      <div class="product-art${p.image ? ' has-image' : ''}">${art}</div>
+    <div class="product-card reveal" data-id="${escHtml(p.id)}" data-collection="${escHtml(collectionKey)}" data-available="${p.available}">
+      <div class="product-art product-art-clickable${primary ? ' has-image' : ''}" onclick="openProductDetail('${escHtml(p.id)}','${escHtml(collectionKey)}')" role="button" tabindex="0" aria-label="مشاهده جزئیات ${escHtml(p.name)}">${art}${badge}</div>
       <div class="product-body">
-        <div class="product-name">${escHtml(p.name)}</div>
+        <div class="product-name product-name-clickable" onclick="openProductDetail('${escHtml(p.id)}','${escHtml(collectionKey)}')" role="button" tabindex="0">${escHtml(p.name)}</div>
         <div class="product-material">${escHtml(p.material)}</div>
         <div class="product-price">${formatPrice(p.price)}</div>
-        <button class="btn-add-cart" onclick="addToCart(this,'${collectionKey}')">افزودن به سبد ${cartSvg}</button>
+        <button class="btn-add-cart" onclick="event.stopPropagation();addToCart(this,'${collectionKey}')">افزودن به سبد ${cartSvg}</button>
       </div>
     </div>`;
 }
@@ -363,9 +463,10 @@ function applyAvailability(collectionKey) {
     if (!card.dataset.id) card.dataset.id = p.id;
     card.dataset.available = String(p.available);
     const art = card.querySelector('.product-art');
-    if (art && p.image) {
+    const primary = getPrimaryImage(p);
+    if (art && primary) {
       art.classList.add('has-image');
-      if (!art.querySelector('img')) art.innerHTML = `<img src="${p.image}" alt="${p.name}" />`;
+      if (!art.querySelector('img')) art.innerHTML = `<img src="${primary}" alt="${p.name}" />`;
     }
     let priceEl = card.querySelector('.product-price');
     if (!priceEl) {
@@ -400,6 +501,128 @@ function initNav() {
   }
 }
 
+/* ── Product detail modal ─────────────────── */
+let pdState = { index: 0, images: [], product: null, collectionKey: '' };
+
+function initProductDetail() {
+  if (document.getElementById('product-detail-overlay')) return;
+  const cartSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`;
+  const overlay = document.createElement('div');
+  overlay.id = 'product-detail-overlay';
+  overlay.className = 'pd-overlay hidden';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.innerHTML = `
+    <div class="pd-modal">
+      <button type="button" class="pd-close" aria-label="بستن">×</button>
+      <div class="pd-gallery">
+        <button type="button" class="pd-nav pd-prev" aria-label="تصویر قبلی">‹</button>
+        <div class="pd-slide-wrap"></div>
+        <button type="button" class="pd-nav pd-next" aria-label="تصویر بعدی">›</button>
+        <div class="pd-dots"></div>
+      </div>
+      <div class="pd-info">
+        <span class="pd-collection"></span>
+        <h2 class="pd-name"></h2>
+        <p class="pd-material"></p>
+        <p class="pd-price"></p>
+        <p class="pd-desc"></p>
+        <p class="pd-status"></p>
+        <button type="button" class="btn-add-cart pd-add-cart">افزودن به سبد ${cartSvg}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.querySelector('.pd-close').addEventListener('click', closeProductDetail);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeProductDetail(); });
+  overlay.querySelector('.pd-prev').addEventListener('click', () => pdGo(-1));
+  overlay.querySelector('.pd-next').addEventListener('click', () => pdGo(1));
+  document.addEventListener('keydown', pdKeydown);
+}
+
+function pdKeydown(e) {
+  const ov = document.getElementById('product-detail-overlay');
+  if (!ov || ov.classList.contains('hidden')) return;
+  if (e.key === 'Escape') closeProductDetail();
+  if (e.key === 'ArrowRight') pdGo(-1);
+  if (e.key === 'ArrowLeft') pdGo(1);
+}
+
+function openProductDetail(id, collectionKey) {
+  const p = Products.getCollection(collectionKey).find(x => x.id === id);
+  if (!p) return;
+  initProductDetail();
+  pdState = { id, collectionKey, images: getProductImages(p), index: 0, product: p };
+  const ov = document.getElementById('product-detail-overlay');
+  ov.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  renderProductDetail();
+}
+
+function closeProductDetail() {
+  const ov = document.getElementById('product-detail-overlay');
+  if (ov) ov.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function pdGo(delta) {
+  if (pdState.images.length < 2) return;
+  pdState.index = (pdState.index + delta + pdState.images.length) % pdState.images.length;
+  renderProductDetailSlide();
+}
+
+function pdGoTo(i) {
+  if (!pdState.images.length) return;
+  pdState.index = i;
+  renderProductDetailSlide();
+}
+
+function renderProductDetailSlide() {
+  const ov = document.getElementById('product-detail-overlay');
+  if (!ov) return;
+  const wrap = ov.querySelector('.pd-slide-wrap');
+  const imgs = pdState.images;
+  const multi = imgs.length > 1;
+  const prev = ov.querySelector('.pd-prev');
+  const next = ov.querySelector('.pd-next');
+  prev.style.display = multi ? 'flex' : 'none';
+  next.style.display = multi ? 'flex' : 'none';
+  if (!imgs.length) {
+    wrap.innerHTML = PRODUCT_PLACEHOLDER_SVG.replace('class="product-art-placeholder"', 'class="pd-placeholder"');
+  } else {
+    wrap.innerHTML = `<img class="pd-slide" src="${imgs[pdState.index]}" alt="${escHtml(pdState.product.name)}" />`;
+  }
+  const dots = ov.querySelector('.pd-dots');
+  if (!multi) { dots.innerHTML = ''; dots.style.display = 'none'; return; }
+  dots.style.display = 'flex';
+  dots.innerHTML = imgs.map((_, i) =>
+    `<button type="button" class="pd-dot${i === pdState.index ? ' active' : ''}" aria-label="تصویر ${(i + 1).toLocaleString('fa-IR')}" onclick="pdGoTo(${i})"></button>`
+  ).join('');
+}
+
+function renderProductDetail() {
+  const ov = document.getElementById('product-detail-overlay');
+  const p = pdState.product;
+  if (!ov || !p) return;
+  ov.querySelector('.pd-collection').textContent = p.collectionName || '';
+  ov.querySelector('.pd-name').textContent = p.name;
+  ov.querySelector('.pd-material').textContent = p.material;
+  ov.querySelector('.pd-price').textContent = formatPrice(p.price);
+  const descEl = ov.querySelector('.pd-desc');
+  if (p.description) { descEl.textContent = p.description; descEl.style.display = 'block'; }
+  else { descEl.textContent = ''; descEl.style.display = 'none'; }
+  const status = ov.querySelector('.pd-status');
+  const avail = p.available !== false;
+  status.textContent = avail ? 'موجود در فروشگاه' : 'ناموجود';
+  status.className = 'pd-status ' + (avail ? 'available' : 'unavailable');
+  const btn = ov.querySelector('.pd-add-cart');
+  btn.classList.remove('added');
+  btn.disabled = !avail;
+  btn.style.opacity = avail ? '' : '0.4';
+  btn.style.pointerEvents = avail ? '' : 'none';
+  btn.onclick = () => { if (avail) addToCart(btn, pdState.collectionKey); };
+  renderProductDetailSlide();
+}
+
 /* ── Footer Instagram ─────────────────────── */
 const INSTAGRAM_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
 
@@ -422,6 +645,7 @@ function initFooterInstagram() {
 /* ── Bootstrap ───────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
   initNav();
+  initProductDetail();
   initFooterInstagram();
 
   const nav = document.getElementById('nav');
