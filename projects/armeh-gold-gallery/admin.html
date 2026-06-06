@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>پنل مدیریت | گالری طلای آرمه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    ul, ol { list-style: none; }
+    button { font-family: inherit; }
+
+    :root {
+      --green:       #114411;
+      --green-deep:  #0c330c;
+      --green-mid:   #1a5c1a;
+      --green-pale:  #e8f0e8;
+      --green-tint:  #f2f6f2;
+      --gold:        #c9a840;
+      --gold-dark:   #9a7e28;
+      --white:       #ffffff;
+      --off-white:   #faf9f6;
+      --cream:       #f4f0e6;
+      --text:        #1a1a1a;
+      --text-dim:    #6b6b6b;
+      --text-muted:  #9a9a9a;
+      --border:      #e0ddd5;
+      --error:       #c0392b;
+      --ease:        cubic-bezier(.25,.46,.45,.94);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--off-white); color: var(--text); font-family: 'Vazirmatn', system-ui, sans-serif; line-height: 1.7; min-height: 100vh; }
+    .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 900; padding: 0 48px; height: 76px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s var(--ease);
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo-img { height: 44px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 40px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-dim); transition: color .2s; }
+    .nav-links a:hover { color: var(--green); }
+
+    /* PAGE */
+    .page-hero { background: var(--green); padding: 48px 0 40px; text-align: center; }
+    .page-hero h1 { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 300; color: var(--white); }
+    .page-hero h1 strong { font-weight: 700; color: var(--gold); }
+    .page-hero p { font-size: 13px; color: rgba(255,255,255,.5); margin-top: 6px; }
+
+    .page-body { padding: 48px 0 80px; }
+
+    /* TABS */
+    .tab-nav { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 32px; }
+    .tab-btn {
+      padding: 12px 24px; font-size: 13px; font-weight: 600; color: var(--text-muted);
+      background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent;
+      margin-bottom: -2px; transition: color .2s, border-color .2s;
+    }
+    .tab-btn.active { color: var(--green); border-color: var(--green); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* SECTION HEADER */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .section-header h2 { font-size: 15px; font-weight: 700; color: var(--green-deep); }
+
+    /* TABLE */
+    .data-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; font-size: 13px; }
+    .data-table th { background: var(--green-tint); padding: 12px 16px; text-align: right; font-size: 11px; font-weight: 700; letter-spacing: .06em; color: var(--green-deep); border-bottom: 1px solid var(--border); }
+    .data-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-dim); vertical-align: middle; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: var(--off-white); }
+
+    /* AVAILABILITY TOGGLE */
+    .toggle-wrap { display: flex; align-items: center; gap: 8px; }
+    .toggle { position: relative; width: 40px; height: 22px; }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-slider {
+      position: absolute; inset: 0; background: #ccc; border-radius: 22px;
+      cursor: pointer; transition: background .25s;
+    }
+    .toggle-slider::before {
+      content: ''; position: absolute; width: 16px; height: 16px;
+      right: 3px; top: 3px; background: white; border-radius: 50%;
+      transition: transform .25s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--green); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(-18px); }
+    .avail-label { font-size: 12px; font-weight: 600; }
+    .avail-label.yes { color: var(--green); }
+    .avail-label.no  { color: var(--text-muted); }
+
+    /* USER ACTIONS */
+    .action-btns { display: flex; gap: 8px; }
+    .btn-action {
+      padding: 5px 12px; border-radius: 2px; font-size: 11px; font-weight: 600;
+      cursor: pointer; border: 1px solid; transition: background .2s;
+    }
+    .btn-edit   { color: var(--green); border-color: rgba(17,68,17,.3); background: none; }
+    .btn-edit:hover   { background: var(--green-pale); }
+    .btn-orders { color: var(--gold-dark); border-color: rgba(154,126,40,.3); background: none; }
+    .btn-orders:hover { background: var(--cream); }
+    .btn-delete { color: var(--error); border-color: rgba(192,57,43,.3); background: none; }
+    .btn-delete:hover { background: rgba(192,57,43,.06); }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: var(--white); border-radius: 4px; width: 100%; max-width: 480px;
+      max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2);
+    }
+    .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
+    .modal-header h3 { font-size: 15px; font-weight: 700; color: var(--green-deep); }
+    .modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 20px; line-height: 1; padding: 0; }
+    .modal-body { padding: 24px; }
+    .modal-footer { padding: 0 24px 24px; display: flex; justify-content: flex-end; gap: 10px; }
+
+    /* FORM */
+    .form-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .form-group input { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 13px; color: var(--text); background: var(--white); outline: none; transition: border-color .2s; }
+    .form-group input:focus { border-color: var(--green); }
+
+    .btn-primary { padding: 10px 24px; background: var(--green); color: var(--white); border: none; border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s; }
+    .btn-primary:hover { background: var(--green-mid); }
+    .btn-secondary { padding: 10px 24px; background: none; border: 1px solid var(--border); border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 13px; font-weight: 600; color: var(--text-dim); cursor: pointer; transition: background .2s; }
+    .btn-secondary:hover { background: var(--off-white); }
+
+    /* ORDERS LIST */
+    .order-item { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .order-item:last-child { border-bottom: none; }
+    .order-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
+    .order-status { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--cream); color: var(--gold-dark); }
+    .order-products { font-size: 13px; color: var(--text-dim); }
+    .no-orders { font-size: 13px; color: var(--text-muted); text-align: center; padding: 20px 0; }
+
+    /* COLLECTION LABEL */
+    .coll-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; background: var(--cream); color: var(--gold-dark); border-radius: 10px; }
+
+    @media (max-width: 700px) { .container { padding: 0 20px; } .nav { padding: 0 20px; } .form-row2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" aria-label="ناوبری اصلی">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#collections">مجموعه‌ها</a></li>
+      <li><a href="index.html#about">درباره ما</a></li>
+      <li id="nav-login-li"><a href="login.html">ورود</a></li>
+      <li id="nav-user-li" style="display:none">
+        <a href="profile.html" class="nav-user-name"></a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
+      </li>
+      <li id="nav-admin-li" style="display:none">
+        <a href="admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
+      </li>
+    </ul>
+    <div class="nav-end">
+      <a href="index.html" class="nav-logo" aria-label="گالری طلای آرمه">
+        <img src="assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" />
+      </a>
+      <a href="cart.html" class="nav-cart" aria-label="سبد خرید">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" style="display:none"></span>
+      </a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1><strong>پنل</strong> مدیریت</h1>
+      <p>مدیریت محصولات و کاربران گالری طلای آرمه</p>
+    </div>
+  </section>
+
+  <main class="page-body">
+    <div class="container" id="admin-body">
+      <!-- rendered by JS -->
+    </div>
+  </main>
+
+  <!-- Edit User Modal -->
+  <div class="modal-overlay hidden" id="edit-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>ویرایش کاربر</h3>
+        <button class="modal-close" onclick="closeModal('edit-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-uid" />
+        <div class="form-row2">
+          <div class="form-group"><label>نام</label><input id="edit-fn" type="text" /></div>
+          <div class="form-group"><label>نام خانوادگی</label><input id="edit-ln" type="text" /></div>
+        </div>
+        <div class="form-group"><label>ایمیل</label><input id="edit-email" type="email" /></div>
+        <div class="form-group"><label>شماره موبایل</label><input id="edit-phone" type="tel" /></div>
+        <div class="form-row2">
+          <div class="form-group"><label>استان</label><input id="edit-ostan" type="text" /></div>
+          <div class="form-group"><label>شهر</label><input id="edit-shahr" type="text" /></div>
+        </div>
+        <div class="form-group"><label>آدرس</label><input id="edit-address" type="text" /></div>
+        <div class="form-group"><label>کد پستی</label><input id="edit-postal" type="text" /></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('edit-modal')">انصراف</button>
+        <button class="btn-primary" onclick="saveEdit()">ذخیره</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders Modal -->
+  <div class="modal-overlay hidden" id="orders-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="orders-modal-title">سابقه سفارش‌ها</h3>
+        <button class="modal-close" onclick="closeModal('orders-modal')">×</button>
+      </div>
+      <div class="modal-body" id="orders-modal-body"></div>
+    </div>
+  </div>
+
+  <script src="js/armeh.js"></script>
+  <script>
+  // Guard: only admin
+  (function() {
+    if (!Auth.isAdmin()) {
+      document.getElementById('admin-body').innerHTML = `
+        <div style="text-align:center;padding:80px 20px">
+          <p style="font-size:15px;color:var(--text-muted)">دسترسی فقط برای مدیر مجاز است.</p>
+          <a href="login.html" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--green);color:#fff;border-radius:2px;font-size:13px;font-weight:700">ورود</a>
+        </div>`;
+      return;
+    }
+    renderAdmin();
+  })();
+
+  function renderAdmin() {
+    document.getElementById('admin-body').innerHTML = `
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('products', this)">مدیریت محصولات</button>
+        <button class="tab-btn" onclick="switchTab('users', this)">مدیریت کاربران</button>
+      </div>
+      <div class="tab-panel active" id="tab-products">${renderProductsTab()}</div>
+      <div class="tab-panel" id="tab-users">${renderUsersTab()}</div>`;
+  }
+
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+  }
+
+  function renderProductsTab() {
+    const all = Products.getAll();
+    const rows = Object.values(all).flat().map(p => `
+      <tr>
+        <td><span class="coll-badge">${p.collectionName}</span></td>
+        <td style="font-weight:600;color:var(--text)">${p.name}</td>
+        <td>${p.material}</td>
+        <td>
+          <div class="toggle-wrap">
+            <label class="toggle">
+              <input type="checkbox" ${p.available ? 'checked' : ''} onchange="toggleAvail('${p.id}', this.checked)" />
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="avail-label ${p.available ? 'yes' : 'no'}">${p.available ? 'موجود' : 'ناموجود'}</span>
+          </div>
+        </td>
+      </tr>`).join('');
+    return `
+      <div class="section-header"><h2>وضعیت موجودی محصولات</h2></div>
+      <table class="data-table">
+        <thead><tr><th>مجموعه</th><th>نام محصول</th><th>جنس</th><th>وضعیت</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function renderUsersTab() {
+    const users = Auth.getUsers();
+    if (users.length === 0)
+      return `<p style="color:var(--text-muted);font-size:14px;padding:32px 0">هیچ کاربری ثبت‌نام نکرده است.</p>`;
+    const rows = users.map(u => `
+      <tr>
+        <td style="font-weight:600;color:var(--text)">${u.firstname} ${u.lastname}</td>
+        <td dir="ltr" style="text-align:right">${u.email}</td>
+        <td>${u.phone || '—'}</td>
+        <td dir="ltr" style="text-align:right;font-size:12px">${new Date(u.createdAt).toLocaleDateString('fa-IR')}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn-action btn-edit" onclick="openEdit(${u.id})">ویرایش</button>
+            <button class="btn-action btn-orders" onclick="openOrders(${u.id})">سفارش‌ها</button>
+            <button class="btn-action btn-delete" onclick="confirmDelete(${u.id})">حذف</button>
+          </div>
+        </td>
+      </tr>`).join('');
+    return `
+      <div class="section-header"><h2>کاربران ثبت‌نام‌شده (${users.length})</h2></div>
+      <table class="data-table">
+        <thead><tr><th>نام</th><th>ایمیل</th><th>موبایل</th><th>تاریخ ثبت</th><th>عملیات</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>`;
+  }
+
+  function toggleAvail(id, available) {
+    Products.setAvailability(id, available);
+    const row = event.target.closest('tr');
+    const label = row.querySelector('.avail-label');
+    label.textContent = available ? 'موجود' : 'ناموجود';
+    label.className = 'avail-label ' + (available ? 'yes' : 'no');
+  }
+
+  function openEdit(id) {
+    const u = Auth.getUsers().find(u => u.id === id);
+    if (!u) return;
+    document.getElementById('edit-uid').value    = u.id;
+    document.getElementById('edit-fn').value     = u.firstname  || '';
+    document.getElementById('edit-ln').value     = u.lastname   || '';
+    document.getElementById('edit-email').value  = u.email      || '';
+    document.getElementById('edit-phone').value  = u.phone      || '';
+    document.getElementById('edit-ostan').value  = u.ostan      || '';
+    document.getElementById('edit-shahr').value  = u.shahr      || '';
+    document.getElementById('edit-address').value= u.address    || '';
+    document.getElementById('edit-postal').value = u.postal     || '';
+    document.getElementById('edit-modal').classList.remove('hidden');
+  }
+
+  function saveEdit() {
+    const id = Number(document.getElementById('edit-uid').value);
+    Auth.updateUser(id, {
+      firstname: document.getElementById('edit-fn').value.trim(),
+      lastname:  document.getElementById('edit-ln').value.trim(),
+      email:     document.getElementById('edit-email').value.trim(),
+      phone:     document.getElementById('edit-phone').value.trim(),
+      ostan:     document.getElementById('edit-ostan').value.trim(),
+      shahr:     document.getElementById('edit-shahr').value.trim(),
+      address:   document.getElementById('edit-address').value.trim(),
+      postal:    document.getElementById('edit-postal').value.trim(),
+    });
+    closeModal('edit-modal');
+    renderAdmin();
+  }
+
+  function openOrders(id) {
+    const u = Auth.getUsers().find(u => u.id === id);
+    if (!u) return;
+    document.getElementById('orders-modal-title').textContent = `سفارش‌های ${u.firstname} ${u.lastname}`;
+    const orders = u.orders || [];
+    document.getElementById('orders-modal-body').innerHTML = orders.length === 0
+      ? `<p class="no-orders">سفارشی ثبت نشده است.</p>`
+      : orders.map(o => `
+          <div class="order-item">
+            <div class="order-meta">
+              <span>${new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric' })}</span>
+              <span class="order-status">${o.status}</span>
+            </div>
+            <div class="order-products">${o.items.map(i => `${i.name} (×${i.qty})`).join(' ، ')}</div>
+          </div>`).join('');
+    document.getElementById('orders-modal').classList.remove('hidden');
+  }
+
+  function confirmDelete(id) {
+    const u = Auth.getUsers().find(u => u.id === id);
+    if (!u) return;
+    if (confirm(`آیا از حذف حساب ${u.firstname} ${u.lastname} مطمئن هستید؟`)) {
+      Auth.deleteUser(id);
+      renderAdmin();
+    }
+  }
+
+  function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
+  });
+  </script>
+</body>
+</html>

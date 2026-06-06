@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>سبد خرید | گالری طلای آرمه</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a { text-decoration: none; color: inherit; }
+    ul, ol { list-style: none; }
+    button { font-family: inherit; }
+
+    :root {
+      --green:       #114411;
+      --green-deep:  #0c330c;
+      --green-mid:   #1a5c1a;
+      --green-pale:  #e8f0e8;
+      --green-tint:  #f2f6f2;
+      --gold:        #c9a840;
+      --gold-dark:   #9a7e28;
+      --white:       #ffffff;
+      --off-white:   #faf9f6;
+      --cream:       #f4f0e6;
+      --text:        #1a1a1a;
+      --text-dim:    #6b6b6b;
+      --text-muted:  #9a9a9a;
+      --border:      #e0ddd5;
+      --border-green:rgba(17,68,17,0.18);
+      --error:       #c0392b;
+      --ease:        cubic-bezier(.25,.46,.45,.94);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--off-white); color: var(--text); font-family: 'Vazirmatn', system-ui, sans-serif; line-height: 1.7; min-height: 100vh; }
+
+    .container { width: 100%; max-width: 1000px; margin: 0 auto; padding: 0 40px; }
+
+    /* NAV */
+    .nav {
+      position: sticky; top: 0; z-index: 900; padding: 0 48px; height: 76px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      transition: box-shadow .3s var(--ease);
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo-img { height: 44px; width: auto; }
+    .nav-links { display: flex; align-items: center; gap: 40px; }
+    .nav-links a { font-size: 13px; font-weight: 500; color: var(--text-dim); transition: color .2s; position: relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; right:0; width:0; height:1px; background:var(--gold); transition:width .25s var(--ease); }
+    .nav-links a:hover { color: var(--green); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* PAGE */
+    .page-hero {
+      background: var(--green); padding: 56px 0 48px; text-align: center;
+    }
+    .page-hero h1 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; color: var(--white); }
+    .page-hero h1 strong { font-weight: 700; color: var(--gold); }
+    .page-hero p { font-size: 14px; color: rgba(255,255,255,.55); margin-top: 8px; }
+
+    .page-body { padding: 56px 0 80px; }
+
+    /* EMPTY STATE */
+    .empty-cart { text-align: center; padding: 80px 20px; }
+    .empty-cart svg { width: 64px; height: 64px; color: var(--border); margin-bottom: 20px; }
+    .empty-cart h2 { font-size: 1.2rem; font-weight: 600; color: var(--text-dim); margin-bottom: 8px; }
+    .empty-cart p { font-size: 14px; color: var(--text-muted); margin-bottom: 28px; }
+    .btn-go { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; background: var(--green); color: var(--white); font-size: 13px; font-weight: 600; border-radius: 2px; transition: background .2s; }
+    .btn-go:hover { background: var(--green-mid); }
+
+    /* CART LAYOUT */
+    .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start; }
+
+    /* ITEMS */
+    .cart-items { background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+    .cart-items-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .cart-items-header h2 { font-size: 14px; font-weight: 700; color: var(--green-deep); }
+    .btn-clear { background: none; border: none; cursor: pointer; font-size: 12px; color: var(--text-muted); transition: color .2s; }
+    .btn-clear:hover { color: var(--error); }
+
+    .cart-item { display: flex; align-items: center; gap: 16px; padding: 16px 24px; border-bottom: 1px solid var(--border); }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-icon { width: 52px; height: 52px; background: var(--cream); border-radius: 2px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cart-item-icon svg { width: 28px; height: 28px; color: var(--gold); }
+    .cart-item-info { flex: 1; }
+    .cart-item-name { font-size: 14px; font-weight: 600; color: var(--green-deep); }
+    .cart-item-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .cart-item-actions { display: flex; align-items: center; gap: 12px; }
+    .qty-wrap { display: flex; align-items: center; gap: 0; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; }
+    .qty-btn { background: none; border: none; width: 30px; height: 30px; cursor: pointer; font-size: 16px; color: var(--green); display: flex; align-items: center; justify-content: center; transition: background .2s; }
+    .qty-btn:hover { background: var(--green-pale); }
+    .qty-val { width: 34px; text-align: center; font-size: 13px; font-weight: 600; color: var(--text); border-right: 1px solid var(--border); border-left: 1px solid var(--border); line-height: 30px; }
+    .btn-remove { background: none; border: none; cursor: pointer; color: var(--text-muted); transition: color .2s; padding: 4px; }
+    .btn-remove:hover { color: var(--error); }
+    .btn-remove svg { width: 16px; height: 16px; display: block; }
+
+    /* SIDEBAR */
+    .cart-sidebar { display: flex; flex-direction: column; gap: 20px; }
+    .sidebar-box { background: var(--white); border: 1px solid var(--border); border-radius: 3px; padding: 24px; }
+    .sidebar-box h3 { font-size: 13px; font-weight: 700; color: var(--green-deep); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .summary-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim); margin-bottom: 8px; }
+    .summary-row strong { color: var(--text); font-weight: 600; }
+    .summary-note { font-size: 11px; color: var(--text-muted); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); line-height: 1.6; }
+
+    /* CHECKOUT FORM */
+    .checkout-form .form-group { margin-bottom: 14px; }
+    .checkout-form label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .checkout-form input, .checkout-form textarea {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 2px;
+      font-family: 'Vazirmatn', sans-serif; font-size: 13px; color: var(--text);
+      background: var(--white); outline: none; transition: border-color .2s;
+    }
+    .checkout-form input:focus, .checkout-form textarea:focus { border-color: var(--green); }
+    .checkout-form textarea { resize: none; min-height: 64px; }
+    .req { color: var(--error); margin-right: 2px; }
+    .guest-note { font-size: 11px; color: var(--text-muted); background: var(--cream); border-radius: 2px; padding: 8px 10px; margin-bottom: 14px; line-height: 1.6; }
+    .btn-submit-order {
+      width: 100%; padding: 13px; background: var(--green); color: var(--white);
+      border: none; border-radius: 2px; font-family: 'Vazirmatn', sans-serif;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: background .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-submit-order:hover { background: var(--green-mid); }
+    .order-success { text-align: center; padding: 16px 0; }
+    .order-success svg { width: 40px; height: 40px; color: var(--green); margin-bottom: 10px; }
+    .order-success p { font-size: 14px; color: var(--green-deep); font-weight: 600; }
+    .order-success small { font-size: 12px; color: var(--text-muted); }
+
+    /* FOOTER */
+    .footer { background: var(--green-deep); padding: 56px 0 28px; }
+    .footer-top { display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr; gap: 40px; margin-bottom: 48px; align-items: start; }
+    .footer-logo-img { height: 52px; width: auto; margin-bottom: 16px; }
+    .footer-brand p { font-size: 13px; color: rgba(201,168,64,.55); line-height: 1.8; max-width: 28ch; }
+    .footer-col-title { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: rgba(240,235,220,.5); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li { font-size: 13px; color: rgba(240,235,220,.45); line-height: 1.7; }
+    .footer-links a { font-size: 13px; color: rgba(240,235,220,.45); transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-map-box { order: -1; }
+    .footer-map { border-radius: 4px; overflow: hidden; border: 1px solid rgba(201,168,64,.2); }
+    .footer-map iframe { width: 100%; height: 180px; border: none; display: block; filter: grayscale(25%) contrast(1.05); }
+    .footer-divider { height: 1px; background: rgba(201,168,64,.1); margin-bottom: 24px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: center; }
+    .footer-copy { font-size: 15px; color: rgba(201,168,64,.5); text-align: center; }
+
+    @media (max-width: 860px) { .cart-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 600px) { .container { padding: 0 20px; } .nav { padding: 0 20px; } .footer-top { grid-template-columns: 1fr; gap: 28px; } }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" aria-label="ناوبری اصلی">
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html#collections">مجموعه‌ها</a></li>
+      <li><a href="index.html#about">درباره ما</a></li>
+      <li id="nav-login-li"><a href="login.html">ورود</a></li>
+      <li id="nav-user-li" style="display:none">
+        <a href="profile.html" class="nav-user-name"></a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
+      </li>
+      <li id="nav-admin-li" style="display:none">
+        <a href="admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
+      </li>
+    </ul>
+    <div class="nav-end">
+      <a href="index.html" class="nav-logo" aria-label="گالری طلای آرمه">
+        <img src="assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" />
+      </a>
+      <a href="cart.html" class="nav-cart" aria-label="سبد خرید">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" style="display:none"></span>
+      </a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1><strong>سبد</strong> خرید</h1>
+      <p>اقلام انتخابی شما برای استعلام قیمت</p>
+    </div>
+  </section>
+
+  <main class="page-body">
+    <div class="container" id="cart-container"></div>
+  </main>
+
+  <footer class="footer" aria-label="پاورقی">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/logo-page-0.png" alt="آرمه گلد" class="footer-logo-img" />
+          <p>جواهرات طلای ناب، دست‌ساز با عشق. ارسال به سراسر کشور.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">لینک‌ها</div>
+          <ul class="footer-links">
+            <li><a href="privacy.html">سیاست حریم خصوصی</a></li>
+            <li><a href="index.html#collections">مجموعه‌ها</a></li>
+            <li><a href="index.html#about">درباره گالری</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">بازدید</div>
+          <ul class="footer-links">
+            <li>تهران، هروی، مرکز خرید رونیکا، طبقه همکف، پلاک ۶۷</li>
+            <li><a href="tel:02121006803">۰۲۱۲۱۰۰۶۸۰۳</a></li>
+            <li>شنبه تا پنج‌شنبه ۱۰ تا ۲۱</li>
+          </ul>
+        </div>
+        <div class="footer-map-box">
+          <div class="footer-map">
+            <iframe src="https://maps.google.com/maps?q=Ronika+Mall+Heravi+Tehran+Iran&output=embed&hl=fa&z=17" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="موقعیت گالری طلای آرمه"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© <span id="year"></span> گالری طلای آرمه. تمام حقوق محفوظ است.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/armeh.js"></script>
+  <script>
+  (function renderCart() {
+    const items   = Cart.get();
+    const session = Auth.getSession();
+    const wrap    = document.getElementById('cart-container');
+
+    if (items.length === 0) {
+      wrap.innerHTML = `
+        <div class="empty-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <h2>سبد خرید شما خالی است</h2>
+          <p>محصولات مورد نظر خود را از مجموعه‌ها انتخاب کنید.</p>
+          <a href="index.html#collections" class="btn-go">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            مشاهده مجموعه‌ها
+          </a>
+        </div>`;
+      return;
+    }
+
+    const cartSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`;
+    const trashSvg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>`;
+
+    const itemsHtml = items.map(item => `
+      <div class="cart-item" data-id="${item.id}">
+        <div class="cart-item-icon">${cartSvg}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-meta">${item.collectionName} &nbsp;·&nbsp; ${item.material}</div>
+        </div>
+        <div class="cart-item-actions">
+          <div class="qty-wrap">
+            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+          </div>
+          <button class="btn-remove" onclick="removeItem('${item.id}')" title="حذف">${trashSvg}</button>
+        </div>
+      </div>`).join('');
+
+    const totalQty = items.reduce((s,i) => s+i.qty, 0);
+
+    // Checkout form
+    let checkoutHtml;
+    if (session?.role === 'user') {
+      const u = Auth.getUsers().find(u => u.id === session.id) || {};
+      checkoutHtml = `
+        <div class="sidebar-box">
+          <h3>اطلاعات سفارش</h3>
+          <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">اطلاعات از پروفایل شما بارگذاری شد.</p>
+          <div class="summary-row"><span>نام:</span><strong>${u.firstname||''} ${u.lastname||''}</strong></div>
+          <div class="summary-row"><span>ایمیل:</span><strong>${u.email||''}</strong></div>
+          <div class="summary-row"><span>تلفن:</span><strong>${u.phone||'—'}</strong></div>
+          <div class="summary-row"><span>آدرس:</span><strong style="max-width:160px;text-align:left;font-size:12px">${u.ostan||''} ${u.shahr||''} ${u.address||''}</strong></div>
+          <button class="btn-submit-order" style="margin-top:16px" onclick="submitOrder()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+            ثبت سفارش
+          </button>
+          <div id="order-result"></div>
+        </div>`;
+    } else {
+      checkoutHtml = `
+        <div class="sidebar-box">
+          <h3>اطلاعات تماس</h3>
+          <p class="guest-note">اطلاعات شما فقط برای پیگیری این سفارش استفاده می‌شود و ذخیره نمی‌گردد.</p>
+          <form class="checkout-form" id="guest-form" onsubmit="submitGuest(event)">
+            <div class="form-group">
+              <label>نام و نام خانوادگی <span class="req">*</span></label>
+              <input type="text" id="g-name" required placeholder="علی رضایی" />
+            </div>
+            <div class="form-group">
+              <label>شماره موبایل یا ایمیل <span class="req">*</span></label>
+              <input type="text" id="g-contact" required placeholder="۰۹۱۲۰۰۰۰۰۰۰ یا example@email.com" dir="ltr" style="text-align:right" />
+            </div>
+            <div class="form-group">
+              <label>آدرس <span class="req">*</span></label>
+              <textarea id="g-address" required placeholder="استان، شهر، خیابان..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit-order">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
+              ارسال استعلام
+            </button>
+            <div id="order-result"></div>
+          </form>
+        </div>`;
+    }
+
+    wrap.innerHTML = `
+      <div class="cart-layout">
+        <div>
+          <div class="cart-items">
+            <div class="cart-items-header">
+              <h2>${totalQty} قلم در سبد</h2>
+              <button class="btn-clear" onclick="clearCart()">پاک‌کردن سبد</button>
+            </div>
+            ${itemsHtml}
+          </div>
+        </div>
+        <div class="cart-sidebar">
+          <div class="sidebar-box">
+            <h3>خلاصه سبد</h3>
+            <div class="summary-row"><span>تعداد اقلام:</span><strong>${totalQty} عدد</strong></div>
+            <p class="summary-note">قیمت‌ها بر اساس نرخ روز طلا محاسبه و با شما در تماس خواهیم بود.</p>
+          </div>
+          ${checkoutHtml}
+        </div>
+      </div>`;
+  })();
+
+  function changeQty(id, delta) {
+    const items = Cart.get();
+    const it = items.find(i => i.id === id);
+    if (it) Cart.updateQty(id, it.qty + delta);
+    renderCart();
+  }
+  function removeItem(id) { Cart.remove(id); renderCart(); }
+  function clearCart()    { Cart.clear(); renderCart(); }
+
+  function renderCart() {
+    // Re-render by reloading the cart section
+    window.location.reload();
+  }
+
+  function submitOrder() {
+    const session = Auth.getSession();
+    if (!session) return;
+    Auth.addOrder(session.id, Cart.get());
+    Cart.clear();
+    document.getElementById('order-result').innerHTML = `
+      <div class="order-success" style="margin-top:16px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <p>سفارش ثبت شد!</p>
+        <small>کارشناسان ما به زودی با شما تماس می‌گیرند.</small>
+      </div>`;
+    setTimeout(() => { window.location.reload(); }, 3000);
+  }
+
+  function submitGuest(e) {
+    e.preventDefault();
+    const name    = document.getElementById('g-name').value.trim();
+    const contact = document.getElementById('g-contact').value.trim();
+    const address = document.getElementById('g-address').value.trim();
+    if (!name || !contact || !address) return;
+    Cart.clear();
+    document.getElementById('order-result').innerHTML = `
+      <div class="order-success" style="margin-top:16px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <p>استعلام ارسال شد!</p>
+        <small>کارشناسان ما به زودی با شما تماس می‌گیرند.</small>
+      </div>`;
+    setTimeout(() => { window.location.reload(); }, 3000);
+  }
+  </script>
+</body>
+</html>

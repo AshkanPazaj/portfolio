@@ -240,62 +240,30 @@
     .product-cta:hover { border-color: var(--green); gap: 9px; }
     .product-cta svg { width: 11px; height: 11px; }
 
-    /* CONTACT STRIP */
-    .contact-strip {
-      background: var(--cream);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 48px 0;
-    }
-    .contact-strip-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 32px; flex-wrap: wrap;
-    }
-    .contact-strip-text h3 {
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--green-deep); margin-bottom: 6px;
-    }
-    .contact-strip-text p {
-      font-size: 0.9rem; color: var(--text-dim);
-    }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 13px 28px;
-      background: var(--green);
-      color: var(--white);
-      font-size: 13px; font-weight: 600;
-      border-radius: 2px;
-      transition: background 0.2s;
-      font-family: 'Vazirmatn', sans-serif;
-    }
-    .btn-primary:hover { background: var(--green-mid); }
-    .btn-primary svg { width: 14px; height: 14px; }
 
     /* FOOTER */
-    .footer {
-      background: var(--green-deep);
-      padding: 40px 0 24px;
-    }
-    .footer-inner {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 32px; flex-wrap: wrap;
-      margin-bottom: 28px;
-    }
-    .footer-logo-img { height: 44px; width: auto; }
-    .footer-info {
-      font-size: 13px; color: rgba(201,168,64,0.55);
-      line-height: 1.8;
-    }
-    .footer-info a { color: rgba(201,168,64,0.7); transition: color 0.2s; }
-    .footer-info a:hover { color: var(--gold); }
-    .footer-divider { height: 1px; background: rgba(201,168,64,0.1); margin-bottom: 20px; }
-    .footer-copy { font-size: 13px; color: rgba(201,168,64,0.4); text-align: center; }
+    .footer { background: var(--green-deep); padding: 56px 0 28px; }
+    .footer-top { display: grid; grid-template-columns: 1fr 1fr 1fr 1.4fr; gap: 40px; margin-bottom: 48px; align-items: start; }
+    .footer-logo-img { height: 52px; width: auto; margin-bottom: 16px; }
+    .footer-brand p { font-size: 13px; color: rgba(201,168,64,0.55); line-height: 1.8; max-width: 28ch; }
+    .footer-col-title { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(240,235,220,0.5); margin-bottom: 16px; }
+    .footer-links { display: flex; flex-direction: column; gap: 10px; }
+    .footer-links li { font-size: 13px; color: rgba(240,235,220,0.45); line-height: 1.7; }
+    .footer-links a { font-size: 13px; color: rgba(240,235,220,0.45); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-map-box { order: -1; }
+    .footer-map { border-radius: 4px; overflow: hidden; border: 1px solid rgba(201,168,64,0.2); }
+    .footer-map iframe { width: 100%; height: 180px; border: none; display: block; filter: grayscale(25%) contrast(1.05); }
+    .footer-divider { height: 1px; background: rgba(201,168,64,0.1); margin-bottom: 24px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: center; }
+    .footer-copy { font-size: 15px; color: rgba(201,168,64,0.5); text-align: center; }
 
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     /* RESPONSIVE */
+    @media (max-width: 1024px) { .footer-top { grid-template-columns: 1fr 1fr; } .footer-map-box { order: 0; } }
     @media (max-width: 900px) {
       .products-grid { grid-template-columns: repeat(2, 1fr); }
       .coll-hero-inner { gap: 36px; }
@@ -305,26 +273,36 @@
       .coll-hero-inner { flex-direction: column; gap: 24px; padding: 40px 0; }
       .coll-hero-art { display: none; }
       .container { padding: 0 24px; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
     }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav class="nav" id="nav">
-    <a href="../index.html" class="nav-logo" aria-label="گالری طلای آرمه">
-      <img src="../assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" />
-    </a>
-    <ul class="nav-links">
+  <nav class="nav" id="nav" aria-label="ناوبری اصلی">
+    <ul class="nav-links" id="nav-links">
       <li><a href="../index.html#collections">مجموعه‌ها</a></li>
       <li><a href="../index.html#about">درباره ما</a></li>
-      <li>
-        <a href="tel:02121006803" class="nav-phone">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>
-          02121006803
-        </a>
+      <li id="nav-login-li"><a href="../login.html">ورود</a></li>
+      <li id="nav-user-li" style="display:none">
+        <a href="../profile.html" class="nav-user-name"></a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
+      </li>
+      <li id="nav-admin-li" style="display:none">
+        <a href="../admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
       </li>
     </ul>
+    <div class="nav-end">
+      <a href="../index.html" class="nav-logo" aria-label="گالری طلای آرمه">
+        <img src="../assets/logo-transparent.png" alt="آرمه گلد" class="nav-logo-img" />
+      </a>
+      <a href="../cart.html" class="nav-cart" aria-label="سبد خرید">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-badge" style="display:none"></span>
+      </a>
+    </div>
   </nav>
 
   <!-- COLLECTION HERO -->
@@ -381,10 +359,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره آویز طلایی</div>
             <div class="product-material">طلای ۱۸ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -399,10 +374,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره حلقه طلایی</div>
             <div class="product-material">طلای ۱۸ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -419,10 +391,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره گوی نگین‌دار</div>
             <div class="product-material">طلای ۱۸ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -438,10 +407,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره آویز بلند</div>
             <div class="product-material">طلای ۲۱ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -458,10 +424,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره حلقه فانتزی</div>
             <div class="product-material">طلای ۱۸ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -478,10 +441,7 @@
           <div class="product-body">
             <div class="product-name">گوشواره آویز دو قسمتی</div>
             <div class="product-material">طلای ۱۸ عیار</div>
-            <a href="tel:02121006803" class="product-cta">
-              تماس برای قیمت
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            </a>
+            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
           </div>
         </div>
 
@@ -489,54 +449,44 @@
     </div>
   </section>
 
-  <!-- CONTACT STRIP -->
-  <section class="contact-strip">
-    <div class="container">
-      <div class="contact-strip-inner reveal">
-        <div class="contact-strip-text">
-          <h3>برای مشاوره و استعلام قیمت تماس بگیرید</h3>
-          <p>کارشناسان ما شنبه تا پنج‌شنبه از ساعت ۱۰ تا ۲۱ پاسخگو هستند.</p>
-        </div>
-        <a href="tel:02121006803" class="btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.07 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16l.92.92z"/></svg>
-          02121006803
-        </a>
-      </div>
-    </div>
-  </section>
-
   <!-- FOOTER -->
-  <footer class="footer">
+  <footer class="footer" aria-label="پاورقی">
     <div class="container">
-      <div class="footer-inner">
-        <img src="../assets/logo-page-0.png" alt="آرمه گلد" class="footer-logo-img" />
-        <div class="footer-info">
-          تهران، هروی، مرکز خرید رونیکا، طبقه همکف، پلاک ۶۷
-          &nbsp;|&nbsp; <a href="tel:02121006803">۰۲۱۲۱۰۰۶۸۰۳</a>
-          &nbsp;|&nbsp; <a href="../index.html">بازگشت به گالری</a>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="../assets/logo-page-0.png" alt="آرمه گلد" class="footer-logo-img" />
+          <p>جواهرات طلای ناب، دست‌ساز با عشق. ارسال به سراسر کشور.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">لینک‌ها</div>
+          <ul class="footer-links">
+            <li><a href="../privacy.html">سیاست حریم خصوصی</a></li>
+            <li><a href="../index.html#collections">مجموعه‌ها</a></li>
+            <li><a href="../index.html#about">درباره گالری</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">بازدید</div>
+          <ul class="footer-links">
+            <li>تهران، هروی، مرکز خرید رونیکا، طبقه همکف، پلاک ۶۷</li>
+            <li><a href="tel:02121006803">۰۲۱۲۱۰۰۶۸۰۳</a></li>
+            <li>شنبه تا پنج‌شنبه ۱۰ تا ۲۱</li>
+          </ul>
+        </div>
+        <div class="footer-map-box">
+          <div class="footer-map">
+            <iframe src="https://maps.google.com/maps?q=Ronika+Mall+Heravi+Tehran+Iran&output=embed&hl=fa&z=17" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="موقعیت گالری طلای آرمه"></iframe>
+          </div>
         </div>
       </div>
       <div class="footer-divider"></div>
-      <p class="footer-copy">© <span id="year"></span> گالری طلای آرمه. تمام حقوق محفوظ است.</p>
+      <div class="footer-bottom">
+        <p class="footer-copy">© <span id="year"></span> گالری طلای آرمه. تمام حقوق محفوظ است.</p>
+      </div>
     </div>
   </footer>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 60);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    revealEls.forEach(el => observer.observe(el));
-  </script>
+  <script src="../js/armeh.js"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => applyAvailability('earrings'));</script>
 </body>
 </html>
