@@ -143,6 +143,70 @@
     }
     .product-name-clickable { cursor:pointer; transition:color .2s; }
     .product-name-clickable:hover { color:var(--green,#114411); }
+    .product-card.product-highlight {
+      outline:2px solid var(--gold,#c9a840); outline-offset:3px;
+      box-shadow:0 0 0 4px rgba(201,168,64,.18);
+    }
+    .coll-filter-dropdown {
+      position:relative; z-index:30; margin-bottom:24px;
+      display:flex; justify-content:flex-start;
+    }
+    .coll-filter-dropdown.is-open,
+    .coll-filter-dropdown:has(.coll-filter-menu.open) { z-index:90; }
+    .coll-filter-dropdown.reveal,
+    .coll-filter-dropdown.reveal.visible { transform:none; }
+    .coll-filter-toggle {
+      display:inline-flex; align-items:center; gap:8px;
+      padding:10px 16px; border:1px solid var(--border,#e0ddd5); border-radius:2px;
+      background:var(--white,#fff); cursor:pointer;
+      font-family:'Vazirmatn',sans-serif; font-size:13px; font-weight:600;
+      color:var(--green-deep,#0c330c); transition:border-color .2s,color .2s,box-shadow .2s;
+    }
+    .coll-filter-toggle:hover, .coll-filter-toggle.open {
+      border-color:var(--green,#114411); color:var(--green,#114411);
+    }
+    .coll-filter-toggle.open { box-shadow:0 4px 14px rgba(17,68,17,.08); }
+    .coll-filter-toggle svg { width:16px; height:16px; flex-shrink:0; display:block; }
+    .coll-filter-chevron { transition:transform .2s; opacity:.65; }
+    .coll-filter-toggle.open .coll-filter-chevron { transform:rotate(180deg); }
+    .coll-filter-badge {
+      width:7px; height:7px; border-radius:50%; background:var(--gold,#c9a840); flex-shrink:0;
+    }
+    .coll-filter-badge[hidden] { display:none; }
+    .coll-filter-menu {
+      position:absolute; top:calc(100% + 8px); right:0; z-index:1;
+      min-width:280px; padding:16px;
+      background:var(--white,#fff); border:1px solid var(--border,#e0ddd5);
+      border-radius:3px; box-shadow:0 12px 36px rgba(0,0,0,.1);
+      opacity:0; visibility:hidden; pointer-events:none;
+      transform:translateY(-6px); transition:opacity .2s,transform .2s,visibility .2s;
+    }
+    .coll-filter-menu.open {
+      opacity:1; visibility:visible; pointer-events:auto; transform:translateY(0);
+    }
+    .coll-filter-group { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+    .coll-filter-group:last-of-type { margin-bottom:0; }
+    .coll-filter-group label {
+      font-size:11px; font-weight:700; letter-spacing:.06em;
+      color:var(--green-deep,#0c330c);
+    }
+    .coll-filter-select {
+      width:100%; padding:9px 12px; border:1px solid var(--border,#e0ddd5); border-radius:2px;
+      font-family:'Vazirmatn',sans-serif; font-size:13px; color:var(--text,#1a1a1a);
+      background:var(--off-white,#faf9f6); outline:none; cursor:pointer;
+    }
+    .coll-filter-select:focus { border-color:var(--green,#114411); background:var(--white,#fff); }
+    .coll-filter-reset {
+      width:100%; margin-top:14px; padding:8px 12px;
+      border:1px solid var(--border,#e0ddd5); border-radius:2px;
+      background:none; font-family:'Vazirmatn',sans-serif; font-size:12px; font-weight:600;
+      color:var(--text-dim,#6b6b6b); cursor:pointer; transition:background .2s,color .2s;
+    }
+    .coll-filter-reset:hover { background:var(--green-tint,#f2f6f2); color:var(--green,#114411); }
+    .coll-filter-empty {
+      grid-column:1/-1; text-align:center; color:var(--text-muted,#9a9a9a);
+      padding:48px 0; font-size:14px;
+    }
     .pd-overlay {
       position:fixed; inset:0; z-index:2000;
       background:rgba(12,51,12,.45); backdrop-filter:blur(4px);
@@ -224,6 +288,7 @@
       .nav-end { gap:12px !important; }
       .search-panel { padding:14px 20px 18px; }
       .products { padding:48px 0 64px !important; }
+      .coll-filter-menu { left:0; right:0; min-width:0; }
       .products-grid { gap:16px !important; }
       .product-body { padding:18px 16px 16px !important; }
       .product-art { height:min(200px,42vw) !important; }
@@ -586,17 +651,286 @@ function buildProductCard(p, collectionKey) {
     </div>`;
 }
 
+function getCollectionPagePath(collectionKey) {
+  const inCollections = window.location.pathname.includes('/collections/');
+  return inCollections ? `${collectionKey}.html` : `collections/${collectionKey}.html`;
+}
+
+function isOnCollectionPage(collectionKey) {
+  return new RegExp(`/collections/${collectionKey}\\.html$`, 'i').test(window.location.pathname);
+}
+
+let productHighlightHandler = null;
+
+function isProductHighlightDismissClick(e) {
+  if (e.target.closest('.product-card.product-highlight')) return false;
+  if (e.target.closest('#product-detail-overlay')) return false;
+  if (e.target.closest('#search-panel')) return false;
+  if (e.target.closest('#nav-search-btn')) return false;
+  return true;
+}
+
+function setProductHighlight(card) {
+  clearProductHighlight();
+  if (!card) return;
+  card.classList.add('visible', 'product-highlight');
+  const dismiss = e => {
+    if (!isProductHighlightDismissClick(e)) return;
+    clearProductHighlight();
+  };
+  productHighlightHandler = dismiss;
+  setTimeout(() => {
+    document.addEventListener('click', dismiss);
+    document.addEventListener('touchend', dismiss);
+  }, 0);
+}
+
+function clearProductHighlight() {
+  document.querySelectorAll('.product-card.product-highlight').forEach(c => c.classList.remove('product-highlight'));
+  if (productHighlightHandler) {
+    document.removeEventListener('click', productHighlightHandler);
+    document.removeEventListener('touchend', productHighlightHandler);
+    productHighlightHandler = null;
+  }
+}
+
+function focusProductOnPage(productId, collectionKey) {
+  const card = document.querySelector(`.product-card[data-id="${productId}"]`);
+  if (card) {
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setProductHighlight(card);
+  }
+  openProductDetail(productId, collectionKey);
+}
+
+function navigateToProduct(productId, collectionKey) {
+  const found = Products.findProduct(productId);
+  if (!found) return;
+  const coll = found.collection;
+  if (isOnCollectionPage(coll)) {
+    focusProductOnPage(productId, coll);
+    return;
+  }
+  window.location.href = `${getCollectionPagePath(coll)}?product=${encodeURIComponent(productId)}`;
+}
+
+function handleProductDeepLink(collectionKey) {
+  const productId = new URLSearchParams(window.location.search).get('product');
+  if (!productId) return;
+  const found = Products.findProduct(productId);
+  if (!found || found.collection !== collectionKey) return;
+  setTimeout(() => {
+    focusProductOnPage(productId, collectionKey);
+    history.replaceState(null, '', window.location.pathname);
+  }, 120);
+}
+
+const KARAT_OPTIONS = [18, 21, 24];
+const KARAT_LABELS = { 18: '۱۸ عیار', 21: '۲۱ عیار', 24: '۲۴ عیار' };
+const collFilterState = { karat: 'all', nameSort: 'none', priceSort: 'none' };
+
+function extractKarat(material) {
+  const m = String(material || '');
+  if (/۲۴|24/.test(m)) return 24;
+  if (/۲۱|21/.test(m)) return 21;
+  if (/۱۸|18/.test(m)) return 18;
+  return null;
+}
+
+function filterAndSortProducts(products) {
+  let list = [...products];
+  if (collFilterState.karat !== 'all') {
+    const k = Number(collFilterState.karat);
+    list = list.filter(p => extractKarat(p.material) === k);
+  }
+  const { nameSort, priceSort } = collFilterState;
+  if (nameSort !== 'none' || priceSort !== 'none') {
+    list.sort((a, b) => {
+      if (priceSort === 'low') {
+        const byPrice = (Number(a.price) || 0) - (Number(b.price) || 0);
+        if (byPrice !== 0) return byPrice;
+      } else if (priceSort === 'high') {
+        const byPrice = (Number(b.price) || 0) - (Number(a.price) || 0);
+        if (byPrice !== 0) return byPrice;
+      }
+      if (nameSort === 'asc') return (a.name || '').localeCompare(b.name || '', 'fa');
+      if (nameSort === 'desc') return (b.name || '').localeCompare(a.name || '', 'fa');
+      return 0;
+    });
+  }
+  return list;
+}
+
+function observeRevealElements(root) {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  (root || document).querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+}
+
+function renderCollectionGrid(collectionKey, products, emptyAll) {
+  const grid = document.getElementById('products-grid');
+  if (!grid) return;
+  if (!products.length) {
+    grid.innerHTML = emptyAll
+      ? '<p class="coll-filter-empty">محصولی در این مجموعه ثبت نشده است.</p>'
+      : '<p class="coll-filter-empty">محصولی با این فیلتر یافت نشد.</p>';
+    return;
+  }
+  grid.innerHTML = products.map(p => buildProductCard(p, collectionKey)).join('');
+  observeRevealElements(grid);
+}
+
+function applyCollectionFilters(collectionKey) {
+  const all = Products.getCollection(collectionKey);
+  const filtered = filterAndSortProducts(all);
+  renderCollectionGrid(collectionKey, filtered, !all.length);
+  updateCollectionFilterBadge();
+}
+
+function updateCollectionFilterBadge() {
+  const badge = document.querySelector('.coll-filter-badge');
+  if (!badge) return;
+  const active = collFilterState.karat !== 'all' || collFilterState.nameSort !== 'none' || collFilterState.priceSort !== 'none';
+  badge.hidden = !active;
+}
+
+function closeCollectionFilterMenu() {
+  const wrap = document.getElementById('collection-filters');
+  const toggle = document.querySelector('.coll-filter-toggle');
+  const menu = document.getElementById('coll-filter-menu');
+  if (!toggle || !menu) return;
+  toggle.classList.remove('open');
+  toggle.setAttribute('aria-expanded', 'false');
+  menu.classList.remove('open');
+  if (wrap) wrap.classList.remove('is-open');
+}
+
+function resetCollectionFilters(collectionKey) {
+  collFilterState.karat = 'all';
+  collFilterState.nameSort = 'none';
+  collFilterState.priceSort = 'none';
+  const karatSel = document.getElementById('filter-karat');
+  const nameSel = document.getElementById('filter-name');
+  const priceSel = document.getElementById('filter-price');
+  if (karatSel) karatSel.value = 'all';
+  if (nameSel) nameSel.value = 'none';
+  if (priceSel) priceSel.value = 'none';
+  applyCollectionFilters(collectionKey);
+}
+
+const FILTER_ICON_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>';
+const CHEVRON_SVG = '<svg class="coll-filter-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>';
+
+function ensureCollectionFilters(collectionKey) {
+  const grid = document.getElementById('products-grid');
+  if (!grid || document.getElementById('collection-filters')) return;
+
+  const karatOptions = ['<option value="all">همه عیارها</option>']
+    .concat(KARAT_OPTIONS.map(k => `<option value="${k}">${KARAT_LABELS[k]}</option>`))
+    .join('');
+
+  const wrap = document.createElement('div');
+  wrap.id = 'collection-filters';
+  wrap.className = 'coll-filter-dropdown reveal';
+  wrap.innerHTML = `
+    <button type="button" class="coll-filter-toggle" aria-expanded="false" aria-controls="coll-filter-menu">
+      ${FILTER_ICON_SVG}
+      <span>فیلتر و مرتب‌سازی</span>
+      <span class="coll-filter-badge" hidden aria-hidden="true"></span>
+      ${CHEVRON_SVG}
+    </button>
+    <div class="coll-filter-menu" id="coll-filter-menu" role="region" aria-label="فیلتر محصولات">
+      <div class="coll-filter-group">
+        <label for="filter-karat">عیار</label>
+        <select id="filter-karat" class="coll-filter-select" aria-label="فیلتر عیار">${karatOptions}</select>
+      </div>
+      <div class="coll-filter-group">
+        <label for="filter-name">مرتب‌سازی نام</label>
+        <select id="filter-name" class="coll-filter-select" aria-label="مرتب‌سازی بر اساس نام">
+          <option value="none">پیش‌فرض</option>
+          <option value="asc">الف – ی</option>
+          <option value="desc">ی – الف</option>
+        </select>
+      </div>
+      <div class="coll-filter-group">
+        <label for="filter-price">مرتب‌سازی قیمت</label>
+        <select id="filter-price" class="coll-filter-select" aria-label="مرتب‌سازی بر اساس قیمت">
+          <option value="none">پیش‌فرض</option>
+          <option value="low">کم به زیاد</option>
+          <option value="high">زیاد به کم</option>
+        </select>
+      </div>
+      <button type="button" class="coll-filter-reset">بازنشانی فیلترها</button>
+    </div>`;
+  grid.parentNode.insertBefore(wrap, grid);
+  observeRevealElements(wrap.parentNode);
+
+  const toggle = wrap.querySelector('.coll-filter-toggle');
+  const menu = wrap.querySelector('#coll-filter-menu');
+
+  toggle.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = menu.classList.contains('open');
+    if (open) closeCollectionFilterMenu();
+    else {
+      toggle.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      menu.classList.add('open');
+      wrap.classList.add('is-open');
+    }
+  });
+
+  wrap.querySelector('#filter-karat').addEventListener('change', e => {
+    collFilterState.karat = e.target.value;
+    applyCollectionFilters(collectionKey);
+  });
+  wrap.querySelector('#filter-name').addEventListener('change', e => {
+    collFilterState.nameSort = e.target.value;
+    applyCollectionFilters(collectionKey);
+  });
+  wrap.querySelector('#filter-price').addEventListener('change', e => {
+    collFilterState.priceSort = e.target.value;
+    applyCollectionFilters(collectionKey);
+  });
+  wrap.querySelector('.coll-filter-reset').addEventListener('click', () => {
+    resetCollectionFilters(collectionKey);
+  });
+
+  if (!wrap.dataset.outsideBound) {
+    wrap.dataset.outsideBound = '1';
+    document.addEventListener('click', e => {
+      if (!menu.classList.contains('open')) return;
+      if (e.target.closest('#collection-filters')) return;
+      closeCollectionFilterMenu();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeCollectionFilterMenu();
+    });
+  }
+}
+
 function renderCollectionPage(collectionKey) {
   const grid = document.getElementById('products-grid');
   if (!grid) return applyAvailability(collectionKey);
-  const products = Products.getCollection(collectionKey);
-  grid.innerHTML = products.length
-    ? products.map(p => buildProductCard(p, collectionKey)).join('')
-    : '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:48px 0">محصولی در این مجموعه ثبت نشده است.</p>';
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  grid.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  collFilterState.karat = 'all';
+  collFilterState.nameSort = 'none';
+  collFilterState.priceSort = 'none';
+  ensureCollectionFilters(collectionKey);
+  const karatSel = document.getElementById('filter-karat');
+  const nameSel = document.getElementById('filter-name');
+  const priceSel = document.getElementById('filter-price');
+  if (karatSel) karatSel.value = 'all';
+  if (nameSel) nameSel.value = 'none';
+  if (priceSel) priceSel.value = 'none';
+  closeCollectionFilterMenu();
+  applyCollectionFilters(collectionKey);
+  handleProductDeepLink(collectionKey);
 }
 
 /* ── Collection page helpers ─────────────── */
@@ -967,8 +1301,8 @@ function initNavSearch() {
 
     results.querySelectorAll('.search-result-item').forEach(el => {
       el.addEventListener('click', () => {
-        openProductDetail(el.dataset.id, el.dataset.coll);
         closeSearch();
+        navigateToProduct(el.dataset.id, el.dataset.coll);
       });
     });
   }

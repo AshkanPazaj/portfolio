@@ -316,8 +316,12 @@
         </div>
         <div class="form-row2">
           <div class="form-group">
-            <label>جنس / عیار</label>
-            <input type="text" id="prod-material" placeholder="طلای ۱۸ عیار" />
+            <label>عیار</label>
+            <select id="prod-karat">
+              <option value="18">طلای ۱۸ عیار</option>
+              <option value="21">طلای ۲۱ عیار</option>
+              <option value="24">طلای ۲۴ عیار</option>
+            </select>
           </div>
           <div class="form-group">
             <label>قیمت (تومان)</label>
@@ -369,6 +373,15 @@
   let productSearchQuery = '';
   let adminActiveTab = 'products';
   let pendingProductImages = undefined;
+
+  const KARAT_MATERIALS = { 18: 'طلای ۱۸ عیار', 21: 'طلای ۲۱ عیار', 24: 'طلای ۲۴ عیار' };
+  function materialFromKarat(k) { return KARAT_MATERIALS[k] || KARAT_MATERIALS[18]; }
+  function karatFromMaterial(m) {
+    const s = String(m || '');
+    if (/۲۴|24/.test(s)) return '24';
+    if (/۲۱|21/.test(s)) return '21';
+    return '18';
+  }
 
   function renderAdmin() {
     try {
@@ -558,7 +571,7 @@
     document.getElementById('prod-id').value = '';
     fillCollectionSelect('rings');
     document.getElementById('prod-name').value = '';
-    document.getElementById('prod-material').value = 'طلای ۱۸ عیار';
+    document.getElementById('prod-karat').value = '18';
     document.getElementById('prod-price').value = '';
     document.getElementById('prod-description').value = '';
     document.getElementById('prod-available').checked = true;
@@ -576,7 +589,7 @@
     document.getElementById('prod-id').value = p.id;
     fillCollectionSelect(found.collection);
     document.getElementById('prod-name').value = p.name;
-    document.getElementById('prod-material').value = p.material;
+    document.getElementById('prod-karat').value = karatFromMaterial(p.material);
     document.getElementById('prod-price').value = p.price || '';
     document.getElementById('prod-description').value = p.description || '';
     document.getElementById('prod-available').checked = p.available !== false;
@@ -614,7 +627,7 @@
     const id = document.getElementById('prod-id').value;
     const name = document.getElementById('prod-name').value.trim();
     const collection = document.getElementById('prod-collection').value;
-    const material = document.getElementById('prod-material').value.trim();
+    const material = materialFromKarat(document.getElementById('prod-karat').value);
     const price = document.getElementById('prod-price').value;
     const description = document.getElementById('prod-description').value.trim();
     const available = document.getElementById('prod-available').checked;
