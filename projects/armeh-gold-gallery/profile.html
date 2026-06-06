@@ -39,10 +39,17 @@
     .nav {
       position: sticky; top: 0; z-index: 900; padding: 0 48px; height: 76px;
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--white); border-bottom: 1px solid var(--border);
-      transition: box-shadow .3s var(--ease);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224, 221, 213, 0.45);
+      transition: background .3s var(--ease), box-shadow .3s var(--ease), border-color .3s var(--ease);
     }
-    .nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.06); }
+    .nav.scrolled {
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom-color: var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,.06);
+    }
     .nav-logo { display: flex; align-items: center; gap: 12px; }
     .nav-logo-img { height: 44px; width: auto; }
     .nav-links { display: flex; align-items: center; gap: 40px; }
@@ -112,12 +119,9 @@
       <li><a href="index.html#collections">مجموعه‌ها</a></li>
       <li><a href="index.html#about">درباره ما</a></li>
       <li id="nav-login-li"><a href="login.html">ورود</a></li>
-      <li id="nav-user-li" style="display:none">
-        <a href="profile.html" class="nav-user-name"></a>
-        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
-      </li>
-      <li id="nav-admin-li" style="display:none">
-        <a href="admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+      <li id="nav-admin-li" style="display:none"><a href="admin.html" class="nav-admin-link">پنل مدیریت</a></li>
+      <li id="nav-logout-li" style="display:none">
+        <a href="profile.html" class="nav-user-name" id="nav-profile-link"></a>
         <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
       </li>
     </ul>
@@ -264,14 +268,18 @@
   function renderOrders(orders) {
     if (!orders || orders.length === 0)
       return `<p class="no-orders">هیچ سفارشی ثبت نشده است.</p>`;
-    return orders.map(o => `
+    return orders.map(o => {
+      const total = o.items.reduce((s, i) => s + resolveItemPrice(i) * i.qty, 0);
+      return `
       <div class="order-card">
         <div class="order-header">
           <span class="order-date">${new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' })}</span>
           <span class="order-status">${o.status}</span>
         </div>
-        <div class="order-items-list">${o.items.map(i => `${i.name} ×${i.qty}`).join(' · ')}</div>
-      </div>`).join('');
+        <div class="order-items-list">${o.items.map(i => `${i.name} ×${i.qty} — ${formatPrice(resolveItemPrice(i) * i.qty)}`).join(' · ')}</div>
+        <div class="order-items-list" style="margin-top:8px;font-weight:600;color:var(--gold-dark)">جمع: ${formatPrice(total)}</div>
+      </div>`;
+    }).join('');
   }
 
   function switchTab(name, btn) {

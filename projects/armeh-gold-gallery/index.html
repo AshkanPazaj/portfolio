@@ -59,11 +59,15 @@
       padding: 0 40px;
       height: 76px;
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s var(--ease);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224, 221, 213, 0.45);
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
     }
     .nav.scrolled {
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom-color: var(--border);
       box-shadow: 0 2px 20px rgba(0,0,0,0.06);
     }
 
@@ -548,12 +552,9 @@
       <li><a href="#collections">مجموعه‌ها</a></li>
       <li><a href="#about">درباره ما</a></li>
       <li id="nav-login-li"><a href="login.html">ورود</a></li>
-      <li id="nav-user-li" style="display:none">
-        <a href="profile.html" class="nav-user-name"></a>
-        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
-      </li>
-      <li id="nav-admin-li" style="display:none">
-        <a href="admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+      <li id="nav-admin-li" style="display:none"><a href="admin.html" class="nav-admin-link">پنل مدیریت</a></li>
+      <li id="nav-logout-li" style="display:none">
+        <a href="profile.html" class="nav-user-name" id="nav-profile-link"></a>
         <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
       </li>
     </ul>

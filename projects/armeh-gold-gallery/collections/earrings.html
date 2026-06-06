@@ -59,11 +59,17 @@
       padding: 0 40px;
       height: 76px;
       display: flex; align-items: center; justify-content: space-between;
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s var(--ease);
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(224, 221, 213, 0.45);
+      transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
     }
-    .nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    .nav.scrolled {
+      background: rgba(255, 255, 255, 0.82);
+      border-bottom-color: var(--border);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
     .nav-logo { display: flex; align-items: center; gap: 12px; }
     .nav-logo-img { height: 44px; width: auto; }
     .nav-links { display: flex; align-items: center; gap: 40px; }
@@ -210,11 +216,15 @@
       transition: background 0.25s;
     }
     .product-card:hover .product-art { background: var(--green-pale); }
+    .product-art.has-image { padding:0; overflow:hidden; }
+    .product-art.has-image img { width:100%; height:100%; object-fit:cover; display:block; }
     .product-art svg {
       filter: drop-shadow(0 3px 10px rgba(17,68,17,0.12));
       transition: transform 0.35s var(--ease), filter 0.35s;
     }
-    .product-card:hover .product-art svg {
+    .product-card:hover .product-art.has-image { padding:0; overflow:hidden; }
+    .product-art.has-image img { width:100%; height:100%; object-fit:cover; display:block; }
+    .product-art svg {
       transform: scale(1.06) translateY(-3px);
       filter: drop-shadow(0 6px 16px rgba(17,68,17,0.2));
     }
@@ -285,12 +295,9 @@
       <li><a href="../index.html#collections">مجموعه‌ها</a></li>
       <li><a href="../index.html#about">درباره ما</a></li>
       <li id="nav-login-li"><a href="../login.html">ورود</a></li>
-      <li id="nav-user-li" style="display:none">
-        <a href="../profile.html" class="nav-user-name"></a>
-        <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
-      </li>
-      <li id="nav-admin-li" style="display:none">
-        <a href="../admin.html" style="font-size:13px;font-weight:600;color:var(--green)">پنل مدیریت</a>
+      <li id="nav-admin-li" style="display:none"><a href="../admin.html" class="nav-admin-link">پنل مدیریت</a></li>
+      <li id="nav-logout-li" style="display:none">
+        <a href="../profile.html" class="nav-user-name" id="nav-profile-link"></a>
         <button class="nav-logout-btn" onclick="Auth.logout()">خروج</button>
       </li>
     </ul>
@@ -341,111 +348,7 @@
         <span class="section-label">مجموعه گوشواره</span>
         <h2 class="section-title">انتخاب <strong>برتر</strong></h2>
       </div>
-      <div class="products-grid">
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="70" height="90" viewBox="0 0 130 160" fill="none">
-              <circle cx="42" cy="22" r="6" fill="none" stroke="#114411" stroke-width="2"/>
-              <path d="M42,28 L42,60 Q30,90 36,130 Q42,155 42,155" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <ellipse cx="42" cy="145" rx="10" ry="13" fill="rgba(17,68,17,0.08)" stroke="#114411" stroke-width="1.5"/>
-              <polygon points="42,134 49,145 42,156 35,145" fill="rgba(201,168,64,0.25)" stroke="#c9a840" stroke-width="1.2"/>
-              <circle cx="88" cy="22" r="6" fill="none" stroke="#114411" stroke-width="2"/>
-              <path d="M88,28 L88,60 Q100,90 94,130 Q88,155 88,155" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <ellipse cx="88" cy="145" rx="10" ry="13" fill="rgba(17,68,17,0.08)" stroke="#114411" stroke-width="1.5"/>
-              <polygon points="88,134 95,145 88,156 81,145" fill="rgba(201,168,64,0.25)" stroke="#c9a840" stroke-width="1.2"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره آویز طلایی</div>
-            <div class="product-material">طلای ۱۸ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="70" height="70" viewBox="0 0 130 130" fill="none">
-              <circle cx="65" cy="65" r="50" stroke="#114411" stroke-width="7" fill="none"/>
-              <circle cx="65" cy="65" r="38" stroke="#114411" stroke-width="1.5" fill="none" opacity="0.3"/>
-              <circle cx="65" cy="15" r="7" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره حلقه طلایی</div>
-            <div class="product-material">طلای ۱۸ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="70" height="70" viewBox="0 0 130 130" fill="none">
-              <circle cx="65" cy="65" r="28" fill="rgba(201,168,64,0.1)" stroke="#c9a840" stroke-width="2"/>
-              <circle cx="65" cy="65" r="18" fill="rgba(17,68,17,0.08)" stroke="#114411" stroke-width="2"/>
-              <polygon points="65,37 72,50 65,63 58,50" fill="rgba(201,168,64,0.25)" stroke="#c9a840" stroke-width="1.3"/>
-              <circle cx="65" cy="10" r="6" fill="none" stroke="#114411" stroke-width="1.8"/>
-              <line x1="65" y1="16" x2="65" y2="37" stroke="#114411" stroke-width="1.8"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره گوی نگین‌دار</div>
-            <div class="product-material">طلای ۱۸ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="70" height="100" viewBox="0 0 130 160" fill="none">
-              <circle cx="65" cy="20" r="6" fill="none" stroke="#114411" stroke-width="2"/>
-              <path d="M65,26 L65,55 Q50,80 55,115 Q60,140 65,148" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <path d="M65,26 L65,55 Q80,80 75,115 Q70,140 65,148" stroke="#114411" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <ellipse cx="65" cy="148" rx="12" ry="8" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.5"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره آویز بلند</div>
-            <div class="product-material">طلای ۲۱ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="80" height="80" viewBox="0 0 140 140" fill="none">
-              <ellipse cx="70" cy="70" rx="55" ry="55" stroke="#114411" stroke-width="2" fill="none" stroke-dasharray="5 4" opacity="0.4"/>
-              <ellipse cx="70" cy="70" rx="38" ry="38" stroke="#114411" stroke-width="7" fill="none"/>
-              <circle cx="70" cy="32" r="6" fill="rgba(201,168,64,0.2)" stroke="#c9a840" stroke-width="1.5"/>
-              <circle cx="40" cy="48" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
-              <circle cx="100" cy="48" r="4" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره حلقه فانتزی</div>
-            <div class="product-material">طلای ۱۸ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-        <div class="product-card reveal">
-          <div class="product-art">
-            <svg width="70" height="90" viewBox="0 0 130 160" fill="none">
-              <circle cx="65" cy="20" r="7" fill="none" stroke="#114411" stroke-width="2"/>
-              <line x1="65" y1="27" x2="65" y2="55" stroke="#114411" stroke-width="2"/>
-              <polygon points="65,55 78,75 65,95 52,75" fill="rgba(201,168,64,0.15)" stroke="#c9a840" stroke-width="1.5"/>
-              <line x1="65" y1="95" x2="65" y2="118" stroke="#114411" stroke-width="1.5"/>
-              <ellipse cx="65" cy="128" rx="14" ry="10" fill="rgba(201,168,64,0.12)" stroke="#c9a840" stroke-width="1.3"/>
-            </svg>
-          </div>
-          <div class="product-body">
-            <div class="product-name">گوشواره آویز دو قسمتی</div>
-            <div class="product-material">طلای ۱۸ عیار</div>
-            <button class="btn-add-cart" onclick="addToCart(this,'earrings','گوشواره')">افزودن به سبد <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg></button>
-          </div>
-        </div>
-
-      </div>
+      <div class="products-grid" id="products-grid"></div>
     </div>
   </section>
 
@@ -487,6 +390,6 @@
   </footer>
 
   <script src="../js/armeh.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => applyAvailability('earrings'));</script>
+  <script>document.addEventListener('DOMContentLoaded', () => renderCollectionPage('earrings'));</script>
 </body>
 </html>
