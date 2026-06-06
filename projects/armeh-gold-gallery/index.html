@@ -170,35 +170,6 @@
       margin-bottom: 48px;
     }
 
-    .hero-actions {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 14px 32px;
-      background: var(--green);
-      color: var(--white);
-      font-size: 13px; font-weight: 600;
-      border-radius: 2px;
-      transition: background 0.2s;
-      font-family: 'Vazirmatn', sans-serif;
-    }
-    .btn-primary:hover { background: var(--green-mid); }
-    .btn-primary svg { width: 14px; height: 14px; }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 13px 28px;
-      border: 1px solid var(--border);
-      color: var(--text-mid);
-      font-size: 13px; font-weight: 500;
-      border-radius: 2px;
-      transition: border-color 0.2s, color 0.2s;
-      font-family: 'Vazirmatn', sans-serif;
-    }
-    .btn-outline:hover { border-color: var(--green); color: var(--green); }
-
     .hero-right {
       background: var(--green);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -349,12 +320,6 @@
       padding: 28px 20px 20px;
       background: linear-gradient(0deg, rgba(255,255,255,0.96) 60%, transparent 100%);
     }
-    .coll-number {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.12em;
-      color: var(--gold-dark); opacity: 0.8;
-      margin-bottom: 4px;
-    }
     .coll-name {
       font-size: 1.25rem; font-weight: 700;
       color: var(--green-deep); line-height: 1.1;
@@ -397,13 +362,13 @@
     }
     .stat-block {
       padding: 32px 28px;
-      border-left: 1px solid var(--border);
+      border-inline-start: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       background: var(--white);
       transition: background 0.25s;
     }
     .stat-block:hover { background: var(--green-tint); }
-    .stat-block:nth-child(odd) { border-left: none; }
+    .stat-block:nth-child(odd) { border-inline-start: none; }
     .stat-block:nth-child(3), .stat-block:nth-child(4) { border-bottom: none; }
     .stat-num {
       font-size: 2.6rem; font-weight: 700;
@@ -480,9 +445,6 @@
       transition: color 0.2s;
     }
     .footer-links a:hover { color: var(--gold); }
-    .footer-map-box {
-      order: -1;
-    }
     .footer-map {
       border-radius: 4px; overflow: hidden;
       border: 1px solid rgba(201,168,64,0.2);
@@ -513,35 +475,65 @@
       .pillar:nth-child(even) { border-inline-start: 1px solid var(--border); }
       .pillar:nth-child(1), .pillar:nth-child(2) { border-bottom: 1px solid var(--border); }
       .footer-top { grid-template-columns: 1fr 1fr; }
-      .footer-map-box { order: 0; }
       .hero { grid-template-columns: 1fr; }
       .hero-left { padding: 60px 40px; border-left: none; }
       .hero-right { min-height: 400px; }
     }
 
     @media (max-width: 768px) {
+      .nav { padding: 0 20px; }
       .nav-links { display: none; }
-      .nav-links.open { display: flex; flex-direction: column; position: absolute; top: 76px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--border); padding: 24px 40px; gap: 20px; box-shadow: 0 8px 24px rgba(0,0,0,.06); z-index: 99; }
+      .nav-links.open { display: flex; flex-direction: column; align-items: flex-start; position: absolute; top: 76px; left: 0; right: 0; background: rgba(255,255,255,.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 20px 24px; gap: 18px; box-shadow: 0 8px 24px rgba(0,0,0,.06); z-index: 99; }
       .nav-toggle { display: flex; }
+      #nav-logout-li { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .hero { display: flex; flex-direction: column; }
+      .hero-right { order: 1; min-height: 280px; }
+      .hero-left { order: 2; border-left: none; border-top: 1px solid var(--border); }
       .coll-grid { grid-template-columns: repeat(4, 1fr); }
       .coll-card { grid-column: span 2; aspect-ratio: 2/3; }
       .coll-card:nth-child(5), .coll-card:nth-child(6) { grid-column: span 2; }
       .coll-card:nth-child(7) { grid-column: 2 / span 2; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
-      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      .footer-top { grid-template-columns: 1fr 1fr 1fr; gap: 20px 12px; }
+      .footer-map-box { grid-column: 1 / -1; }
+      .footer-brand p { font-size: 10px; max-width: none; }
+      .footer-logo-img { height: 36px; margin-bottom: 8px; }
+      .footer-col-title { font-size: 9px; margin-bottom: 10px; }
+      .footer-links li, .footer-links a { font-size: 11px; }
+      .footer-links { gap: 6px; }
       .container { padding: 0 24px; }
       .section { padding: 72px 0; }
-      .pillars-grid { grid-template-columns: 1fr; }
-      .pillar { border-inline-start: none; border-bottom: 1px solid var(--border); }
-      .pillar:last-child { border-bottom: none; }
+      .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+      .pillar {
+        padding: 28px 18px;
+        display: flex; flex-direction: column; align-items: center; text-align: center;
+        border-bottom: none;
+      }
+      .pillar:nth-child(odd) { border-inline-start: none; }
+      .pillar:nth-child(even) { border-inline-start: 1px solid var(--border); }
+      .pillar:nth-child(1), .pillar:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .pillar:nth-child(3), .pillar:nth-child(4) { border-bottom: none; }
+      .pillar-icon { width: 36px; height: 36px; margin-bottom: 14px; }
+      .pillar-icon svg { width: 16px; height: 16px; }
+      .pillar-title { font-size: 0.88rem; }
+      .pillar-desc { font-size: 11px; line-height: 1.65; }
+      .pillars-head { margin-bottom: 36px; }
     }
 
     @media (max-width: 480px) {
+      .nav { padding: 0 16px; }
+      .container { padding: 0 16px; }
       .coll-grid { grid-template-columns: repeat(2, 1fr); }
       .coll-card { grid-column: span 1 !important; aspect-ratio: 3/4; }
+      .hero-left { padding: 40px 16px; }
+      .hero-right { min-height: 220px; }
       .hero-title { font-size: 2.2rem; }
-      .btn-primary, .btn-outline { width: 100%; justify-content: center; }
-      .hero-actions { flex-direction: column; }
+      .section { padding: 56px 0; }
+      .footer-copy { font-size: 13px; }
+      .pillar { padding: 22px 12px; }
+      .pillar-title { font-size: 0.82rem; }
+      .pillar-desc { font-size: 10px; }
+      .pillar-icon { width: 32px; height: 32px; margin-bottom: 10px; }
     }
   </style>
 </head>
@@ -585,13 +577,6 @@
       <p class="hero-sub reveal">
         جواهرات دست‌ساز با طراحی ماندگار و طلای تأییدشده. هر قطعه در گالری ما برای زیبایی، کیفیت و داستانی که حمل می‌کند انتخاب شده است.
       </p>
-      <div class="hero-actions reveal">
-        <a href="#collections" class="btn-primary">
-          مشاهده مجموعه‌ها
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        </a>
-        <a href="#about" class="btn-outline">درباره گالری</a>
-      </div>
     </div>
 
     <div class="hero-right" aria-hidden="true">
@@ -658,7 +643,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۱</div>
             <div class="coll-name">گوشواره</div>
             <div class="coll-count">آویز، گوی و حلقه</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -678,7 +662,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۲</div>
             <div class="coll-name">انگشتر</div>
             <div class="coll-count">نگین‌دار، ساده و فانتزی</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -698,7 +681,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۳</div>
             <div class="coll-name">گردنبد</div>
             <div class="coll-count">آویزدار، ظریف و لایه‌ای</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -718,7 +700,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۴</div>
             <div class="coll-name">النگو</div>
             <div class="coll-count">ساده، نگین‌دار و طرح‌دار</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -738,7 +719,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۵</div>
             <div class="coll-name">دستبند</div>
             <div class="coll-count">تنیس، چرمی و زنجیری</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -759,7 +739,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۶</div>
             <div class="coll-name">آویز تک</div>
             <div class="coll-count">کلاسیک، مدرن و نگین‌دار</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -783,7 +762,6 @@
             </svg>
           </div>
           <div class="coll-body">
-            <div class="coll-number">۰۷</div>
             <div class="coll-name">زنجیر تک</div>
             <div class="coll-count">فیگارو، کارتیه و هرینگبون</div>
             <div class="coll-hover">مشاهده <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></div>
@@ -908,7 +886,7 @@
           </ul>
         </div>
 
-        <!-- Map box — visual RIGHT (first in RTL grid) -->
+        <!-- Map box — visual LEFT -->
         <div class="footer-map-box">
           <div class="footer-map">
             <iframe

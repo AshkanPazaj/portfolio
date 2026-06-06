@@ -109,7 +109,19 @@
     .btn-danger { padding: 10px 24px; background: none; border: 1px solid rgba(192,57,43,.4); color: var(--error); border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .2s; }
     .btn-danger:hover { background: rgba(192,57,43,.06); }
 
-    @media (max-width: 600px) { .container { padding: 0 20px; } .nav { padding: 0 20px; } .form-row2 { grid-template-columns: 1fr; } .card { padding: 20px; } }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .nav { padding: 0 20px; }
+      .page-hero { padding: 40px 0 32px; }
+      .page-body { padding: 32px 0 48px; }
+      .form-row2 { grid-template-columns: 1fr; }
+      .card { padding: 20px; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .nav { padding: 0 16px; }
+      .card { padding: 16px; }
+    }
   </style>
 </head>
 <body>

@@ -176,7 +176,23 @@
     /* COLLECTION LABEL */
     .coll-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; background: var(--cream); color: var(--gold-dark); border-radius: 10px; }
 
-    @media (max-width: 700px) { .container { padding: 0 20px; } .nav { padding: 0 20px; } .form-row2 { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .nav { padding: 0 20px; }
+      .form-row2 { grid-template-columns: 1fr; }
+      .page-hero { padding: 40px 0 32px; }
+      .page-hero p { font-size: 13px; }
+      .page-body { padding: 32px 0 48px; }
+      .data-table { min-width: 640px; }
+      .action-btns { flex-wrap: wrap; }
+    }
+    @media (max-width: 480px) {
+      .container { padding: 0 16px; }
+      .nav { padding: 0 16px; }
+      .modal-body { padding: 16px; }
+      .modal-footer { flex-direction: column-reverse; }
+      .modal-footer .btn-primary, .modal-footer .btn-secondary { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -382,10 +398,12 @@
         <h2>مدیریت محصولات (${Object.values(all).flat().length})</h2>
         <button class="btn-add-product" onclick="openProductAdd()">+ افزودن محصول</button>
       </div>
-      <table class="data-table">
-        <thead><tr><th>تصویر</th><th>مجموعه</th><th>نام</th><th>جنس</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-        <tbody>${rows || '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>'}</tbody>
-      </table>`;
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>تصویر</th><th>مجموعه</th><th>نام</th><th>جنس</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+          <tbody>${rows || '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>'}</tbody>
+        </table>
+      </div>`;
   }
 
   function fillCollectionSelect(selected) {
@@ -514,10 +532,12 @@
       </tr>`).join('');
     return `
       <div class="section-header"><h2>کاربران ثبت‌نام‌شده (${users.length})</h2></div>
-      <table class="data-table">
-        <thead><tr><th>نام</th><th>ایمیل</th><th>موبایل</th><th>تاریخ ثبت</th><th>عملیات</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>`;
+      <div class="data-table-wrap">
+        <table class="data-table">
+          <thead><tr><th>نام</th><th>ایمیل</th><th>موبایل</th><th>تاریخ ثبت</th><th>عملیات</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
   }
 
   function toggleAvail(id, available) {

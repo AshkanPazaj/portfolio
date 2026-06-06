@@ -43,7 +43,6 @@
     .coll-hero-back { display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:600; color:rgba(201,168,64,0.65); letter-spacing:0.08em; margin-bottom:20px; transition:color 0.2s; }
     .coll-hero-back:hover { color:var(--gold); }
     .coll-hero-back svg { width:13px; height:13px; }
-    .coll-hero-num { font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(201,168,64,0.5); margin-bottom:12px; }
     .coll-hero-title { font-size:clamp(2.2rem,5vw,3.6rem); font-weight:700; color:#f0ead8; line-height:1.2; margin-bottom:14px; }
     .coll-hero-desc { font-size:0.97rem; color:rgba(201,168,64,0.6); max-width:44ch; line-height:1.9; }
     .products { padding:80px 0 96px; background:var(--off-white); border-bottom:1px solid var(--border); }
@@ -79,7 +78,6 @@
     .footer-links li { font-size:13px; color:rgba(240,235,220,0.45); line-height:1.7; }
     .footer-links a { font-size:13px; color:rgba(240,235,220,0.45); transition:color 0.2s; }
     .footer-links a:hover { color:var(--gold); }
-    .footer-map-box { order:-1; }
     .footer-map { border-radius:4px; overflow:hidden; border:1px solid rgba(201,168,64,0.2); }
     .footer-map iframe { width:100%; height:180px; border:none; display:block; filter:grayscale(25%) contrast(1.05); }
     .footer-divider { height:1px; background:rgba(201,168,64,0.1); margin-bottom:24px; }
@@ -87,9 +85,9 @@
     .footer-copy { font-size:15px; color:rgba(201,168,64,0.5); text-align:center; }
     .reveal { opacity:0; transform:translateY(18px); transition:opacity 0.6s var(--ease),transform 0.6s var(--ease); }
     .reveal.visible { opacity:1; transform:translateY(0); }
-    @media (max-width:1024px) { .footer-top { grid-template-columns:1fr 1fr; } .footer-map-box { order:0; } }
+    @media (max-width:1024px) { .footer-top { grid-template-columns:1fr 1fr; } }
     @media (max-width:900px) { .products-grid { grid-template-columns:repeat(2,1fr); } .coll-hero-inner { gap:36px; } }
-    @media (max-width:600px) { .products-grid { grid-template-columns:1fr; } .coll-hero-inner { flex-direction:column; gap:24px; padding:40px 0; } .coll-hero-art { display:none; } .container { padding:0 24px; } .footer-top { grid-template-columns:1fr; gap:28px; } }
+    @media (max-width:600px) { .products-grid { grid-template-columns:1fr; } .coll-hero-inner { flex-direction:column; gap:24px; padding:40px 0; } .coll-hero-art { display:none; } .container { padding:0 24px; } .footer-top { grid-template-columns:1fr 1fr 1fr; gap:20px 12px; } .footer-map-box { grid-column:1 / -1; } }
   </style>
 </head>
 <body>
@@ -122,7 +120,6 @@
         </div>
         <div class="coll-hero-text">
           <a href="../index.html#collections" class="coll-hero-back"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 19l7-7-7-7"/></svg>بازگشت به مجموعه‌ها</a>
-          <div class="coll-hero-num">مجموعه ۰۳</div>
           <h1 class="coll-hero-title">گردنبد</h1>
           <p class="coll-hero-desc">آویزدار، ظریف و لایه‌ای. هر گردنبد از طلای ۱۸ و ۲۱ عیار با مهر رسمی صادرشده.</p>
         </div>

@@ -26,6 +26,8 @@
     .nav-logout-btn:hover { background:rgba(192,57,43,.07); }
     .nav-user-name { font-size:13px; font-weight:600; color:var(--green,#114411); }
     .nav-admin-link { font-size:13px; font-weight:600; color:var(--green,#114411); }
+    .nav-icon-link { display:inline-flex; align-items:center; gap:6px; }
+    .nav-icon-link svg { width:14px; height:14px; flex-shrink:0; }
     #nav-logout-li { align-items:center; gap:8px; }
     .footer-instagram {
       display:inline-flex; align-items:center; justify-content:center;
@@ -119,10 +121,88 @@
     .pd-status.available { color:var(--green,#114411); }
     .pd-status.unavailable { color:#c0392b; }
     .pd-add-cart { font-size:13px !important; padding-bottom:3px; }
-    @media (max-width:600px) {
-      .pd-slide-wrap { height:240px; }
-      .pd-slide { max-height:240px; }
+    .nav-toggle {
+      display:none; flex-direction:column; gap:5px; width:32px; padding:4px;
+      background:none; border:none; cursor:pointer; flex-shrink:0;
+    }
+    .nav-toggle span {
+      display:block; height:1.5px; background:var(--text,#1a1a1a); border-radius:1px;
+      transition:transform .25s,opacity .25s;
+    }
+    .nav-toggle span:nth-child(2) { width:75%; }
+    .data-table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    @media (max-width:768px) {
+      .nav { padding-left:20px !important; padding-right:20px !important; }
+      .nav-links { display:none !important; }
+      .nav-links.open {
+        display:flex !important; flex-direction:column; align-items:flex-start;
+        position:absolute; top:76px; left:0; right:0;
+        background:rgba(255,255,255,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+        border-bottom:1px solid var(--border,#e0ddd5);
+        padding:20px 24px; gap:18px; box-shadow:0 8px 24px rgba(0,0,0,.06); z-index:99;
+      }
+      .nav-links.open li { width:100%; }
+      .nav-toggle { display:flex !important; }
+      #nav-logout-li { flex-direction:column; align-items:flex-start !important; gap:10px; }
+      .nav-logo-img { height:38px !important; }
+      .products { padding:48px 0 64px !important; }
+      .products-grid { gap:16px !important; }
+      .product-body { padding:18px 16px 16px !important; }
+      .product-art { height:min(200px,42vw) !important; }
+      .coll-hero { min-height:auto !important; }
+      .coll-hero-inner { padding:40px 0 !important; }
+      .page-hero { padding:40px 0 32px !important; }
+      .page-body { padding:32px 0 48px !important; }
+      .cart-layout { grid-template-columns:1fr !important; gap:24px !important; }
+      .cart-item { flex-wrap:wrap; padding:14px 16px !important; gap:12px; }
+      .cart-item-actions { width:100%; justify-content:space-between; }
+      .cart-items-header { padding:14px 16px !important; flex-wrap:wrap; gap:8px; }
+      .sidebar-box { padding:18px !important; }
+      .section-header { flex-direction:column !important; align-items:flex-start !important; gap:12px; }
+      .tab-nav { overflow-x:auto; -webkit-overflow-scrolling:touch; flex-wrap:nowrap; padding-bottom:4px; }
+      .modal { margin:0 12px !important; max-width:calc(100vw - 24px) !important; }
+      .content { padding-left:20px !important; padding-right:20px !important; }
+      .pd-overlay { padding:12px; align-items:center; }
+      .pd-modal { max-height:88dvh; }
+      .pd-slide-wrap { height:min(280px,45vw); min-height:200px; }
+      .pd-slide { max-height:min(280px,45vw); }
       .pd-info { padding:20px; }
+      .pd-name { font-size:1.15rem; }
+      .pd-nav { width:40px; height:40px; font-size:24px; }
+      .pd-prev { right:8px; }
+      .pd-next { left:8px; }
+      .footer-top {
+        grid-template-columns:1fr 1fr 1fr !important;
+        gap:20px 12px !important;
+        margin-bottom:24px !important;
+      }
+      .footer-map-box { grid-column:1 / -1 !important; }
+      .footer-brand p { font-size:10px; line-height:1.65; max-width:none; }
+      .footer-logo-img { height:36px !important; margin-bottom:8px; }
+      .footer-col-title { font-size:9px; margin-bottom:10px; letter-spacing:.1em; }
+      .footer-links { gap:6px; }
+      .footer-links li, .footer-links a { font-size:11px; line-height:1.55; }
+      .footer-map iframe { height:160px; }
+    }
+    @media (max-width:480px) {
+      .container { padding-left:16px !important; padding-right:16px !important; }
+      .nav { padding-left:16px !important; padding-right:16px !important; }
+      .products-grid { grid-template-columns:1fr !important; }
+      .checkout-form .form-row { grid-template-columns:1fr !important; }
+      .form-row2 { grid-template-columns:1fr !important; }
+      .pd-overlay { padding:0; align-items:flex-end; }
+      .pd-modal { border-radius:12px 12px 0 0; max-height:92dvh; width:100%; }
+      .pd-slide-wrap { height:220px; min-height:180px; }
+      .pd-slide { max-height:220px; }
+      .pd-close { top:8px; left:8px; }
+      .cart-item-info { min-width:0; flex:1 1 100%; }
+      .footer-copy { font-size:13px; }
+      .footer-top { gap:16px 8px !important; }
+      .footer-brand p { font-size:9px; }
+      .footer-links li, .footer-links a { font-size:10px; }
+      .footer-logo-img { height:32px !important; }
+      .hero-left { padding:40px 20px !important; }
+      .section { padding:56px 0 !important; }
     }
   `;
   const s = document.createElement('style');
@@ -483,14 +563,75 @@ function applyAvailability(collectionKey) {
   });
 }
 
+/* ── Mobile nav ───────────────────────────── */
+function initMobileNav() {
+  const nav = document.getElementById('nav');
+  const links = document.getElementById('nav-links');
+  if (!nav || !links) return;
+  let toggle = document.getElementById('nav-toggle');
+  if (!toggle) {
+    toggle = document.createElement('button');
+    toggle.className = 'nav-toggle';
+    toggle.id = 'nav-toggle';
+    toggle.type = 'button';
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'nav-links');
+    toggle.setAttribute('aria-label', 'باز کردن منو');
+    toggle.innerHTML = '<span></span><span></span><span></span>';
+    nav.appendChild(toggle);
+  }
+  if (toggle.dataset.bound) return;
+  toggle.dataset.bound = '1';
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    links.classList.toggle('open', !open);
+  });
+  links.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      links.classList.remove('open');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!links.classList.contains('open')) return;
+    if (e.target.closest('#nav')) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    links.classList.remove('open');
+  });
+}
+
 /* ── Nav init ─────────────────────────────── */
+const NAV_ICONS = {
+  collections: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>',
+  about: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  login: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+};
+
+function addNavIcon(link, icon) {
+  if (!link || link.querySelector('svg')) return;
+  link.classList.add('nav-icon-link');
+  link.insertAdjacentHTML('afterbegin', icon);
+}
+
 function initNav() {
   Cart.updateBadge();
   const s       = Auth.getSession();
   const loginLi  = document.getElementById('nav-login-li');
   const adminLi  = document.getElementById('nav-admin-li');
   const logoutLi = document.getElementById('nav-logout-li');
-  if (loginLi)  loginLi.style.display  = s ? 'none' : 'list-item';
+
+  document.querySelectorAll('#nav-links > li > a').forEach(link => {
+    const href = link.getAttribute('href') || '';
+    const text = link.textContent.trim();
+    if (href.includes('#collections') || text === 'مجموعه‌ها') addNavIcon(link, NAV_ICONS.collections);
+    else if (href.includes('#about') || text === 'درباره ما') addNavIcon(link, NAV_ICONS.about);
+  });
+
+  if (loginLi) {
+    loginLi.style.display = s ? 'none' : 'list-item';
+    addNavIcon(loginLi.querySelector('a'), NAV_ICONS.login);
+  }
   if (adminLi)  adminLi.style.display  = (s?.role === 'admin') ? 'list-item' : 'none';
   if (logoutLi) logoutLi.style.display = s ? 'flex' : 'none';
   const profileLink = document.getElementById('nav-profile-link');
@@ -537,6 +678,14 @@ function initProductDetail() {
   overlay.querySelector('.pd-prev').addEventListener('click', () => pdGo(-1));
   overlay.querySelector('.pd-next').addEventListener('click', () => pdGo(1));
   document.addEventListener('keydown', pdKeydown);
+  let touchX = 0;
+  const gallery = overlay.querySelector('.pd-gallery');
+  gallery.addEventListener('touchstart', e => { touchX = e.changedTouches[0].screenX; }, { passive: true });
+  gallery.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].screenX - touchX;
+    if (dx < -45) pdGo(1);
+    else if (dx > 45) pdGo(-1);
+  }, { passive: true });
 }
 
 function pdKeydown(e) {
@@ -645,21 +794,12 @@ function initFooterInstagram() {
 /* ── Bootstrap ───────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
   initNav();
+  initMobileNav();
   initProductDetail();
   initFooterInstagram();
 
   const nav = document.getElementById('nav');
   if (nav) window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 10), { passive:true });
-
-  const toggle = document.getElementById('nav-toggle');
-  const links  = document.getElementById('nav-links');
-  if (toggle && links) {
-    toggle.addEventListener('click', () => {
-      const open = toggle.getAttribute('aria-expanded') === 'true';
-      toggle.setAttribute('aria-expanded', String(!open));
-      links.classList.toggle('open');
-    });
-  }
 
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i*60); obs.unobserve(e.target); } });
