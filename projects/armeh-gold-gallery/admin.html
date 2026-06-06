@@ -78,6 +78,29 @@
     /* SECTION HEADER */
     .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
     .section-header h2 { font-size: 15px; font-weight: 700; color: var(--green-deep); }
+    .section-header-products {
+      display: grid;
+      grid-template-columns: auto minmax(200px, 1fr) auto;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .section-header-products h2 { font-size: 15px; font-weight: 700; color: var(--green-deep); white-space: nowrap; }
+    .admin-search-wrap { position: relative; width: 100%; max-width: 420px; justify-self: center; }
+    .admin-search-input {
+      width: 100%; padding: 9px 40px 9px 14px;
+      border: 1px solid var(--border); border-radius: 2px;
+      font-family: 'Vazirmatn', sans-serif; font-size: 13px;
+      background: var(--white); color: var(--text); outline: none;
+      transition: border-color .2s;
+    }
+    .admin-search-input:focus { border-color: var(--green); }
+    .admin-search-input::placeholder { color: var(--text-muted); }
+    .admin-search-icon {
+      position: absolute; top: 50%; right: 12px; transform: translateY(-50%);
+      color: var(--text-muted); pointer-events: none; line-height: 0;
+    }
+    .admin-search-icon svg { width: 16px; height: 16px; display: block; }
 
     /* TABLE */
     .data-table { width: 100%; border-collapse: collapse; background: var(--white); border: 1px solid var(--border); border-radius: 3px; overflow: hidden; font-size: 13px; }
@@ -185,6 +208,19 @@
       .page-body { padding: 32px 0 48px; }
       .data-table { min-width: 640px; }
       .action-btns { flex-wrap: wrap; }
+      .section-header-products {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 12px;
+      }
+      .section-header-products h2 { grid-column: 1; }
+      .section-header-products .btn-add-product { grid-column: 2; grid-row: 1; }
+      .section-header-products .admin-search-wrap {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        max-width: none;
+        justify-self: stretch;
+      }
     }
     @media (max-width: 480px) {
       .container { padding: 0 16px; }
@@ -330,52 +366,124 @@
 
   <script src="js/armeh.js"></script>
   <script>
-  // Guard: only admin
-  (function() {
-    if (!Auth.isAdmin()) {
-      document.getElementById('admin-body').innerHTML = `
-        <div style="text-align:center;padding:80px 20px">
-          <p style="font-size:15px;color:var(--text-muted)">دسترسی فقط برای مدیر مجاز است.</p>
-          <a href="login.html" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--green);color:#fff;border-radius:2px;font-size:13px;font-weight:700">ورود</a>
-        </div>`;
-      return;
-    }
-    renderAdmin();
-  })();
+  let productSearchQuery = '';
+  let adminActiveTab = 'products';
+  let pendingProductImages = undefined;
 
   function renderAdmin() {
-    document.getElementById('admin-body').innerHTML = `
-      <div class="tab-nav">
-        <button class="tab-btn active" onclick="switchTab('products', this)">مدیریت محصولات</button>
-        <button class="tab-btn" onclick="switchTab('users', this)">مدیریت کاربران</button>
-      </div>
-      <div class="tab-panel active" id="tab-products">${renderProductsTab()}</div>
-      <div class="tab-panel" id="tab-users">${renderUsersTab()}</div>`;
+    try {
+      document.getElementById('admin-body').innerHTML = `
+        <div class="tab-nav">
+          <button class="tab-btn${adminActiveTab === 'products' ? ' active' : ''}" onclick="switchTab('products', this)">مدیریت محصولات</button>
+          <button class="tab-btn${adminActiveTab === 'users' ? ' active' : ''}" onclick="switchTab('users', this)">مدیریت کاربران</button>
+        </div>
+        <div class="tab-panel${adminActiveTab === 'products' ? ' active' : ''}" id="tab-products">${renderProductsTab()}</div>
+        <div class="tab-panel${adminActiveTab === 'users' ? ' active' : ''}" id="tab-users">${renderUsersTab()}</div>`;
+      initAdminProductSearch();
+      const searchInput = document.getElementById('admin-product-search');
+      if (searchInput) searchInput.value = productSearchQuery;
+      filterAdminProductTable();
+    } catch (err) {
+      console.error(err);
+      document.getElementById('admin-body').innerHTML = `
+        <p style="color:var(--error);padding:32px 0;font-size:14px">خطا در بارگذاری پنل. لطفاً صفحه را رفرش کنید.</p>`;
+    }
+  }
+
+  function initAdminProductSearch() {
+    const body = document.getElementById('admin-body');
+    if (!body || body.dataset.searchBound) return;
+    body.dataset.searchBound = '1';
+    body.addEventListener('input', e => {
+      if (e.target.id !== 'admin-product-search') return;
+      productSearchQuery = e.target.value;
+      filterAdminProductTable();
+    });
+    body.addEventListener('search', e => {
+      if (e.target.id !== 'admin-product-search') return;
+      productSearchQuery = e.target.value;
+      filterAdminProductTable();
+    });
+  }
+
+  function filterAdminProductTable() {
+    const q = productSearchQuery.trim();
+    const rows = document.querySelectorAll('#tab-products .data-table tbody tr[data-pid]');
+    let visible = 0;
+    rows.forEach(row => {
+      if (!q) {
+        row.style.display = '';
+        visible++;
+        return;
+      }
+      const match = (row.textContent || '').includes(q);
+      row.style.display = match ? '' : 'none';
+      if (match) visible++;
+    });
+    const countEl = document.getElementById('admin-product-count');
+    if (countEl) {
+      const total = rows.length;
+      countEl.textContent = q ? `(${visible} از ${total})` : `(${total})`;
+    }
+    const emptyRow = document.getElementById('admin-search-empty');
+    if (emptyRow) emptyRow.style.display = rows.length && visible === 0 ? '' : 'none';
+    const placeholderRow = document.getElementById('admin-products-placeholder');
+    if (placeholderRow) placeholderRow.style.display = rows.length > 0 ? 'none' : '';
+  }
+
+  function refreshProductsTable() {
+    const panel = document.getElementById('tab-products');
+    const tbody = document.querySelector('#tab-products .data-table tbody');
+    if (!panel || !tbody) return;
+
+    const products = Object.values(Products.getAll()).flat();
+    const emptyMsg = '<tr id="admin-products-placeholder"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
+    const noResults = '<tr id="admin-search-empty" style="display:none"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>';
+
+    if (!products.length) {
+      tbody.innerHTML = emptyMsg + noResults;
+    } else {
+      tbody.innerHTML = products.map(buildProductRowHtml).join('') + noResults;
+    }
+
+    const input = document.getElementById('admin-product-search');
+    if (input && input.value !== productSearchQuery) input.value = productSearchQuery;
+    filterAdminProductTable();
   }
 
   function switchTab(name, btn) {
+    adminActiveTab = name;
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('tab-' + name).classList.add('active');
+    if (name === 'products') filterAdminProductTable();
   }
 
-  let pendingProductImages = undefined;
+  function adminThumbHtml(imgs) {
+    if (!imgs.length) return '<div class="product-thumb-empty">بدون<br>تصویر</div>';
+    const src = imgs[0];
+    if (!src || src.length > 12000) {
+      const label = imgs.length > 1 ? `${imgs.length} تصویر` : 'تصویر';
+      return `<div class="product-thumb-empty">${label}</div>`;
+    }
+    const safeSrc = src.replace(/"/g, '&quot;');
+    const count = imgs.length > 1
+      ? `<span style="font-size:9px;color:var(--text-muted);display:block;margin-top:2px">${imgs.length} تصویر</span>`
+      : '';
+    return `<img src="${safeSrc}" class="product-thumb" alt="" />${count}`;
+  }
 
-  function renderProductsTab() {
-    const all = Products.getAll();
-    const rows = Object.values(all).flat().map(p => {
-      const imgs = getProductImages(p);
-      const thumb = imgs[0]
-        ? `<img src="${imgs[0]}" class="product-thumb" alt="" />${imgs.length > 1 ? `<span style="font-size:9px;color:var(--text-muted);display:block;margin-top:2px">${imgs.length} تصویر</span>` : ''}`
-        : '<div class="product-thumb-empty">بدون<br>تصویر</div>';
-      return `
-      <tr data-pid="${p.id}">
+  function buildProductRowHtml(p) {
+    const imgs = getProductImages(p);
+    const thumb = adminThumbHtml(imgs);
+    return `
+      <tr data-pid="${escHtml(p.id)}">
         <td>${thumb}</td>
-        <td><span class="coll-badge">${p.collectionName}</span></td>
-        <td style="font-weight:600;color:var(--text)">${p.name}</td>
-        <td>${p.material}</td>
-        <td style="font-weight:600;color:var(--gold-dark)">${formatPrice(p.price)}</td>
+        <td><span class="coll-badge">${escHtml(p.collectionName)}</span></td>
+        <td style="font-weight:600;color:var(--text)">${escHtml(p.name)}</td>
+        <td>${escHtml(p.material)}</td>
+        <td style="font-weight:600;color:var(--gold-dark)">${escHtml(formatPrice(p.price))}</td>
         <td>
           <div class="toggle-wrap">
             <label class="toggle">
@@ -392,16 +500,33 @@
           </div>
         </td>
       </tr>`;
-    }).join('');
+  }
+
+  function renderProductsTab() {
+    const all = Products.getAll();
+    const products = Object.values(all).flat();
+    const rows = products.map(buildProductRowHtml).join('');
+    const total = products.length;
+    const searchSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+    const emptyMsg = products.length
+      ? ''
+      : '<tr id="admin-products-placeholder"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
     return `
-      <div class="section-header">
-        <h2>مدیریت محصولات (${Object.values(all).flat().length})</h2>
+      <div class="section-header-products">
+        <h2>مدیریت محصولات <span id="admin-product-count">(${total})</span></h2>
+        <div class="admin-search-wrap">
+          <input type="search" id="admin-product-search" class="admin-search-input" placeholder="جستجوی محصول، مجموعه یا جنس..." autocomplete="off" aria-label="جستجوی محصولات" />
+          <span class="admin-search-icon">${searchSvg}</span>
+        </div>
         <button class="btn-add-product" onclick="openProductAdd()">+ افزودن محصول</button>
       </div>
       <div class="data-table-wrap">
         <table class="data-table">
           <thead><tr><th>تصویر</th><th>مجموعه</th><th>نام</th><th>جنس</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
-          <tbody>${rows || '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>'}</tbody>
+          <tbody>
+            ${rows}${emptyMsg}
+            <tr id="admin-search-empty" style="display:none"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>
+          </tbody>
         </table>
       </div>`;
   }
@@ -500,7 +625,7 @@
     if (id) Products.updateProduct(id, data);
     else Products.addProduct(collection, data);
     closeModal('product-modal');
-    renderAdmin();
+    refreshProductsTable();
   }
 
   function confirmDeleteProduct(id) {
@@ -508,7 +633,7 @@
     if (!found) return;
     if (confirm(`آیا از حذف «${found.product.name}» مطمئن هستید؟`)) {
       Products.deleteProduct(id);
-      renderAdmin();
+      refreshProductsTable();
     }
   }
 
@@ -615,6 +740,20 @@
   document.addEventListener('click', e => {
     if (e.target.classList.contains('modal-overlay')) closeModal(e.target.id);
   });
+
+  (function initAdminPanel() {
+    const body = document.getElementById('admin-body');
+    if (!body) return;
+    if (!Auth.isAdmin()) {
+      body.innerHTML = `
+        <div style="text-align:center;padding:80px 20px">
+          <p style="font-size:15px;color:var(--text-muted)">دسترسی فقط برای مدیر مجاز است.</p>
+          <a href="login.html" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--green);color:#fff;border-radius:2px;font-size:13px;font-weight:700">ورود</a>
+        </div>`;
+      return;
+    }
+    renderAdmin();
+  })();
   </script>
 </body>
 </html>

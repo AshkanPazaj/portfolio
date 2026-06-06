@@ -5,10 +5,75 @@
 /* ── Injected shared CSS ── */
 (function () {
   const css = `
-    .nav-end { display:flex; align-items:center; gap:16px; order:1; flex-direction:row-reverse; }
-    .nav-cart { position:relative; display:flex; align-items:center; color:var(--green,#114411); transition:color .2s; }
-    .nav-cart svg { width:22px; height:22px; }
+    .nav { align-items:center; }
+    .nav-links {
+      display:flex; align-items:center; gap:32px;
+      list-style:none; margin:0; padding:0; height:100%;
+    }
+    .nav-links > li { display:flex; align-items:center; }
+    .nav-links a {
+      display:inline-flex; align-items:center; justify-content:center;
+      line-height:1; min-height:36px; white-space:nowrap;
+    }
+    .nav-end {
+      display:flex; align-items:center; gap:14px;
+      order:1; flex-direction:row-reverse; flex-shrink:0;
+    }
+    .nav-logo { display:flex; align-items:center; line-height:0; }
+    .nav-logo-img { display:block; vertical-align:middle; }
+    .nav-cart {
+      position:relative; display:inline-flex; align-items:center; justify-content:center;
+      width:36px; height:36px; flex-shrink:0;
+      color:var(--green,#114411); transition:color .2s;
+    }
+    .nav-cart svg { width:22px; height:22px; display:block; }
     .nav-cart:hover { color:var(--gold-dark,#9a7e28); }
+    .nav-search {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:36px; height:36px; flex-shrink:0;
+      color:var(--green,#114411); background:none; border:none; cursor:pointer;
+      padding:0; transition:color .2s;
+    }
+    .nav-search svg { width:22px; height:22px; display:block; }
+    .nav-search:hover, .nav-search.active { color:var(--gold-dark,#9a7e28); }
+    .search-panel {
+      position:fixed; top:76px; left:0; right:0; z-index:98;
+      background:rgba(255,255,255,.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border,#e0ddd5);
+      box-shadow:0 8px 24px rgba(0,0,0,.06);
+      padding:16px 40px 20px;
+      opacity:0; pointer-events:none; visibility:hidden;
+      transition:opacity .2s, visibility .2s;
+    }
+    .search-panel.open { opacity:1; pointer-events:auto; visibility:visible; }
+    .search-panel-inner { max-width:1160px; margin:0 auto; }
+    .search-input-wrap { position:relative; }
+    .search-input {
+      width:100%; padding:12px 44px 12px 16px;
+      border:1px solid var(--border,#e0ddd5); border-radius:2px;
+      font-family:'Vazirmatn',sans-serif; font-size:14px;
+      background:var(--white,#fff); color:var(--text,#1a1a1a);
+    }
+    .search-input:focus { outline:none; border-color:var(--green,#114411); }
+    .search-input-icon {
+      position:absolute; top:50%; right:14px; transform:translateY(-50%);
+      color:var(--text-muted,#9a9a9a); pointer-events:none; line-height:0;
+    }
+    .search-input-icon svg { width:18px; height:18px; display:block; }
+    .search-results { margin-top:12px; max-height:min(360px,50vh); overflow-y:auto; }
+    .search-results:empty { display:none; }
+    .search-result-item {
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:12px 14px; border-radius:2px; cursor:pointer;
+      border:none; background:none; width:100%; text-align:right;
+      font-family:'Vazirmatn',sans-serif; transition:background .15s;
+    }
+    .search-result-item:hover { background:var(--green-tint,#f2f6f2); }
+    .search-result-name { font-size:14px; font-weight:600; color:var(--green-deep,#0c330c); }
+    .search-result-meta { font-size:11px; color:var(--text-muted,#9a9a9a); margin-top:2px; }
+    .search-result-price { font-size:13px; font-weight:700; color:var(--gold-dark,#9a7e28); flex-shrink:0; direction:ltr; }
+    .search-empty { padding:16px; text-align:center; font-size:13px; color:var(--text-muted,#9a9a9a); }
+    .search-hint { font-size:12px; color:var(--text-muted,#9a9a9a); margin-top:8px; }
     .cart-badge {
       position:absolute; top:-7px; left:-8px;
       background:var(--gold,#c9a840); color:#fff;
@@ -18,17 +83,26 @@
       font-family:'Vazirmatn',sans-serif; line-height:1;
     }
     .nav-logout-btn {
+      display:inline-flex; align-items:center; justify-content:center;
       background:none; border:1px solid rgba(192,57,43,.3); cursor:pointer;
-      font-family:'Vazirmatn',sans-serif; font-size:12px; font-weight:500;
-      color:#c0392b; padding:4px 10px; border-radius:2px;
-      transition:background .2s;
+      font-family:'Vazirmatn',sans-serif; font-size:13px; font-weight:500;
+      color:#c0392b; height:32px; padding:0 12px; border-radius:2px;
+      line-height:1; transition:background .2s; flex-shrink:0;
     }
     .nav-logout-btn:hover { background:rgba(192,57,43,.07); }
-    .nav-user-name { font-size:13px; font-weight:600; color:var(--green,#114411); }
-    .nav-admin-link { font-size:13px; font-weight:600; color:var(--green,#114411); }
-    .nav-icon-link { display:inline-flex; align-items:center; gap:6px; }
-    .nav-icon-link svg { width:14px; height:14px; flex-shrink:0; }
-    #nav-logout-li { align-items:center; gap:8px; }
+    .nav-user-name {
+      display:inline-flex; align-items:center; line-height:1;
+      font-size:13px; font-weight:600; color:var(--green,#114411);
+      min-height:36px;
+    }
+    .nav-admin-link {
+      display:inline-flex; align-items:center; line-height:1;
+      font-size:13px; font-weight:600; color:var(--green,#114411);
+      min-height:36px;
+    }
+    .nav-icon-link { display:inline-flex; align-items:center; gap:7px; line-height:1; }
+    .nav-icon-link svg { width:14px; height:14px; flex-shrink:0; display:block; }
+    #nav-logout-li { display:flex; align-items:center; gap:10px; }
     .footer-instagram {
       display:inline-flex; align-items:center; justify-content:center;
       margin-top:14px; color:rgba(201,168,64,0.55); line-height:0;
@@ -122,8 +196,9 @@
     .pd-status.unavailable { color:#c0392b; }
     .pd-add-cart { font-size:13px !important; padding-bottom:3px; }
     .nav-toggle {
-      display:none; flex-direction:column; gap:5px; width:32px; padding:4px;
-      background:none; border:none; cursor:pointer; flex-shrink:0;
+      display:none; flex-direction:column; justify-content:center; gap:5px;
+      width:32px; height:36px; padding:4px; margin:0;
+      background:none; border:none; cursor:pointer; flex-shrink:0; align-self:center;
     }
     .nav-toggle span {
       display:block; height:1.5px; background:var(--text,#1a1a1a); border-radius:1px;
@@ -142,9 +217,12 @@
         padding:20px 24px; gap:18px; box-shadow:0 8px 24px rgba(0,0,0,.06); z-index:99;
       }
       .nav-links.open li { width:100%; }
+      .nav-links.open a, .nav-links.open .nav-logout-btn { min-height:0; justify-content:flex-start; }
       .nav-toggle { display:flex !important; }
       #nav-logout-li { flex-direction:column; align-items:flex-start !important; gap:10px; }
       .nav-logo-img { height:38px !important; }
+      .nav-end { gap:12px !important; }
+      .search-panel { padding:14px 20px 18px; }
       .products { padding:48px 0 64px !important; }
       .products-grid { gap:16px !important; }
       .product-body { padding:18px 16px 16px !important; }
@@ -583,6 +661,17 @@ function initMobileNav() {
   if (toggle.dataset.bound) return;
   toggle.dataset.bound = '1';
   toggle.addEventListener('click', () => {
+    const searchPanel = document.getElementById('search-panel');
+    const searchBtn = document.getElementById('nav-search-btn');
+    if (searchPanel?.classList.contains('open')) {
+      searchPanel.classList.remove('open');
+      searchBtn?.classList.remove('active');
+      searchBtn?.setAttribute('aria-expanded', 'false');
+      const si = searchPanel.querySelector('.search-input');
+      const sr = searchPanel.querySelector('.search-results');
+      if (si) si.value = '';
+      if (sr) sr.innerHTML = '';
+    }
     const open = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', String(!open));
     links.classList.toggle('open', !open);
@@ -772,6 +861,139 @@ function renderProductDetail() {
   renderProductDetailSlide();
 }
 
+/* ── Nav search ───────────────────────────── */
+const SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+
+function initNavSearch() {
+  if (/\/admin\.html$/i.test(window.location.pathname) || document.getElementById('admin-body')) return;
+  const nav = document.getElementById('nav');
+  const navEnd = document.querySelector('.nav-end');
+  if (!nav || !navEnd) return;
+
+  let btn = document.getElementById('nav-search-btn');
+  if (!btn) {
+    btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'nav-search-btn';
+    btn.className = 'nav-search';
+    btn.setAttribute('aria-label', 'جستجو');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-controls', 'search-panel');
+    btn.innerHTML = SEARCH_SVG;
+    const cart = navEnd.querySelector('.nav-cart');
+    if (cart) navEnd.insertBefore(btn, cart);
+    else navEnd.appendChild(btn);
+  }
+
+  let panel = document.getElementById('search-panel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'search-panel';
+    panel.className = 'search-panel';
+    panel.setAttribute('role', 'search');
+    panel.innerHTML = `
+      <div class="search-panel-inner">
+        <div class="search-input-wrap">
+          <input type="search" class="search-input" placeholder="جستجوی محصول، مجموعه یا جنس..." autocomplete="off" aria-label="جستجو" />
+          <span class="search-input-icon">${SEARCH_SVG}</span>
+        </div>
+        <p class="search-hint">نام محصول یا مجموعه را وارد کنید</p>
+        <div class="search-results" aria-live="polite"></div>
+      </div>`;
+    nav.insertAdjacentElement('afterend', panel);
+  }
+
+  if (btn.dataset.bound) return;
+  btn.dataset.bound = '1';
+
+  const input = panel.querySelector('.search-input');
+  const results = panel.querySelector('.search-results');
+  const hint = panel.querySelector('.search-hint');
+
+  function closeSearch() {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-expanded', 'false');
+    panel.classList.remove('open');
+    input.value = '';
+    results.innerHTML = '';
+    if (hint) hint.style.display = '';
+  }
+
+  function openSearch() {
+    const links = document.getElementById('nav-links');
+    const toggle = document.getElementById('nav-toggle');
+    if (links?.classList.contains('open')) {
+      links.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    }
+    btn.classList.add('active');
+    btn.setAttribute('aria-expanded', 'true');
+    panel.classList.add('open');
+    setTimeout(() => input.focus(), 80);
+  }
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    panel.classList.contains('open') ? closeSearch() : openSearch();
+  });
+
+  function runSearch(query) {
+    const q = query.trim();
+    if (!q) {
+      results.innerHTML = '';
+      if (hint) hint.style.display = '';
+      return;
+    }
+    if (hint) hint.style.display = 'none';
+    const matches = Products.getAllFlat().filter(p =>
+      (p.name && p.name.includes(q)) ||
+      (p.collectionName && p.collectionName.includes(q)) ||
+      (p.material && p.material.includes(q))
+    ).slice(0, 12);
+
+    if (!matches.length) {
+      results.innerHTML = '<p class="search-empty">نتیجه‌ای یافت نشد</p>';
+      return;
+    }
+
+    results.innerHTML = matches.map(p => `
+      <button type="button" class="search-result-item" data-id="${escHtml(p.id)}" data-coll="${escHtml(p.collection)}">
+        <div>
+          <div class="search-result-name">${escHtml(p.name)}</div>
+          <div class="search-result-meta">${escHtml(p.collectionName || '')} · ${escHtml(p.material || '')}</div>
+        </div>
+        <span class="search-result-price">${escHtml(formatPrice(p.price))}</span>
+      </button>`).join('');
+
+    results.querySelectorAll('.search-result-item').forEach(el => {
+      el.addEventListener('click', () => {
+        openProductDetail(el.dataset.id, el.dataset.coll);
+        closeSearch();
+      });
+    });
+  }
+
+  let debounce;
+  input.addEventListener('input', () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(() => runSearch(input.value), 180);
+  });
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && panel.classList.contains('open')) closeSearch();
+  });
+
+  document.addEventListener('click', e => {
+    if (!panel.classList.contains('open')) return;
+    if (e.target.closest('#search-panel') || e.target.closest('#nav-search-btn')) return;
+    closeSearch();
+  });
+}
+
 /* ── Footer Instagram ─────────────────────── */
 const INSTAGRAM_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>';
 
@@ -794,6 +1016,7 @@ function initFooterInstagram() {
 /* ── Bootstrap ───────────────────────────── */
 document.addEventListener('DOMContentLoaded', function () {
   initNav();
+  initNavSearch();
   initMobileNav();
   initProductDetail();
   initFooterInstagram();
