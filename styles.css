@@ -1435,12 +1435,17 @@ button:focus-visible {
 }
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-bottom: 40px;
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
+}
+.contact-item-github {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc((100% - 16px) / 2);
 }
 .contact-item {
   display: flex; align-items: center; gap: 14px;
