@@ -1686,6 +1686,21 @@ button:focus-visible {
   color: var(--accent);
   font-weight: 500;
 }
+.proj-links {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.proj-links a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.proj-links a:hover {
+  color: var(--green);
+  border-bottom-color: var(--green);
+}
 
 .back-link {
   display: inline-flex; align-items: center; gap: 8px;
