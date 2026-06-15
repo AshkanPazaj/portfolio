@@ -299,6 +299,27 @@
     }
     .nav-gold-ticker.is-loading .nav-gold-value { opacity:.45; }
     .nav-gold-ticker.is-error .nav-gold-value { color:var(--text-muted,#9a9a9a); font-size:12px; }
+    @media (max-width:768px) {
+      .nav-gold-ticker {
+        gap:6px; padding:5px 10px;
+        max-width:min(200px, calc(100vw - 168px));
+      }
+      .nav-gold-label { font-size:9px; }
+      .nav-gold-value { font-size:11px; }
+      .nav-gold-ticker.is-error .nav-gold-value { font-size:10px; }
+    }
+    @media (max-width:480px) {
+      .nav-gold-ticker {
+        flex-direction:column; align-items:center; gap:1px;
+        padding:4px 8px;
+        max-width:min(120px, calc(100vw - 148px));
+      }
+      .nav-gold-label { font-size:8px; line-height:1.2; }
+      .nav-gold-value {
+        font-size:10px; line-height:1.2;
+        max-width:100%; overflow:hidden; text-overflow:ellipsis;
+      }
+    }
     .nav-toggle {
       display:none; flex-direction:column; justify-content:center; gap:5px;
       width:32px; height:36px; padding:4px; margin:0;
@@ -310,9 +331,6 @@
     }
     .nav-toggle span:nth-child(2) { width:75%; }
     .data-table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
-    @media (max-width:1024px) {
-      .nav-gold-ticker { display:none; }
-    }
     @media (max-width:768px) {
       .nav { padding-left:20px !important; padding-right:20px !important; }
       .nav-links { display:none !important; }
@@ -1387,7 +1405,7 @@ function initNavGoldPrice() {
       valueEl.textContent = formatted;
       ticker.classList.remove('is-error');
     } catch {
-      valueEl.textContent = 'قیمت در دسترس نیست';
+      valueEl.textContent = window.innerWidth <= 480 ? '—' : 'قیمت در دسترس نیست';
       ticker.classList.add('is-error');
     } finally {
       ticker.classList.remove('is-loading');
