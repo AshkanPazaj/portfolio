@@ -256,6 +256,14 @@
     .pd-material { font-size:13px; color:var(--text-muted,#9a9a9a); margin-bottom:8px; }
     .pd-price { font-size:1.1rem; font-weight:700; color:var(--gold-dark,#9a7e28); margin-bottom:12px; }
     .pd-desc { font-size:13px; color:var(--text-dim,#6b6b6b); line-height:1.85; margin-bottom:16px; }
+    .pd-specs {
+      display:grid; grid-template-columns:1fr 1fr; gap:8px 16px;
+      margin-bottom:16px; padding:14px 16px;
+      background:var(--off-white,#faf9f6); border:1px solid var(--border,#e0ddd5); border-radius:3px;
+    }
+    .pd-spec { font-size:12px; }
+    .pd-spec dt { color:var(--text-muted,#9a9a9a); font-weight:600; margin-bottom:2px; }
+    .pd-spec dd { color:var(--text,#1a1a1a); font-weight:600; margin:0; direction:ltr; text-align:right; }
     .pd-status { font-size:12px; font-weight:600; margin-bottom:18px; }
     .pd-status.available { color:var(--green,#114411); }
     .pd-status.unavailable { color:#c0392b; }
@@ -352,6 +360,7 @@
       .pd-slide { max-height:min(280px,45vw); }
       .pd-info { padding:20px; }
       .pd-name { font-size:1.15rem; }
+      .pd-specs { grid-template-columns:1fr; }
       .pd-nav { width:40px; height:40px; font-size:24px; }
       .pd-prev { right:8px; }
       .pd-next { left:8px; }
@@ -486,6 +495,47 @@ const Cart = (function () {
   return { get, add, remove, updateQty, count, clear, updateBadge, save };
 })();
 
+/* ── Product spec helpers ─────────────────── */
+const MATERIAL_FROM_KARAT = { 18: 'طلای ۱۸ عیار', 21: 'طلای ۲۱ عیار', 24: 'طلای ۲۴ عیار' };
+
+function materialFromKarat(k) {
+  return MATERIAL_FROM_KARAT[Number(k)] || MATERIAL_FROM_KARAT[18];
+}
+
+function formatWeightGrams(value) {
+  if (value == null || value === '') return '—';
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  return n.toLocaleString('fa-IR', { maximumFractionDigits: 3 }) + ' گرم';
+}
+
+function formatPercent(value) {
+  if (value == null || value === '') return '—';
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  return n.toLocaleString('fa-IR', { maximumFractionDigits: 2 }) + '٪';
+}
+
+function productSpecRows(p) {
+  return [
+    { label: 'کد محصول', value: p.barcode || '—', ltr: true },
+    { label: 'مجموعه', value: p.collectionName || '—' },
+    { label: 'عیار', value: KARAT_LABELS[p.karat] || materialFromKarat(p.karat) },
+    { label: 'وزن کل', value: formatWeightGrams(p.gross_weight) },
+    { label: 'وزن سنگ', value: formatWeightGrams(p.stone_weight) },
+    { label: 'وزن خالص طلا', value: formatWeightGrams(p.net_weight) },
+    { label: 'اجرت ساخت', value: formatPrice(p.labor_fee) },
+    { label: 'درصد سود', value: formatPercent(p.profit_percent) },
+    { label: 'قیمت نگین', value: formatPrice(p.stone_price) },
+  ];
+}
+
+function renderProductSpecsHtml(p) {
+  return productSpecRows(p).map(row =>
+    `<div class="pd-spec"><dt>${escHtml(row.label)}</dt><dd${row.ltr ? ' style="font-family:monospace"' : ''}>${escHtml(row.value)}</dd></div>`
+  ).join('');
+}
+
 /* ── Products ─────────────────────────────── */
 const Products = (function () {
   const KEY = 'armeh_products';
@@ -506,15 +556,54 @@ const Products = (function () {
     }
     delete p.image;
     if (!Array.isArray(p.images)) p.images = [];
+    if (p.karat == null) p.karat = extractKarat(p.material) || 18;
+    else p.karat = Number(p.karat) || 18;
+    p.material = materialFromKarat(p.karat);
+    p.gross_weight = numOrNull(p.gross_weight);
+    p.stone_weight = numOrNull(p.stone_weight);
+    p.net_weight = numOrNull(p.net_weight);
+    p.labor_fee = numOrNull(p.labor_fee);
+    p.profit_percent = numOrNull(p.profit_percent);
+    p.stone_price = numOrNull(p.stone_price);
+    p.barcode = String(p.barcode || '').trim() || ('ARM-' + String(p.id || '').toUpperCase());
     return p;
+  }
+  function numOrNull(v) {
+    if (v == null || v === '') return null;
+    const n = Number(v);
+    return Number.isFinite(n) ? n : null;
+  }
+  function buildProductFields(data, collection, id) {
+    const meta = COLLECTIONS[collection] || { name: collection };
+    const karat = Number(data.karat) || 18;
+    return normalizeProduct({
+      id,
+      name: data.name.trim(),
+      collection,
+      collectionName: meta.name,
+      karat,
+      material: materialFromKarat(karat),
+      price: Number(data.price) || 0,
+      available: data.available !== false,
+      images: Array.isArray(data.images) ? data.images.filter(Boolean) : [],
+      description: (data.description || '').trim(),
+      gross_weight: data.gross_weight,
+      stone_weight: data.stone_weight,
+      net_weight: data.net_weight,
+      labor_fee: data.labor_fee,
+      profit_percent: data.profit_percent,
+      stone_price: data.stone_price,
+      barcode: data.barcode,
+    });
   }
   function mergeDefaults(all) {
     let changed = false;
     Object.keys(all).forEach(coll => {
       (all[coll] || []).forEach(p => {
         const hadLegacy = p.image != null || !Array.isArray(p.images);
+        const before = JSON.stringify(p);
         normalizeProduct(p);
-        if (hadLegacy) changed = true;
+        if (hadLegacy || before !== JSON.stringify(p)) changed = true;
       });
     });
     Object.keys(D).forEach(coll => {
@@ -563,19 +652,8 @@ const Products = (function () {
   function addProduct(collection, data) {
     const all = getAll();
     if (!all[collection]) all[collection] = [];
-    const meta = COLLECTIONS[collection] || { name: collection };
     const prefix = collection.slice(0, 3);
-    const product = {
-      id: prefix + Date.now(),
-      name: data.name.trim(),
-      collection,
-      collectionName: meta.name,
-      material: (data.material || 'طلای ۱۸ عیار').trim(),
-      price: Number(data.price) || 0,
-      available: data.available !== false,
-      images: Array.isArray(data.images) ? data.images.filter(Boolean) : [],
-      description: (data.description || '').trim(),
-    };
+    const product = buildProductFields(data, collection, prefix + Date.now());
     all[collection].push(product);
     saveAll(all);
     return product;
@@ -587,11 +665,24 @@ const Products = (function () {
     const p = all[found.collection].find(p => p.id === id);
     if (!p) return false;
     if (data.name != null) p.name = data.name.trim();
-    if (data.material != null) p.material = data.material.trim();
+    if (data.karat != null) {
+      p.karat = Number(data.karat) || 18;
+      p.material = materialFromKarat(p.karat);
+    } else if (data.material != null) {
+      p.material = data.material.trim();
+      p.karat = extractKarat(p.material) || 18;
+    }
     if (data.price != null) p.price = Number(data.price) || 0;
     if (data.available != null) p.available = !!data.available;
     if (data.images !== undefined) p.images = Array.isArray(data.images) ? data.images.filter(Boolean) : [];
     if (data.description !== undefined) p.description = (data.description || '').trim();
+    if (data.gross_weight !== undefined) p.gross_weight = numOrNull(data.gross_weight);
+    if (data.stone_weight !== undefined) p.stone_weight = numOrNull(data.stone_weight);
+    if (data.net_weight !== undefined) p.net_weight = numOrNull(data.net_weight);
+    if (data.labor_fee !== undefined) p.labor_fee = numOrNull(data.labor_fee);
+    if (data.profit_percent !== undefined) p.profit_percent = numOrNull(data.profit_percent);
+    if (data.stone_price !== undefined) p.stone_price = numOrNull(data.stone_price);
+    if (data.barcode !== undefined) p.barcode = String(data.barcode || '').trim() || ('ARM-' + String(p.id).toUpperCase());
     if (data.collection && data.collection !== found.collection && COLLECTIONS[data.collection]) {
       all[found.collection] = all[found.collection].filter(x => x.id !== id);
       p.collection = data.collection;
@@ -599,6 +690,7 @@ const Products = (function () {
       if (!all[data.collection]) all[data.collection] = [];
       all[data.collection].push(p);
     }
+    normalizeProduct(p);
     saveAll(all);
     return true;
   }
@@ -1138,6 +1230,7 @@ function initProductDetail() {
         <h2 class="pd-name"></h2>
         <p class="pd-material"></p>
         <p class="pd-price"></p>
+        <dl class="pd-specs" aria-label="مشخصات محصول"></dl>
         <p class="pd-desc"></p>
         <p class="pd-status"></p>
         <button type="button" class="btn-add-cart pd-add-cart">افزودن به سبد ${cartSvg}</button>
@@ -1227,6 +1320,8 @@ function renderProductDetail() {
   ov.querySelector('.pd-name').textContent = p.name;
   ov.querySelector('.pd-material').textContent = p.material;
   ov.querySelector('.pd-price').textContent = formatPrice(p.price);
+  const specsEl = ov.querySelector('.pd-specs');
+  if (specsEl) specsEl.innerHTML = renderProductSpecsHtml(p);
   const descEl = ov.querySelector('.pd-desc');
   if (p.description) { descEl.textContent = p.description; descEl.style.display = 'block'; }
   else { descEl.textContent = ''; descEl.style.display = 'none'; }

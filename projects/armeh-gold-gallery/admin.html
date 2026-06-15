@@ -149,6 +149,7 @@
       max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.2);
     }
     .modal.modal-wide { max-width: 560px; }
+    .modal.modal-xwide { max-width: 760px; }
     .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
     .modal-header h3 { font-size: 15px; font-weight: 700; color: var(--green-deep); }
     .modal-close { background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 20px; line-height: 1; padding: 0; }
@@ -161,6 +162,13 @@
     .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
     .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 9px 12px; border: 1px solid var(--border); border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 13px; color: var(--text); background: var(--white); outline: none; transition: border-color .2s; }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green); }
+    .form-section-title {
+      font-size: 12px; font-weight: 700; color: var(--green-deep);
+      margin: 18px 0 10px; padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .form-section-title:first-child { margin-top: 0; }
+    .form-hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
 
     .btn-add-product { padding: 8px 18px; background: var(--green); color: var(--white); border: none; border-radius: 2px; font-family: 'Vazirmatn', sans-serif; font-size: 12px; font-weight: 700; cursor: pointer; }
     .btn-add-product:hover { background: var(--green-mid); }
@@ -206,7 +214,7 @@
       .page-hero { padding: 40px 0 32px; }
       .page-hero p { font-size: 13px; }
       .page-body { padding: 32px 0 48px; }
-      .data-table { min-width: 640px; }
+      .data-table { min-width: 860px; }
       .action-btns { flex-wrap: wrap; }
       .section-header-products {
         grid-template-columns: 1fr auto;
@@ -299,24 +307,34 @@
 
   <!-- Product Modal -->
   <div class="modal-overlay hidden" id="product-modal">
-    <div class="modal modal-wide">
+    <div class="modal modal-xwide">
       <div class="modal-header">
         <h3 id="product-modal-title">افزودن محصول</h3>
         <button class="modal-close" onclick="closeModal('product-modal')">×</button>
       </div>
       <div class="modal-body">
         <input type="hidden" id="prod-id" />
-        <div class="form-group">
-          <label>مجموعه</label>
-          <select id="prod-collection"></select>
-        </div>
-        <div class="form-group">
-          <label>نام محصول</label>
-          <input type="text" id="prod-name" placeholder="مثال: انگشتر نگین‌دار کلاسیک" />
-        </div>
+
+        <p class="form-section-title">اطلاعات پایه</p>
         <div class="form-row2">
           <div class="form-group">
-            <label>عیار</label>
+            <label for="prod-collection">مجموعه</label>
+            <select id="prod-collection"></select>
+          </div>
+          <div class="form-group">
+            <label for="prod-barcode">کد محصول (بارکد)</label>
+            <input type="text" id="prod-barcode" placeholder="ARM-RIN-001" dir="ltr" style="text-align:right" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="prod-name">نام محصول</label>
+          <input type="text" id="prod-name" placeholder="مثال: انگشتر طلای زنانه مدل رز" />
+        </div>
+
+        <p class="form-section-title">مشخصات طلا</p>
+        <div class="form-row2">
+          <div class="form-group">
+            <label for="prod-karat">عیار</label>
             <select id="prod-karat">
               <option value="18">طلای ۱۸ عیار</option>
               <option value="21">طلای ۲۱ عیار</option>
@@ -324,10 +342,45 @@
             </select>
           </div>
           <div class="form-group">
-            <label>قیمت (تومان)</label>
-            <input type="number" id="prod-price" min="0" step="100000" placeholder="28500000" dir="ltr" style="text-align:right" />
+            <label for="prod-gross-weight">وزن کل (گرم)</label>
+            <input type="number" id="prod-gross-weight" min="0" step="0.001" placeholder="3.450" dir="ltr" style="text-align:right" />
           </div>
         </div>
+        <div class="form-row2">
+          <div class="form-group">
+            <label for="prod-stone-weight">وزن سنگ (گرم)</label>
+            <input type="number" id="prod-stone-weight" min="0" step="0.001" placeholder="0.120" dir="ltr" style="text-align:right" />
+          </div>
+          <div class="form-group">
+            <label for="prod-net-weight">وزن خالص طلا (گرم)</label>
+            <input type="number" id="prod-net-weight" min="0" step="0.001" placeholder="3.330" dir="ltr" style="text-align:right" />
+          </div>
+        </div>
+
+        <p class="form-section-title">قیمت‌گذاری</p>
+        <div class="form-row2">
+          <div class="form-group">
+            <label for="prod-labor-fee">اجرت ساخت (تومان)</label>
+            <input type="number" id="prod-labor-fee" min="0" step="10000" placeholder="2500000" dir="ltr" style="text-align:right" />
+          </div>
+          <div class="form-group">
+            <label for="prod-profit-percent">درصد سود</label>
+            <input type="number" id="prod-profit-percent" min="0" step="0.1" placeholder="7" dir="ltr" style="text-align:right" />
+          </div>
+        </div>
+        <div class="form-row2">
+          <div class="form-group">
+            <label for="prod-stone-price">قیمت نگین / سنگ (تومان)</label>
+            <input type="number" id="prod-stone-price" min="0" step="10000" placeholder="3500000" dir="ltr" style="text-align:right" />
+          </div>
+          <div class="form-group">
+            <label for="prod-price">قیمت نهایی (تومان)</label>
+            <input type="number" id="prod-price" min="0" step="100000" placeholder="28500000" dir="ltr" style="text-align:right" />
+            <p class="form-hint">قیمت فروش نمایش‌داده‌شده در سایت</p>
+          </div>
+        </div>
+
+        <p class="form-section-title">سایر</p>
         <div class="form-group">
           <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
             <input type="checkbox" id="prod-available" checked style="width:auto" />
@@ -335,7 +388,7 @@
           </label>
         </div>
         <div class="form-group">
-          <label>توضیحات محصول <span style="font-weight:400;color:var(--text-muted)">(اختیاری)</span></label>
+          <label for="prod-description">توضیحات محصول <span style="font-weight:400;color:var(--text-muted)">(اختیاری)</span></label>
           <textarea id="prod-description" rows="3" placeholder="جزئیات، ابعاد، نگین و..."></textarea>
         </div>
         <div class="form-group">
@@ -374,13 +427,74 @@
   let adminActiveTab = 'products';
   let pendingProductImages = undefined;
 
-  const KARAT_MATERIALS = { 18: 'طلای ۱۸ عیار', 21: 'طلای ۲۱ عیار', 24: 'طلای ۲۴ عیار' };
-  function materialFromKarat(k) { return KARAT_MATERIALS[k] || KARAT_MATERIALS[18]; }
   function karatFromMaterial(m) {
     const s = String(m || '');
     if (/۲۴|24/.test(s)) return '24';
     if (/۲۱|21/.test(s)) return '21';
     return '18';
+  }
+  function numInputValue(id) {
+    const el = document.getElementById(id);
+    if (!el || el.value === '') return null;
+    const n = Number(el.value);
+    return Number.isFinite(n) ? n : null;
+  }
+  function setNumInput(id, value) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.value = value == null || value === '' ? '' : value;
+  }
+  function clearProductForm() {
+    document.getElementById('prod-id').value = '';
+    fillCollectionSelect('rings');
+    document.getElementById('prod-barcode').value = '';
+    document.getElementById('prod-name').value = '';
+    document.getElementById('prod-karat').value = '18';
+    setNumInput('prod-gross-weight', null);
+    setNumInput('prod-stone-weight', null);
+    setNumInput('prod-net-weight', null);
+    setNumInput('prod-labor-fee', null);
+    setNumInput('prod-profit-percent', null);
+    setNumInput('prod-stone-price', null);
+    document.getElementById('prod-price').value = '';
+    document.getElementById('prod-description').value = '';
+    document.getElementById('prod-available').checked = true;
+    document.getElementById('product-image-input').value = '';
+  }
+  function fillProductForm(p, collection) {
+    document.getElementById('prod-id').value = p.id;
+    fillCollectionSelect(collection);
+    document.getElementById('prod-barcode').value = p.barcode || '';
+    document.getElementById('prod-name').value = p.name || '';
+    document.getElementById('prod-karat').value = String(p.karat || karatFromMaterial(p.material));
+    setNumInput('prod-gross-weight', p.gross_weight);
+    setNumInput('prod-stone-weight', p.stone_weight);
+    setNumInput('prod-net-weight', p.net_weight);
+    setNumInput('prod-labor-fee', p.labor_fee);
+    setNumInput('prod-profit-percent', p.profit_percent);
+    setNumInput('prod-stone-price', p.stone_price);
+    document.getElementById('prod-price').value = p.price || '';
+    document.getElementById('prod-description').value = p.description || '';
+    document.getElementById('prod-available').checked = p.available !== false;
+    document.getElementById('product-image-input').value = '';
+  }
+  function readProductFormData() {
+    return {
+      name: document.getElementById('prod-name').value.trim(),
+      collection: document.getElementById('prod-collection').value,
+      barcode: document.getElementById('prod-barcode').value.trim(),
+      karat: document.getElementById('prod-karat').value,
+      material: materialFromKarat(document.getElementById('prod-karat').value),
+      gross_weight: numInputValue('prod-gross-weight'),
+      stone_weight: numInputValue('prod-stone-weight'),
+      net_weight: numInputValue('prod-net-weight'),
+      labor_fee: numInputValue('prod-labor-fee'),
+      profit_percent: numInputValue('prod-profit-percent'),
+      stone_price: numInputValue('prod-stone-price'),
+      price: document.getElementById('prod-price').value,
+      description: document.getElementById('prod-description').value.trim(),
+      available: document.getElementById('prod-available').checked,
+    };
   }
 
   function renderAdmin() {
@@ -450,8 +564,8 @@
     if (!panel || !tbody) return;
 
     const products = Object.values(Products.getAll()).flat();
-    const emptyMsg = '<tr id="admin-products-placeholder"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
-    const noResults = '<tr id="admin-search-empty" style="display:none"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>';
+    const emptyMsg = '<tr id="admin-products-placeholder"><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
+    const noResults = '<tr id="admin-search-empty" style="display:none"><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>';
 
     if (!products.length) {
       tbody.innerHTML = emptyMsg + noResults;
@@ -493,9 +607,11 @@
     return `
       <tr data-pid="${escHtml(p.id)}">
         <td>${thumb}</td>
+        <td dir="ltr" style="font-family:monospace;font-size:11px">${escHtml(p.barcode || '—')}</td>
         <td><span class="coll-badge">${escHtml(p.collectionName)}</span></td>
         <td style="font-weight:600;color:var(--text)">${escHtml(p.name)}</td>
-        <td>${escHtml(p.material)}</td>
+        <td>${escHtml(KARAT_LABELS[p.karat] || materialFromKarat(p.karat))}</td>
+        <td>${escHtml(formatWeightGrams(p.net_weight))}</td>
         <td style="font-weight:600;color:var(--gold-dark)">${escHtml(formatPrice(p.price))}</td>
         <td>
           <div class="toggle-wrap">
@@ -523,22 +639,22 @@
     const searchSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
     const emptyMsg = products.length
       ? ''
-      : '<tr id="admin-products-placeholder"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
+      : '<tr id="admin-products-placeholder"><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted)">محصولی ثبت نشده است.</td></tr>';
     return `
       <div class="section-header-products">
         <h2>مدیریت محصولات <span id="admin-product-count">(${total})</span></h2>
         <div class="admin-search-wrap">
-          <input type="search" id="admin-product-search" class="admin-search-input" placeholder="جستجوی محصول، مجموعه یا جنس..." autocomplete="off" aria-label="جستجوی محصولات" />
+          <input type="search" id="admin-product-search" class="admin-search-input" placeholder="جستجوی محصول، کد، مجموعه یا عیار..." autocomplete="off" aria-label="جستجوی محصولات" />
           <span class="admin-search-icon">${searchSvg}</span>
         </div>
         <button class="btn-add-product" onclick="openProductAdd()">+ افزودن محصول</button>
       </div>
       <div class="data-table-wrap">
         <table class="data-table">
-          <thead><tr><th>تصویر</th><th>مجموعه</th><th>نام</th><th>جنس</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
+          <thead><tr><th>تصویر</th><th>کد</th><th>مجموعه</th><th>نام</th><th>عیار</th><th>وزن خالص</th><th>قیمت</th><th>وضعیت</th><th>عملیات</th></tr></thead>
           <tbody>
             ${rows}${emptyMsg}
-            <tr id="admin-search-empty" style="display:none"><td colspan="7" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>
+            <tr id="admin-search-empty" style="display:none"><td colspan="9" style="text-align:center;padding:32px;color:var(--text-muted)">نتیجه‌ای یافت نشد.</td></tr>
           </tbody>
         </table>
       </div>`;
@@ -568,14 +684,7 @@
   function openProductAdd() {
     pendingProductImages = [];
     document.getElementById('product-modal-title').textContent = 'افزودن محصول جدید';
-    document.getElementById('prod-id').value = '';
-    fillCollectionSelect('rings');
-    document.getElementById('prod-name').value = '';
-    document.getElementById('prod-karat').value = '18';
-    document.getElementById('prod-price').value = '';
-    document.getElementById('prod-description').value = '';
-    document.getElementById('prod-available').checked = true;
-    document.getElementById('product-image-input').value = '';
+    clearProductForm();
     renderProductImagesGallery();
     document.getElementById('product-modal').classList.remove('hidden');
   }
@@ -586,14 +695,7 @@
     const p = found.product;
     pendingProductImages = getProductImages(p).slice();
     document.getElementById('product-modal-title').textContent = 'ویرایش محصول';
-    document.getElementById('prod-id').value = p.id;
-    fillCollectionSelect(found.collection);
-    document.getElementById('prod-name').value = p.name;
-    document.getElementById('prod-karat').value = karatFromMaterial(p.material);
-    document.getElementById('prod-price').value = p.price || '';
-    document.getElementById('prod-description').value = p.description || '';
-    document.getElementById('prod-available').checked = p.available !== false;
-    document.getElementById('product-image-input').value = '';
+    fillProductForm(p, found.collection);
     renderProductImagesGallery();
     document.getElementById('product-modal').classList.remove('hidden');
   }
@@ -625,18 +727,11 @@
 
   function saveProduct() {
     const id = document.getElementById('prod-id').value;
-    const name = document.getElementById('prod-name').value.trim();
-    const collection = document.getElementById('prod-collection').value;
-    const material = materialFromKarat(document.getElementById('prod-karat').value);
-    const price = document.getElementById('prod-price').value;
-    const description = document.getElementById('prod-description').value.trim();
-    const available = document.getElementById('prod-available').checked;
-    if (!name) { alert('لطفاً نام محصول را وارد کنید.'); return; }
-    if (!material) { alert('لطفاً جنس محصول را وارد کنید.'); return; }
-    const data = { name, material, price, available, collection, description };
+    const data = readProductFormData();
+    if (!data.name) { alert('لطفاً نام محصول را وارد کنید.'); return; }
     if (pendingProductImages !== undefined) data.images = pendingProductImages.slice();
     if (id) Products.updateProduct(id, data);
-    else Products.addProduct(collection, data);
+    else Products.addProduct(data.collection, data);
     closeModal('product-modal');
     refreshProductsTable();
   }
