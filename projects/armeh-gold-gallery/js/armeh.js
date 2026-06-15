@@ -260,6 +260,37 @@
     .pd-status.available { color:var(--green,#114411); }
     .pd-status.unavailable { color:#c0392b; }
     .pd-add-cart { font-size:13px !important; padding-bottom:3px; }
+    .nav-gold-ticker {
+      position:absolute; left:50%; top:50%;
+      transform:translate(-50%, -50%);
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 16px;
+      background:rgba(244,240,230,.9);
+      border:1px solid rgba(201,168,64,.35);
+      border-radius:2px;
+      text-decoration:none; color:inherit;
+      transition:border-color .2s, background .2s, box-shadow .2s;
+      max-width:min(340px, calc(100vw - 300px));
+      white-space:nowrap;
+      z-index:1;
+      box-shadow:0 1px 8px rgba(17,68,17,.04);
+    }
+    .nav-gold-ticker:hover {
+      border-color:var(--gold,#c9a840);
+      background:var(--cream,#f4f0e6);
+      box-shadow:0 2px 12px rgba(201,168,64,.12);
+    }
+    .nav-gold-label {
+      font-size:11px; font-weight:700; letter-spacing:.04em;
+      color:var(--green-deep,#0c330c);
+    }
+    .nav-gold-value {
+      font-size:13px; font-weight:700;
+      color:var(--gold-dark,#9a7e28);
+      direction:ltr;
+    }
+    .nav-gold-ticker.is-loading .nav-gold-value { opacity:.45; }
+    .nav-gold-ticker.is-error .nav-gold-value { color:var(--text-muted,#9a9a9a); font-size:12px; }
     .nav-toggle {
       display:none; flex-direction:column; justify-content:center; gap:5px;
       width:32px; height:36px; padding:4px; margin:0;
@@ -271,6 +302,9 @@
     }
     .nav-toggle span:nth-child(2) { width:75%; }
     .data-table-wrap { width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    @media (max-width:1024px) {
+      .nav-gold-ticker { display:none; }
+    }
     @media (max-width:768px) {
       .nav { padding-left:20px !important; padding-right:20px !important; }
       .nav-links { display:none !important; }
@@ -1209,6 +1243,67 @@ function renderProductDetail() {
   renderProductDetailSlide();
 }
 
+/* ── Nav gold price (tgju.org) ────────────── */
+const TGJU_GOLD18_API = 'https://api.tgju.org/v1/widget/tmp?keys=137121';
+const TGJU_GOLD18_URL = 'https://www.tgju.org/profile/geram18';
+const TGJU_REFRESH_MS = 60 * 1000;
+
+function formatGoldTickerPrice(rialAmount) {
+  const toman = Math.round(Number(rialAmount) / 10);
+  if (!Number.isFinite(toman) || toman <= 0) return null;
+  return toman.toLocaleString('fa-IR') + ' تومان';
+}
+
+function initNavGoldPrice() {
+  const nav = document.getElementById('nav');
+  if (!nav || document.getElementById('nav-gold-ticker')) return;
+
+  const ticker = document.createElement('a');
+  ticker.id = 'nav-gold-ticker';
+  ticker.className = 'nav-gold-ticker is-loading';
+  ticker.href = TGJU_GOLD18_URL;
+  ticker.target = '_blank';
+  ticker.rel = 'noopener noreferrer';
+  ticker.title = 'قیمت لحظه‌ای طلای ۱۸ عیار — منبع: tgju.org';
+  ticker.setAttribute('aria-label', 'قیمت لحظه‌ای طلای ۱۸ عیار از tgju.org');
+  ticker.innerHTML = `
+    <span class="nav-gold-label">طلای ۱۸</span>
+    <span class="nav-gold-value" aria-live="polite">در حال بارگذاری…</span>`;
+
+  const toggle = nav.querySelector('.nav-toggle');
+  if (toggle) nav.insertBefore(ticker, toggle);
+  else nav.appendChild(ticker);
+
+  const valueEl = ticker.querySelector('.nav-gold-value');
+  let refreshing = false;
+
+  async function refreshGoldPrice() {
+    if (refreshing) return;
+    refreshing = true;
+    ticker.classList.add('is-loading');
+    ticker.classList.remove('is-error');
+    try {
+      const res = await fetch(TGJU_GOLD18_API, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      const indicator = data?.response?.indicators?.[0];
+      const formatted = formatGoldTickerPrice(String(indicator?.p || '').replace(/,/g, ''));
+      if (!formatted) throw new Error('missing price');
+      valueEl.textContent = formatted;
+      ticker.classList.remove('is-error');
+    } catch {
+      valueEl.textContent = 'قیمت در دسترس نیست';
+      ticker.classList.add('is-error');
+    } finally {
+      ticker.classList.remove('is-loading');
+      refreshing = false;
+    }
+  }
+
+  refreshGoldPrice();
+  setInterval(refreshGoldPrice, TGJU_REFRESH_MS);
+}
+
 /* ── Nav search ───────────────────────────── */
 const SEARCH_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
 
@@ -1394,6 +1489,7 @@ function initIntroSplash() {
 document.addEventListener('DOMContentLoaded', function () {
   initIntroSplash();
   initNav();
+  initNavGoldPrice();
   initNavSearch();
   initMobileNav();
   initProductDetail();
