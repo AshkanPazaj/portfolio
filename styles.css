@@ -1786,13 +1786,14 @@ button:focus-visible {
   .contact-card { padding: 48px 20px; }
   .contact-sub { font-size: 16px; margin-bottom: 32px; }
   .contact-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-bottom: 0;
   }
   .contact-item-github {
-    width: 100%;
-    justify-self: stretch;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 12px) / 2);
   }
   .contact-item { padding: 16px; gap: 12px; }
   .contact-item > div { min-width: 0; }
@@ -1834,8 +1835,14 @@ button:focus-visible {
   .dual-card strong { font-size: 15px; line-height: 1.35; }
   .contact-ico { width: 36px; height: 36px; }
   .contact-ico svg { width: 16px; height: 16px; }
-  .contact-item { padding: 14px; gap: 10px; }
-  .contact-item strong { font-size: 12px; }
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 12px 10px;
+    gap: 8px;
+  }
+  .contact-item strong { font-size: 11px; }
   .soft-bridge { padding: 20px 16px; gap: 16px; }
   .soft-bridge h3 { font-size: 18px; }
   .soft-bridge p { font-size: 14px; }
