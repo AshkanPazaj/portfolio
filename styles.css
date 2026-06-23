@@ -1083,6 +1083,29 @@ button:focus-visible {
 .section-fullstack {
   background: linear-gradient(180deg, transparent 0%, rgba(110, 139, 255, 0.04) 50%, transparent 100%);
 }
+.section-fullstack .tl-dot {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px var(--border-strong), 0 0 20px rgba(110, 139, 255, 0.5);
+}
+.section-fullstack .tl-card:hover {
+  border-color: rgba(110, 139, 255, 0.3);
+}
+.section-fullstack .tl-org { color: var(--accent); }
+.section-fullstack .tl-list li::before { background: var(--accent); }
+.section-fullstack .tl-list code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(110, 139, 255, 0.1);
+  border: 1px solid rgba(110, 139, 255, 0.2);
+  color: var(--accent);
+}
+.section-fullstack .tl-tags span {
+  background: rgba(110, 139, 255, 0.08);
+  border: 1px solid rgba(110, 139, 255, 0.2);
+  color: var(--accent);
+}
 
 .edu-card {
   padding: 40px;
