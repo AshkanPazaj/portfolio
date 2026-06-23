@@ -1455,6 +1455,10 @@ button:focus-visible {
   border-radius: 12px;
   text-align: left;
   transition: all 0.2s var(--ease);
+  min-width: 0;
+}
+.contact-item > div {
+  min-width: 0;
 }
 .contact-item:not(.contact-item-static):hover {
   border-color: var(--border-strong);
@@ -1482,6 +1486,7 @@ button:focus-visible {
   font-size: 14px;
   font-weight: 600;
   color: var(--text);
+  overflow-wrap: anywhere;
 }
 
 /* ============================================
@@ -1776,7 +1781,32 @@ button:focus-visible {
   .edu-status { margin-left: 0; }
 
   .soft-bridge { flex-direction: column; padding: 24px; }
-  .contact-card { padding: 56px 24px; }
+
+  .section-contact { padding-bottom: 48px; }
+  .contact-card { padding: 48px 20px; }
+  .contact-sub { font-size: 16px; margin-bottom: 32px; }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  .contact-item-github {
+    width: 100%;
+    justify-self: stretch;
+  }
+  .contact-item { padding: 16px; gap: 12px; }
+  .contact-item > div { min-width: 0; }
+  .contact-item strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .dual-card { padding: 22px; }
+  .dual-card strong { font-size: 16px; }
+  .dual-card span { font-size: 13px; }
+  .dual-link { font-size: 12px !important; }
+
+  .footer { margin-top: 0; padding: 24px 0; }
 
   .value-prop { padding: 24px; }
   .philosophy { padding: 36px 28px; }
@@ -1793,6 +1823,26 @@ button:focus-visible {
   .btn { padding: 12px 18px; font-size: 14px; }
   .hero-stats { grid-template-columns: 1fr 1fr; }
   .photo-frame { max-width: 280px; }
+
+  .section-contact { padding-bottom: 32px; }
+  .contact-card { padding: 32px 16px; border-radius: var(--radius); }
+  .contact-sub { font-size: 15px; margin-bottom: 24px; }
+  .dual-cta { gap: 12px; margin-bottom: 28px; }
+  .dual-card { padding: 18px; gap: 8px; }
+  .dual-icon { width: 40px; height: 40px; }
+  .dual-icon svg { width: 20px; height: 20px; }
+  .dual-card strong { font-size: 15px; line-height: 1.35; }
+  .contact-ico { width: 36px; height: 36px; }
+  .contact-ico svg { width: 16px; height: 16px; }
+  .contact-item { padding: 14px; gap: 10px; }
+  .contact-item strong { font-size: 12px; }
+  .soft-bridge { padding: 20px 16px; gap: 16px; }
+  .soft-bridge h3 { font-size: 18px; }
+  .soft-bridge p { font-size: 14px; }
+  .proj-teaser { padding: 28px 0; }
+  .proj-teaser-copy p { font-size: 14px; }
+  .footer { padding: 20px 0; }
+  .footer p { font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
