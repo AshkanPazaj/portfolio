@@ -209,7 +209,7 @@
   <nav class="nav" id="nav" aria-label="ناوبری اصلی">
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html#collections">مجموعه‌ها</a></li>
-      <li><a href="index.html#about">درباره ما</a></li>
+      <li><a href="index.html">خانه</a></li>
       <li id="nav-login-li"><a href="login.html">ورود</a></li>
       <li id="nav-admin-li" style="display:none"><a href="admin.html" class="nav-admin-link">پنل مدیریت</a></li>
       <li id="nav-logout-li" style="display:none">
@@ -274,9 +274,15 @@
     </div>
   </footer>
 
-  <script src="js/armeh.js"></script>
+  <link rel="stylesheet" href="css/armeh-shared.css?v=23" />
+  <script src="js/armeh.js?v=23"></script>
   <script>
-  (function renderCart() {
+  (async function initCartPage() {
+    await window.armehReady;
+    await renderCart();
+  })();
+
+  async function renderCart() {
     const items   = Cart.get();
     const session = Auth.getSession();
     const wrap    = document.getElementById('cart-container');
@@ -301,21 +307,22 @@
     const itemsHtml = items.map(item => {
       const unitPrice = resolveItemPrice(item);
       const lineTotal = unitPrice * item.qty;
+      const safeId = escHtml(item.id);
       return `
-      <div class="cart-item" data-id="${item.id}">
+      <div class="cart-item" data-id="${safeId}">
         <div class="cart-item-icon">${cartSvg}</div>
         <div class="cart-item-info">
-          <div class="cart-item-name">${item.name}</div>
-          <div class="cart-item-meta">${item.collectionName} &nbsp;·&nbsp; ${item.material}</div>
-          <div class="cart-item-price">${formatPrice(unitPrice)}${item.qty > 1 ? ' × ' + item.qty.toLocaleString('fa-IR') + ' = ' + formatPrice(lineTotal) : ''}</div>
+          <div class="cart-item-name">${escHtml(item.name)}</div>
+          <div class="cart-item-meta">${escHtml(item.collectionName)} &nbsp;·&nbsp; ${escHtml(item.material)}</div>
+          <div class="cart-item-price">${escHtml(formatPrice(unitPrice))}${item.qty > 1 ? ' × ' + escHtml(item.qty.toLocaleString('fa-IR')) + ' = ' + escHtml(formatPrice(lineTotal)) : ''}</div>
         </div>
         <div class="cart-item-actions">
           <div class="qty-wrap">
-            <button class="qty-btn" onclick="changeQty('${item.id}', -1)">−</button>
-            <span class="qty-val">${item.qty}</span>
-            <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+            <button type="button" class="qty-btn" data-qty-delta="-1" data-item-id="${safeId}">−</button>
+            <span class="qty-val">${escHtml(item.qty)}</span>
+            <button type="button" class="qty-btn" data-qty-delta="1" data-item-id="${safeId}">+</button>
           </div>
-          <button class="btn-remove" onclick="removeItem('${item.id}')" title="حذف">${trashSvg}</button>
+          <button type="button" class="btn-remove" data-remove-id="${safeId}" title="حذف">${trashSvg}</button>
         </div>
       </div>`;
     }).join('');
@@ -326,15 +333,18 @@
     // Checkout form
     let checkoutHtml;
     if (session?.role === 'user') {
-      const u = Auth.getUsers().find(u => u.id === session.id) || {};
+      let u = Auth.getUsers().find(u => u.id === session.id) || {};
+      if (ArmehAPI.enabled()) {
+        try { u = await Auth.fetchCurrentUser() || u; } catch { /* use cached */ }
+      }
       checkoutHtml = `
         <div class="sidebar-box">
           <h3>اطلاعات سفارش</h3>
           <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">اطلاعات از پروفایل شما بارگذاری شد.</p>
-          <div class="summary-row"><span>نام:</span><strong>${u.firstname||''} ${u.lastname||''}</strong></div>
-          <div class="summary-row"><span>ایمیل:</span><strong>${u.email||''}</strong></div>
-          <div class="summary-row"><span>تلفن:</span><strong>${u.phone||'—'}</strong></div>
-          <div class="summary-row"><span>آدرس:</span><strong style="max-width:160px;text-align:left;font-size:12px">${u.ostan||''} ${u.shahr||''} ${u.address||''}</strong></div>
+          <div class="summary-row"><span>نام:</span><strong>${escHtml(u.firstname||'')} ${escHtml(u.lastname||'')}</strong></div>
+          <div class="summary-row"><span>ایمیل:</span><strong>${escHtml(u.email||'')}</strong></div>
+          <div class="summary-row"><span>تلفن:</span><strong>${escHtml(u.phone||'—')}</strong></div>
+          <div class="summary-row"><span>آدرس:</span><strong style="max-width:160px;text-align:left;font-size:12px">${escHtml([u.ostan, u.shahr, u.address].filter(Boolean).join(' '))}</strong></div>
           <button class="btn-submit-order" style="margin-top:16px" onclick="submitOrder()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>
             ثبت سفارش
@@ -444,34 +454,40 @@
           ${checkoutHtml}
         </div>
       </div>`;
-  })();
 
-  function changeQty(id, delta) {
+    wrap.querySelectorAll('[data-qty-delta]').forEach(btn => {
+      btn.addEventListener('click', () => changeQty(btn.dataset.itemId, Number(btn.dataset.qtyDelta)));
+    });
+    wrap.querySelectorAll('[data-remove-id]').forEach(btn => {
+      btn.addEventListener('click', () => removeItem(btn.dataset.removeId));
+    });
+  }
+
+  async function changeQty(id, delta) {
     const items = Cart.get();
     const it = items.find(i => i.id === id);
-    if (it) Cart.updateQty(id, it.qty + delta);
-    renderCart();
+    if (it) await Cart.updateQty(id, it.qty + delta);
+    await renderCart();
   }
-  function removeItem(id) { Cart.remove(id); renderCart(); }
-  function clearCart()    { Cart.clear(); renderCart(); }
+  async function removeItem(id) { await Cart.remove(id); await renderCart(); }
+  async function clearCart()    { await Cart.clear(); await renderCart(); }
 
-  function renderCart() {
-    // Re-render by reloading the cart section
-    window.location.reload();
-  }
-
-  function submitOrder() {
+  async function submitOrder() {
     const session = Auth.getSession();
     if (!session) return;
-    Auth.addOrder(session.id, Cart.get());
-    Cart.clear();
-    document.getElementById('order-result').innerHTML = `
-      <div class="order-success" style="margin-top:16px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-        <p>سفارش ثبت شد!</p>
-        <small>کارشناسان ما به زودی با شما تماس می‌گیرند.</small>
-      </div>`;
-    setTimeout(() => { window.location.reload(); }, 3000);
+    try {
+      await Auth.addOrder(session.id, Cart.get());
+      await Cart.clear();
+      document.getElementById('order-result').innerHTML = `
+        <div class="order-success" style="margin-top:16px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <p>سفارش ثبت شد!</p>
+          <small>کارشناسان ما به زودی با شما تماس می‌گیرند.</small>
+        </div>`;
+      setTimeout(() => { window.location.reload(); }, 3000);
+    } catch (e) {
+      alert(e.data?.error || e.message || 'خطا در ثبت سفارش.');
+    }
   }
 
   function setGuestError(groupId, msg) {
@@ -488,7 +504,7 @@
     document.querySelectorAll('#guest-form .form-group').forEach(g => g.classList.remove('has-error'));
   }
 
-  function submitGuest(e) {
+  async function submitGuest(e) {
     e.preventDefault();
     clearGuestErrors();
     let valid = true;
@@ -505,7 +521,7 @@
     if (!document.getElementById('g-postal').value.trim())  { setGuestError('g-group-postal');  valid = false; }
     if (!valid) return;
 
-    Cart.clear();
+    await Cart.clear();
     document.getElementById('order-result').innerHTML = `
       <div class="order-success" style="margin-top:16px">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>

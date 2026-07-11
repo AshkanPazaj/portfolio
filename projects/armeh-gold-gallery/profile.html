@@ -129,7 +129,7 @@
   <nav class="nav" id="nav" aria-label="ناوبری اصلی">
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html#collections">مجموعه‌ها</a></li>
-      <li><a href="index.html#about">درباره ما</a></li>
+      <li><a href="index.html">خانه</a></li>
       <li id="nav-login-li"><a href="login.html">ورود</a></li>
       <li id="nav-admin-li" style="display:none"><a href="admin.html" class="nav-admin-link">پنل مدیریت</a></li>
       <li id="nav-logout-li" style="display:none">
@@ -161,9 +161,11 @@
     </div>
   </main>
 
-  <script src="js/armeh.js"></script>
+  <link rel="stylesheet" href="css/armeh-shared.css?v=23" />
+  <script src="js/armeh.js?v=23"></script>
   <script>
-  (function() {
+  (async function() {
+    await window.armehReady;
     if (!Auth.isUser()) {
       document.getElementById('profile-body').innerHTML = `
         <div style="text-align:center;padding:80px 20px">
@@ -285,11 +287,11 @@
       return `
       <div class="order-card">
         <div class="order-header">
-          <span class="order-date">${new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' })}</span>
-          <span class="order-status">${o.status}</span>
+          <span class="order-date">${escHtml(new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' }))}</span>
+          <span class="order-status">${escHtml(o.status)}</span>
         </div>
-        <div class="order-items-list">${o.items.map(i => `${i.name} ×${i.qty} — ${formatPrice(resolveItemPrice(i) * i.qty)}`).join(' · ')}</div>
-        <div class="order-items-list" style="margin-top:8px;font-weight:600;color:var(--gold-dark)">جمع: ${formatPrice(total)}</div>
+        <div class="order-items-list">${o.items.map(i => `${escHtml(i.name)} ×${escHtml(i.qty)} — ${escHtml(formatPrice(resolveItemPrice(i) * i.qty))}`).join(' · ')}</div>
+        <div class="order-items-list" style="margin-top:8px;font-weight:600;color:var(--gold-dark)">جمع: ${escHtml(formatPrice(total))}</div>
       </div>`;
     }).join('');
   }
@@ -329,14 +331,30 @@
     const errEl = document.getElementById('pw-err');
     const matEl = document.getElementById('pw-match-err');
     errEl.style.display = 'none'; matEl.style.display = 'none';
-    if (u.password !== cur) { errEl.style.display = 'block'; return; }
-    if (!nw || nw !== con)  { matEl.style.display = 'block'; return; }
-    Auth.updateUser(sess.id, { password: nw });
-    document.getElementById('p-cur-pw').value = '';
-    document.getElementById('p-new-pw').value = '';
-    document.getElementById('p-con-pw').value = '';
-    const msg = document.getElementById('pw-msg');
-    msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500);
+    if (!nw || nw !== con) { matEl.style.display = 'block'; return; }
+
+    (async () => {
+      if (ArmehAPI.enabled()) {
+        try {
+          await Auth.updateUser(sess.id, { password: nw, currentPassword: cur });
+        } catch {
+          errEl.style.display = 'block';
+          return;
+        }
+      } else {
+        const hash = await hashLocalPassword(cur);
+        if (!u || (u.passwordHash !== hash && u.password !== cur)) {
+          errEl.style.display = 'block';
+          return;
+        }
+        await Auth.updateUser(sess.id, { password: nw });
+      }
+      document.getElementById('p-cur-pw').value = '';
+      document.getElementById('p-new-pw').value = '';
+      document.getElementById('p-con-pw').value = '';
+      const msg = document.getElementById('pw-msg');
+      msg.classList.add('show'); setTimeout(() => msg.classList.remove('show'), 2500);
+    })();
   }
 
   function requestDelete() {

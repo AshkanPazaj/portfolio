@@ -94,7 +94,7 @@
   <nav class="nav" id="nav" aria-label="ناوبری اصلی">
     <ul class="nav-links" id="nav-links">
       <li><a href="../index.html#collections">مجموعه‌ها</a></li>
-      <li><a href="../index.html#about">درباره ما</a></li>
+      <li><a href="../index.html">خانه</a></li>
       <li id="nav-login-li"><a href="../login.html">ورود</a></li>
       <li id="nav-admin-li" style="display:none"><a href="../admin.html" class="nav-admin-link">پنل مدیریت</a></li>
       <li id="nav-logout-li" style="display:none"><a href="../profile.html" class="nav-user-name" id="nav-profile-link"></a><button class="nav-logout-btn" onclick="Auth.logout()">خروج</button></li>
@@ -172,7 +172,8 @@
       </div>
     </div>
   </footer>
-  <script src="../js/armeh.js"></script>
-  <script>document.addEventListener('DOMContentLoaded', () => renderCollectionPage('necklaces'));</script>
+  <link rel="stylesheet" href="../css/armeh-shared.css?v=23" />
+  <script src="../js/armeh.js?v=23"></script>
+  <script>document.addEventListener('DOMContentLoaded', async () => { if (window.armehReady) await window.armehReady; renderCollectionPage('necklaces'); });</script>
 </body>
 </html>
