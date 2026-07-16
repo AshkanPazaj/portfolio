@@ -13,7 +13,7 @@
   --text-dim: #a8a8b3;
   --text-mute: #6e6e7a;
 
-  --brand: #ff6a3d;          /* warm â€” hospitality */
+  --brand: #ff6a3d;          /* warm: hospitality */
   --brand-2: #ffb347;
   --accent: #6e8bff;         /* cool â€” full stack */
   --accent-2: #a26bff;
@@ -352,7 +352,7 @@ button:focus-visible {
   transition: color 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 
-/* Hospitality â€” warm orange box */
+/* Hospitality: warm orange box */
 .nav-links a.nav-warm:hover,
 .nav-links a.nav-warm.active,
 .nav-links a.nav-warm:focus-visible {
@@ -1752,16 +1752,12 @@ button:focus-visible {
 }
 
 /* ============================================
-   Reveal Animations
+   Reveal (disabled)
    ============================================ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
-}
+.reveal,
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* ============================================

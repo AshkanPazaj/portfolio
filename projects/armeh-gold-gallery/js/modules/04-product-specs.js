@@ -6,23 +6,23 @@ function materialFromKarat(k) {
 }
 
 function formatWeightGrams(value) {
-  if (value == null || value === '') return '—';
+  if (value == null || value === '') return '-';
   const n = Number(value);
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) return '-';
   return n.toLocaleString('fa-IR', { maximumFractionDigits: 3 }) + ' گرم';
 }
 
 function formatPercent(value) {
-  if (value == null || value === '') return '—';
+  if (value == null || value === '') return '-';
   const n = Number(value);
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) return '-';
   return n.toLocaleString('fa-IR', { maximumFractionDigits: 2 }) + '٪';
 }
 
 function productSpecRows(p) {
   return [
-    { label: 'کد محصول', value: p.barcode || '—', ltr: true },
-    { label: 'مجموعه', value: p.collectionName || '—' },
+    { label: 'کد محصول', value: p.barcode || '-', ltr: true },
+    { label: 'مجموعه', value: p.collectionName || '-' },
     { label: 'عیار', value: KARAT_LABELS[p.karat] || materialFromKarat(p.karat) },
     { label: 'جنسیت', value: genderLabel(p.gender) },
     { label: 'وزن کل', value: formatWeightGrams(p.gross_weight ?? p.grossWeight) },

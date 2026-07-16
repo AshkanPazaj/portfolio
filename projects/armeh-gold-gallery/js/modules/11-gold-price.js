@@ -132,7 +132,7 @@ function initNavGoldPrice() {
     ticker.href = TGJU_GOLD18_URL;
     ticker.target = '_blank';
     ticker.rel = 'noopener noreferrer';
-    ticker.title = 'قیمت لحظه‌ای طلای ۱۸ عیار — منبع: tgju.org';
+    ticker.title = 'قیمت لحظه‌ای طلای ۱۸ عیار، منبع: tgju.org';
     ticker.setAttribute('aria-label', 'قیمت لحظه‌ای طلای ۱۸ عیار از tgju.org');
     ticker.innerHTML = `
       <span class="nav-gold-label">طلای ۱۸</span>
@@ -161,7 +161,7 @@ function initNavGoldPrice() {
       valueEl.textContent = await fetchNavGoldPriceText();
       ticker.classList.remove('is-error');
     } catch {
-      valueEl.textContent = window.innerWidth <= 480 ? '—' : 'قیمت در دسترس نیست';
+      valueEl.textContent = window.innerWidth <= 480 ? '-' : 'قیمت در دسترس نیست';
       ticker.classList.add('is-error');
     } finally {
       ticker.classList.remove('is-loading');

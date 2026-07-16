@@ -16,6 +16,6 @@ export function safeImageUrl(url) {
 }
 
 export function formatPrice(amount) {
-  if (amount == null) return '—';
+  if (amount == null) return '-';
   return Number(amount).toLocaleString('fa-IR') + ' تومان';
 }

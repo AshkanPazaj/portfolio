@@ -1,20 +1,19 @@
-# Ashkan Pazaj — Portfolio
+# Ashkan Pazaj | Portfolio
 
-A modern, single-page portfolio for **Ashkan Pazaj** featuring two career tracks:
+A modern portfolio for **Ashkan Pazaj**, junior full-stack developer based in Toronto.
 
-1. **Hospitality & Retail** — 5+ years of progressive leadership (Viuna Café, Roots)
-2. **Full-Stack Development** — Currently in the Computer Programming (T186) 2-Year Diploma at George Brown Polytechnic
+**Full-Stack Development:** George Brown Computer Programming (T186) graduate, currently building production software for clients (ASP.NET Core, Java, JavaScript, SQL).
 
 ## Tech stack
 
-Pure HTML, CSS and vanilla JavaScript — no build step, no dependencies.
+Pure HTML, CSS and vanilla JavaScript. No build step, no dependencies.
 
-- `index.html` — main portfolio page
-- `projects.html` — project showcase
-- `styles.css` — portfolio design system, layout and animations
-- `script.js` — scroll reveals, counter animation, mobile nav, parallax photo
-- `projects/` — self-contained project demos (Chrome Dino, Cafe X, etc.)
-- `assets/` — shared site assets (favicon, profile photo)
+- `index.html`: main portfolio page
+- `projects.html`: project showcase
+- `styles.css`: portfolio design system, layout and animations
+- `script.js`: mobile nav, parallax photo
+- `projects/`: self-contained project demos (Chrome Dino, Cafe X, etc.)
+- `assets/`: shared site assets (favicon, profile photo)
 
 ## Run locally
 

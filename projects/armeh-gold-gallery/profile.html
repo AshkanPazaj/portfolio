@@ -290,7 +290,7 @@
           <span class="order-date">${escHtml(new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' }))}</span>
           <span class="order-status">${escHtml(o.status)}</span>
         </div>
-        <div class="order-items-list">${o.items.map(i => `${escHtml(i.name)} ×${escHtml(i.qty)} — ${escHtml(formatPrice(resolveItemPrice(i) * i.qty))}`).join(' · ')}</div>
+        <div class="order-items-list">${o.items.map(i => `${escHtml(i.name)} ×${escHtml(i.qty)}: ${escHtml(formatPrice(resolveItemPrice(i) * i.qty))}`).join(' · ')}</div>
         <div class="order-items-list" style="margin-top:8px;font-weight:600;color:var(--gold-dark)">جمع: ${escHtml(formatPrice(total))}</div>
       </div>`;
     }).join('');

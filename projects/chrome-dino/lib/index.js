@@ -2,7 +2,7 @@ import DinoGame from './game/DinoGame.js'
 
 const game = new DinoGame(600, 150)
 
-// ── Touch detection — show on-screen buttons on any touch-capable device ────
+// Touch detection: show on-screen buttons on any touch-capable device
 // Uses three checks because no single API is reliable across all phones/browsers.
 if (
   'ontouchstart' in window ||
@@ -44,7 +44,7 @@ if (stage) {
 // If the user drags instead of tapping, the duck is cancelled immediately
 // so the dino doesn't stay crouched while the button is being moved.
 
-const DRAG_THRESHOLD = 12 // px — movement needed before drag mode activates
+const DRAG_THRESHOLD = 12 // px: movement needed before drag mode activates
 
 /**
  * @param {HTMLElement}   btn        The button element

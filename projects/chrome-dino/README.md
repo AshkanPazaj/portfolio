@@ -1,6 +1,6 @@
 # Chrome Dino
 
-A faithful replica of the classic **Chrome offline dinosaur game** — same sprites, cacti, pterodactyls, night mode, score blink, and jump/duck controls.
+A faithful replica of the classic **Chrome offline dinosaur game**, with the same sprites, cacti, pterodactyls, night mode, score blink, and jump/duck controls.
 
 ## Tech stack
 
@@ -20,8 +20,8 @@ Then visit `http://localhost:8000`.
 
 ## Controls
 
-- **Space / ↑** — Jump
-- **↓** — Duck
+- **Space / ↑**: Jump
+- **↓**: Duck
 
 ## Author
 

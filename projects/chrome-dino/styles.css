@@ -124,7 +124,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   line-height: 1;
 }
 
-/* Default positions — jump upper-right, duck lower-right */
+/* Default positions: jump upper-right, duck lower-right */
 #ctrl-jump {
   right: 24px;
   bottom: 136px;

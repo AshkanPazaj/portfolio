@@ -343,7 +343,7 @@
           <p style="font-size:12px;color:var(--text-dim);margin-bottom:16px;">اطلاعات از پروفایل شما بارگذاری شد.</p>
           <div class="summary-row"><span>نام:</span><strong>${escHtml(u.firstname||'')} ${escHtml(u.lastname||'')}</strong></div>
           <div class="summary-row"><span>ایمیل:</span><strong>${escHtml(u.email||'')}</strong></div>
-          <div class="summary-row"><span>تلفن:</span><strong>${escHtml(u.phone||'—')}</strong></div>
+          <div class="summary-row"><span>تلفن:</span><strong>${escHtml(u.phone||'-')}</strong></div>
           <div class="summary-row"><span>آدرس:</span><strong style="max-width:160px;text-align:left;font-size:12px">${escHtml([u.ostan, u.shahr, u.address].filter(Boolean).join(' '))}</strong></div>
           <button class="btn-submit-order" style="margin-top:16px" onclick="submitOrder()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><polyline points="20 6 9 17 4 12"/></svg>

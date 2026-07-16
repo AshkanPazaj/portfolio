@@ -405,7 +405,7 @@
           <label>تصاویر محصول</label>
           <div class="image-upload-box">
             <div id="prod-images-gallery" class="prod-images-gallery"></div>
-            <p id="prod-image-hint" style="font-size:12px;color:var(--text-muted)">فرمت JPG یا PNG — حداکثر ۲ مگابایت برای هر تصویر — تعداد نامحدود</p>
+            <p id="prod-image-hint" style="font-size:12px;color:var(--text-muted)">فرمت JPG یا PNG، حداکثر ۲ مگابایت برای هر تصویر، تعداد نامحدود</p>
             <input type="file" id="product-image-input" accept="image/jpeg,image/png,image/webp" multiple />
             <div class="image-actions">
               <button type="button" class="btn-img" onclick="document.getElementById('product-image-input').click()">افزودن تصویر</button>
@@ -621,7 +621,7 @@
     return `
       <tr data-pid="${escHtml(p.id)}">
         <td>${thumb}</td>
-        <td dir="ltr" style="font-family:monospace;font-size:11px">${escHtml(p.barcode || '—')}</td>
+        <td dir="ltr" style="font-family:monospace;font-size:11px">${escHtml(p.barcode || '-')}</td>
         <td><span class="coll-badge">${escHtml(p.collectionName)}</span></td>
         <td style="font-weight:600;color:var(--text)">${escHtml(p.name)}</td>
         <td>${escHtml(KARAT_LABELS[p.karat] || materialFromKarat(p.karat))}</td>
@@ -771,7 +771,7 @@
       <tr>
         <td style="font-weight:600;color:var(--text)">${escHtml(u.firstname)} ${escHtml(u.lastname)}</td>
         <td dir="ltr" style="text-align:right">${escHtml(u.email)}</td>
-        <td>${escHtml(u.phone || '—')}</td>
+        <td>${escHtml(u.phone || '-')}</td>
         <td dir="ltr" style="text-align:right;font-size:12px">${escHtml(new Date(u.createdAt).toLocaleDateString('fa-IR'))}</td>
         <td>
           <div class="action-btns">
@@ -845,7 +845,7 @@
               <span>${escHtml(new Date(o.date).toLocaleDateString('fa-IR', { year:'numeric', month:'long', day:'numeric' }))}</span>
               <span class="order-status">${escHtml(o.status)}</span>
             </div>
-            <div class="order-products">${o.items.map(i => `${escHtml(i.name)} (×${i.qty}) — ${escHtml(formatPrice(resolveItemPrice(i) * i.qty))}`).join(' ، ')}</div>
+            <div class="order-products">${o.items.map(i => `${escHtml(i.name)} (×${i.qty}): ${escHtml(formatPrice(resolveItemPrice(i) * i.qty))}`).join(' ، ')}</div>
             <div class="order-products" style="margin-top:6px;font-weight:600;color:var(--gold-dark)">جمع: ${escHtml(formatPrice(total))}</div>
           </div>`;
         }).join('');

@@ -678,7 +678,7 @@ html { scroll-behavior: smooth; }
 }
 .cafe-back:hover { color: #fff; }
 
-/* Cafe X — photos, gallery, forms */
+/* Cafe X: photos, gallery, forms */
 .cafe-hero-photo .cafe-hero-media { inset: 0; }
 .cafe-hero-img {
   position: absolute;

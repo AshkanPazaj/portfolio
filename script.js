@@ -1,5 +1,5 @@
 /* ============================================
-   Ashkan Pazaj — Portfolio Scripts
+   Ashkan Pazaj | Portfolio Scripts
    ============================================ */
 
 // ── Intro splash (once per session) ──────────────────────────
@@ -30,7 +30,7 @@
       return;
     }
 
-    // Hide the real nav logo — the splash logo will visibly travel to its spot
+    // Hide the real nav logo; the splash logo will visibly travel to its spot
     navLogo.style.opacity = '0';
 
     // Cancel the CSS entry animation so it doesn't interfere with the slide
@@ -58,7 +58,7 @@
       splash.style.backgroundColor = 'transparent';
     }, 0);
 
-    // Logo has landed — show the real nav logo and tear down the splash
+    // Logo has landed; show the real nav logo and tear down the splash
     setTimeout(() => {
       navLogo.style.transition = 'opacity 0.2s ease';
       navLogo.style.opacity    = '1';
@@ -126,48 +126,6 @@
     });
   }
 
-  // ----- Reveal-on-scroll animations -----
-  const revealEls = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-  revealEls.forEach(el => io.observe(el));
-
-  // ----- Animated stat counters -----
-  const stats = document.querySelectorAll('.stat-num');
-  const statIo = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        animateCount(entry.target);
-        statIo.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  stats.forEach(s => statIo.observe(s));
-
-  function animateCount(el) {
-    const target = parseInt(el.dataset.target, 10) || 0;
-    const suffix = el.dataset.suffix || '+';
-    const duration = 1600;
-    const start = performance.now();
-
-    const step = (now) => {
-      const elapsed = now - start;
-      const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const value = Math.round(target * eased);
-      el.textContent = value + (progress === 1 ? suffix : '');
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }
-
   // ----- Smooth-scroll offset for fixed nav -----
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.querySelectorAll('a[href^="#"]').forEach(link => {
@@ -183,18 +141,18 @@
     });
   });
 
-  // ----- Rotating headline (hospitality <-> programming) -----
+  // ----- Rotating headline (full-stack developer) -----
   const rotator = document.querySelector('.rotator');
   if (rotator && !prefersReducedMotion) {
     const phrases = [
-      { text: 'I lead floors',   tone: 'warm' },
-      { text: 'I write code',    tone: 'cool' },
-      { text: 'I run the rush',  tone: 'warm' },
-      { text: 'I ship features', tone: 'cool' },
-      { text: 'I coach teams',   tone: 'warm' },
-      { text: 'I squash bugs',   tone: 'cool' },
-      { text: 'I open doors',    tone: 'warm' },
-      { text: 'I learn fast',    tone: 'cool' },
+      { text: 'I ship features',   tone: 'cool' },
+      { text: 'I write code',      tone: 'cool' },
+      { text: 'I build APIs',      tone: 'cool' },
+      { text: 'I squash bugs',     tone: 'cool' },
+      { text: 'I ship full-stack', tone: 'cool' },
+      { text: 'I learn fast',      tone: 'cool' },
+      { text: 'I write SQL',       tone: 'cool' },
+      { text: 'I deploy apps',     tone: 'cool' },
     ];
 
     let i = 0;

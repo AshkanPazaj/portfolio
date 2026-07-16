@@ -686,7 +686,7 @@ function safeImageUrl(url) {
 }
 
 function formatPrice(amount) {
-  if (amount == null) return '—';
+  if (amount == null) return '-';
   return Number(amount).toLocaleString('fa-IR') + ' تومان';
 }
 function resolveItemPrice(item) {
@@ -1137,23 +1137,23 @@ function materialFromKarat(k) {
 }
 
 function formatWeightGrams(value) {
-  if (value == null || value === '') return '—';
+  if (value == null || value === '') return '-';
   const n = Number(value);
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) return '-';
   return n.toLocaleString('fa-IR', { maximumFractionDigits: 3 }) + ' گرم';
 }
 
 function formatPercent(value) {
-  if (value == null || value === '') return '—';
+  if (value == null || value === '') return '-';
   const n = Number(value);
-  if (!Number.isFinite(n)) return '—';
+  if (!Number.isFinite(n)) return '-';
   return n.toLocaleString('fa-IR', { maximumFractionDigits: 2 }) + '٪';
 }
 
 function productSpecRows(p) {
   return [
-    { label: 'کد محصول', value: p.barcode || '—', ltr: true },
-    { label: 'مجموعه', value: p.collectionName || '—' },
+    { label: 'کد محصول', value: p.barcode || '-', ltr: true },
+    { label: 'مجموعه', value: p.collectionName || '-' },
     { label: 'عیار', value: KARAT_LABELS[p.karat] || materialFromKarat(p.karat) },
     { label: 'جنسیت', value: genderLabel(p.gender) },
     { label: 'وزن کل', value: formatWeightGrams(p.gross_weight ?? p.grossWeight) },
@@ -1672,7 +1672,7 @@ function initNavGoldPrice() {
     ticker.href = TGJU_GOLD18_URL;
     ticker.target = '_blank';
     ticker.rel = 'noopener noreferrer';
-    ticker.title = 'قیمت لحظه‌ای طلای ۱۸ عیار — منبع: tgju.org';
+    ticker.title = 'قیمت لحظه‌ای طلای ۱۸ عیار، منبع: tgju.org';
     ticker.setAttribute('aria-label', 'قیمت لحظه‌ای طلای ۱۸ عیار از tgju.org');
     ticker.innerHTML = `
       <span class="nav-gold-label">طلای ۱۸</span>
@@ -1701,7 +1701,7 @@ function initNavGoldPrice() {
       valueEl.textContent = await fetchNavGoldPriceText();
       ticker.classList.remove('is-error');
     } catch {
-      valueEl.textContent = window.innerWidth <= 480 ? '—' : 'قیمت در دسترس نیست';
+      valueEl.textContent = window.innerWidth <= 480 ? '-' : 'قیمت در دسترس نیست';
       ticker.classList.add('is-error');
     } finally {
       ticker.classList.remove('is-loading');

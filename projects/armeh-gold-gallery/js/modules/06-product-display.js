@@ -13,7 +13,7 @@ function safeImageUrl(url) {
 }
 
 function formatPrice(amount) {
-  if (amount == null) return '—';
+  if (amount == null) return '-';
   return Number(amount).toLocaleString('fa-IR') + ' تومان';
 }
 function resolveItemPrice(item) {

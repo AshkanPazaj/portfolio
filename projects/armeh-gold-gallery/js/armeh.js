@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════
-   ARMEH GOLD — script loader
+   ARMEH GOLD | script loader
    Prefers armeh.bundle.js (1 request); falls back to modules/.
    Append ?dev=1 to armeh.js to force per-module loading.
    ═══════════════════════════════════════════ */

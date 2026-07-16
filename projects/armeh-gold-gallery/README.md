@@ -1,6 +1,6 @@
 # Armeh Gold Gallery
 
-A luxury Persian (RTL) gold jewellery boutique site — collections, product detail modal, cart, user accounts, and admin panel.
+A luxury Persian (RTL) gold jewellery boutique site with collections, product detail modal, cart, user accounts, and admin panel.
 
 ## Features
 
